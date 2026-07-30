@@ -44,3 +44,7 @@ data/processed/*.npz
 *.log
 tmp/
 temp/
+
+# Local Stage 9 handoff outputs
+handoff/
+data/processed/package_manifest.json

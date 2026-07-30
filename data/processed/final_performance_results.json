@@ -1,0 +1,80 @@
+{
+  "project_version": "1.0.0-prototype",
+  "measured_at": "2026-07-30T21:06:25+00:00",
+  "environment_note": "Local prototype measurement on the presentation development machine; not a production capacity claim.",
+  "method": {
+    "warmup_requests_per_endpoint": 1,
+    "measured_requests_per_endpoint": 20,
+    "clock": "time.perf_counter wall-clock latency around FastAPI TestClient",
+    "percentile": "nearest-rank p95"
+  },
+  "cold_start": {
+    "definition": "Application creation, lifespan initialization, and first deterministic plan request.",
+    "startup_to_ready_ms": 7807.915,
+    "first_request_ms": 220.419,
+    "combined_ms": 8036.636,
+    "status_code": 200
+  },
+  "warm_endpoints": {
+    "plans": {
+      "request_count": 20,
+      "average_ms": 113.01,
+      "median_ms": 114.041,
+      "p95_ms": 121.351,
+      "minimum_ms": 100.626,
+      "maximum_ms": 121.363
+    },
+    "plans_adapt": {
+      "request_count": 20,
+      "average_ms": 3.893,
+      "median_ms": 3.885,
+      "p95_ms": 4.371,
+      "minimum_ms": 3.02,
+      "maximum_ms": 4.86
+    },
+    "plans_full": {
+      "request_count": 20,
+      "average_ms": 114.44,
+      "median_ms": 113.779,
+      "p95_ms": 129.181,
+      "minimum_ms": 102.375,
+      "maximum_ms": 132.237
+    },
+    "readiness": {
+      "request_count": 20,
+      "average_ms": 5.045,
+      "median_ms": 4.41,
+      "p95_ms": 5.17,
+      "minimum_ms": 3.612,
+      "maximum_ms": 18.007
+    }
+  },
+  "deterministic_fallback": {
+    "request_count": 20,
+    "average_ms": 5.444,
+    "median_ms": 5.628,
+    "p95_ms": 6.612,
+    "minimum_ms": 3.567,
+    "maximum_ms": 6.943,
+    "method_note": "Simulated immediate local connection failure; the real deterministic response and validation path ran."
+  },
+  "concurrent_batch": {
+    "request_count": 5,
+    "worker_count": 5,
+    "batch_elapsed_ms": 784.756,
+    "successful_requests": 5,
+    "consistent_plan_id": true,
+    "capacity_note": "Small correctness smoke only; not a production-scale load test."
+  },
+  "real_ollama_explanation": {
+    "measured_request_count": 1,
+    "latency_ms": 17610.08,
+    "note": "One optional real local-model demo request; it is not a distribution benchmark."
+  },
+  "plans_vs_full_investigation": {
+    "plans_average_ms": 113.01,
+    "plans_full_average_ms": 114.44,
+    "difference_ms": -1.43,
+    "finding": "The repeated measurement does not reproduce a material /plans slowdown."
+  }
+}

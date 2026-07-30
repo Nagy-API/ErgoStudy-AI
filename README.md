@@ -1,236 +1,177 @@
 # ErgoStudy AI
 
-ErgoStudy AI is the working title for a local, posture-aware daily study planner. The planned system will combine deterministic scheduling, source-grounded knowledge retrieval, optional sensor data, and a local language model. A Flutter application will communicate with the Python backend through FastAPI.
+ErgoStudy AI `1.0.0-prototype` is a local, posture-aware daily study planner built for a competition demonstration. It combines source-traceable semantic retrieval, deterministic study scheduling, optional normalized sensor adaptation, optional local-LLM wording, and a versioned FastAPI interface for a future Flutter client.
 
-## Problem statement
+The prototype is complete. It is not production-ready, and this repository does not include Flutter UI implementation, deployment, Docker, authentication, cloud APIs, or raw sensor hardware integration.
 
-Students often need to decide what to study, for how long, when to pause, and how to recover when a plan changes. Generic schedules do not account for subject priority, difficulty, workload, current understanding, or physical strain from prolonged sitting. This project aims to produce a practical one-day plan from those inputs while keeping important planning decisions predictable and explainable.
+## What the system demonstrates
 
-## Main users
+1. A student submits available time, subjects, topics, and four 1-to-5 ratings.
+2. MiniLM embeddings and a persistent Chroma collection retrieve relevant knowledge records.
+3. Python rules calculate subject scores and allocate study time.
+4. The scheduler creates ordered study sessions and breaks inside the available window.
+5. An optional normalized sensor observation may adjust only future timing and breaks.
+6. An optional local Qwen model phrases the already-complete plan in English.
+7. Strict validation accepts that wording or returns a deterministic fallback.
+8. FastAPI returns versioned JSON for Flutter.
 
-- Students who want a structured daily study plan.
-- Students using only the Flutter application, without additional hardware.
-- Students who also use the planned smart back-support sensor.
-- Project reviewers who need to inspect and explain the system's data, decisions, and evaluation.
+## Architecture
 
-## Operating modes
-
-### Without a sensor
-
-The non-sensor mode supports deterministic daily planning and timer-based study sessions and breaks. Sensor-disabled or unusable observations preserve this plan unchanged.
-
-### With a sensor
-
-The sensor mode accepts normalized application-level observations such as continuous sitting minutes, posture direction, pressure imbalance, and poor-posture duration. A deterministic adapter may adjust only future breaks and session lengths while preserving academic scores, priorities, methods, and retrieved record IDs. Raw hardware communication and device calibration remain outside the repository.
-
-## High-level architecture
-
-The intended flow is:
-
-1. A Flutter app submits study and optional sensor inputs.
-2. FastAPI validates the request.
-3. A retrieval component obtains relevant, source-traceable guidance from a persistent ChromaDB store.
-4. A deterministic planning engine creates the schedule.
-5. A sensor adapter applies documented timing and break rules when sensor data is available.
-6. A local language model explains the grounded result without changing the schedule rules.
-7. FastAPI returns structured JSON to Flutter.
-
-See [docs/system_architecture.md](docs/system_architecture.md) for the planned component boundaries.
-
-## Current status
-
-Stages 1 through 8 are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, a reusable production `RetrievalService`, a deterministic daily planner, a deterministic sensor-adaptation layer, a local grounded wording layer, and a versioned local FastAPI service for Flutter. Stage 7 uses only `qwen3:4b-instruct` through the local Ollama API with schema-constrained JSON, strict value and safety validation, one correction attempt, and a deterministic fallback.
-
-The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. The Stage 8 API keeps normal planning endpoints independent of Ollama and isolates optional explanation latency behind a configurable 30-second deadline. Stage 9 final end-to-end evaluation, packaging, and handoff is next; Flutter UI implementation and deployment have not started.
-
-See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md), [docs/stage6a_daily_planner_report.md](docs/stage6a_daily_planner_report.md), [docs/stage6b_sensor_adaptation_report.md](docs/stage6b_sensor_adaptation_report.md), and [docs/stage7_grounded_generation_report.md](docs/stage7_grounded_generation_report.md) for the completed checkpoints.
-
-## Project tracking
-
-See [PROJECT_STATUS.md](PROJECT_STATUS.md) for confirmed requirements, technical decisions, open questions, and the latest validation checkpoint.
-
-## Planned stages
-
-- Environment and scaffold
-- Dataset design and source strategy
-- Dataset creation and validation
-- Embeddings and ChromaDB
-- Retrieval and retrieval evaluation
-- Deterministic daily planning engine
-- Sensor-aware adaptation
-- Local LLM and grounded generation
-- FastAPI integration
-- Full system evaluation and demo
-
-Detailed goals and completion criteria are in [PROJECT_PLAN.md](PROJECT_PLAN.md).
-
-## Dataset build and validation
-
-Stage 3 uses only the Python standard library. From the repository root:
-
-```powershell
-python scripts/build_dataset.py
-python scripts/validate_dataset.py
-python -m unittest discover -s tests -v
+```mermaid
+flowchart LR
+    A["Flutter client (future)"] --> B["FastAPI + Pydantic"]
+    B --> C["Alias resolver + MiniLM retrieval"]
+    C --> D["477-record Chroma collection"]
+    D --> E["Deterministic scorer, allocator, scheduler"]
+    E --> F["Optional sensor adapter"]
+    F --> G["Optional Qwen wording"]
+    G --> H["Schema validation or deterministic fallback"]
+    H --> B
 ```
 
-The notebooks can be opened when Jupyter is installed:
+Python owns every score, allocation, subject priority, session duration, break, sensor action, and fallback. The language model cannot change those values.
+
+## Final evidence
+
+- Dataset: 477 retrievable records from 29 recorded sources; 96 separate evaluation queries.
+- Embedding: `sentence-transformers/all-MiniLM-L6-v2`, pinned revision, 384 dimensions.
+- Frozen retrieval: Recall@5 `0.8621`, MRR@10 `0.8728`, document-family and subject-family Hit@5 `1.0000` on the sealed 32-query final split.
+- End-to-end scenarios: 12 of 12 passed.
+- Unit and integration tests: 171 passed.
+- Warm local averages over 20 measured requests: `/plans` `113.010 ms`, `/plans/adapt` `3.893 ms`, `/plans/full` `114.440 ms`, readiness `5.045 ms`.
+- Five simultaneous deterministic plan requests: 5 of 5 passed in `784.756 ms` total.
+- Real prewarmed Ollama explanation: validated after one correction in `17.610 s`.
+
+These are local prototype measurements, not production capacity claims. See [the final system report](docs/final_system_report.md) for the complete method and limitations.
+
+## Requirements
+
+- Windows with PowerShell
+- 64-bit CPython 3.12
+- Git
+- A repository-local `.venv`
+- Packages pinned in `requirements.txt`
+- The selected MiniLM revision available in the local Hugging Face cache before offline startup
+- A locally built Chroma collection
+- Optional: Ollama with `qwen3:4b-instruct` already installed for live English generation
+
+Ollama is not required for planning. The repository uses no paid service or paid API.
+
+## Setup
+
+From the repository root:
 
 ```powershell
-jupyter notebook notebooks/01_dataset_creation.ipynb
-jupyter notebook notebooks/02_dataset_validation.ipynb
+py -3.12 -m venv .venv
+.venv\Scripts\python.exe -m pip install --upgrade pip
+.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-No model, embedding package, or vector database is required for Stage 3.
+PyTorch is pinned to the CUDA 13.0 build used by the evaluated machine. On a different machine, install the appropriate PyTorch build first and then install the remaining pinned requirements. `scripts/setup_stage4_environment.ps1` preserves the original environment workflow.
 
-## Stage 4 embedding and index workflow
+Model downloads are not automatic Stage 9 behavior. Confirm before downloading models or other large files.
 
-Stage 4 uses the repository-local `.venv`. On Windows, create or verify it with the existing CPython 3.12 interpreter, then install the pinned packages:
+## Dataset validation and index build
+
+Validate the included source and processed records:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/setup_stage4_environment.ps1 -PythonPath "C:\path\to\python.exe"
+.venv\Scripts\python.exe scripts\validate_dataset.py
 ```
 
-The benchmark downloads only the three configured embedding models. The build and verification scripts use the resolved cached revision offline:
+Build the persistent Chroma collection from the included 477-record corpus, then verify it:
 
 ```powershell
-.venv\Scripts\python.exe scripts\benchmark_embeddings.py
 .venv\Scripts\python.exe scripts\build_chroma_index.py
 .venv\Scripts\python.exe scripts\verify_chroma_index.py
 ```
 
-Use `--rebuild` only when intentionally replacing the exact ErgoStudy collection:
+Use `--rebuild` only when intentionally replacing the exact local collection. Chroma contents are ignored by Git and are not included in the handoff ZIP.
+
+## Run the API
 
 ```powershell
-.venv\Scripts\python.exe scripts\build_chroma_index.py --rebuild
-```
-
-The `.venv`, Hugging Face model cache, raw embedding arrays, and `chroma_db` contents are local artifacts and are ignored by Git.
-
-## Stage 5 retrieval workflow
-
-The production service loads only the selected cached model and existing Chroma collection:
-
-```python
-from pathlib import Path
-from src.retriever import RetrievalService
-
-with RetrievalService.from_frozen_config(Path.cwd()) as retriever:
-    results = retriever.retrieve(
-        "How should I study Mathematics equations?",
-        top_k=5,
-        metadata_filters={"reviewed": True},
-    )
-```
-
-Development comparison, failure analysis, and the sealed final-test artifacts are already complete. The evaluator refuses another final run while the final artifacts exist:
-
-```powershell
-.venv\Scripts\python.exe scripts\inspect_retrieval_failures.py
-.venv\Scripts\python.exe scripts\run_notebook_cells.py 05_retrieval_pipeline.ipynb
-```
-
-## Stage 6A daily planner workflow
-
-The planner accepts plain JSON-compatible dictionaries and does not require an LLM:
-
-```python
-from pathlib import Path
-from src.daily_planner import DailyPlanner
-from src.retriever import RetrievalService
-
-root = Path.cwd()
-with RetrievalService.from_frozen_config(root, device="cpu") as retriever:
-    planner = DailyPlanner(root, retrieval_service=retriever)
-    plan = planner.plan({
-        "total_available_minutes": 90,
-        "preferred_start_time": "16:00",
-        "subjects": [{
-            "name": "Stats",
-            "topics": ["Probability"],
-            "difficulty": 4,
-            "priority": 5,
-            "workload": 4,
-            "current_understanding": 2,
-        }],
-    })
-    print(plan.to_dict())
-```
-
-Regenerate the committed school, university, short-window, and fallback demos with:
-
-```powershell
-.venv\Scripts\python.exe scripts\generate_study_plan.py --device cpu
-.venv\Scripts\python.exe scripts\run_notebook_cells.py 06_daily_planner.ipynb
-```
-
-Planner weights and time bounds are in `config/planner_config.json`. They are versioned prototype product settings rather than universal scientific values.
-
-## Stage 6B sensor adaptation workflow
-
-Apply one normalized observation to an existing `DailyStudyPlan` or its dictionary form:
-
-```python
-from pathlib import Path
-from src.sensor_adapter import SensorPlanAdapter
-
-adapter = SensorPlanAdapter(Path.cwd())
-adapted = adapter.adapt(plan, {
-    "sensor_enabled": True,
-    "connection_status": "connected",
-    "observation_status": "valid",
-    "continuous_sitting_minutes": 50,
-    "poor_posture_duration_minutes": 12,
-    "posture_direction": "leaning_right",
-    "pressure_imbalance_detected": True,
-    "reading_age_seconds": 5,
-    "current_session_order": 1,
-    "elapsed_session_minutes": 25,
-})
-print(adapted.to_dict())
-```
-
-Regenerate and inspect the committed sensor scenarios with:
-
-```powershell
-.venv\Scripts\python.exe scripts\adapt_study_plan.py
-.venv\Scripts\python.exe scripts\run_notebook_cells.py 07_sensor_adaptation.ipynb
-```
-
-Sensor thresholds and time bounds are in `config/sensor_policy.json`. They are configurable, non-medical prototype product parameters pending user testing and hardware-team confirmation.
-
-## Stage 7 local grounded-generation workflow
-
-Stage 7 explains an already-complete deterministic plan. It cannot change allocations, session or break durations, priorities, record IDs, or sensor actions. Check the local environment and run the six focused demos with:
-
-```powershell
-.venv\Scripts\python.exe scripts\check_ollama.py
-.venv\Scripts\python.exe scripts\generate_grounded_response.py
-.venv\Scripts\python.exe scripts\run_notebook_cells.py 08_grounded_generation.ipynb
-```
-
-The generation settings in `config/generation_config.json` lock the client to the local Ollama API, `qwen3:4b-instruct`, `stream=false`, temperature zero, a 4096-token context, and one correction attempt. If Ollama is unavailable or both model responses fail validation, the request returns a stable template response with `generation_mode` set to `deterministic_fallback`.
-
-## Stage 8 FastAPI workflow
-
-Install the exact packages in `requirements.txt`, then start the local API:
-
-```powershell
-.venv\Scripts\python.exe -m pip install -r requirements.txt
 powershell -ExecutionPolicy Bypass -File scripts\run_api.ps1
 ```
 
-The main local URLs are:
+Local URLs:
 
 - API base: `http://127.0.0.1:8000/api/v1`
 - Interactive OpenAPI: `http://127.0.0.1:8000/docs`
 - Raw OpenAPI: `http://127.0.0.1:8000/openapi.json`
 
-Run the API smoke check and notebook without making a real Ollama generation request:
+## Main endpoints
+
+| Method | Endpoint | Purpose | Calls Ollama |
+| --- | --- | --- | --- |
+| GET | `/api/v1/health` | Basic process health | No |
+| GET | `/api/v1/readiness` | Deterministic prerequisites and separate Ollama status | Version probe only |
+| POST | `/api/v1/plans` | Create a deterministic daily plan | No |
+| POST | `/api/v1/plans/adapt` | Adapt an existing plan from normalized sensor data | No |
+| POST | `/api/v1/plans/full` | Create and optionally adapt a plan | No |
+| POST | `/api/v1/explanations` | Explain an existing plan with fallback | Yes |
+| POST | `/api/v1/plans/full-with-explanation` | Slower demonstration-only full path | Yes |
+
+Use `/plans`, `/plans/adapt`, and `/plans/full` as the primary application path. Explanation is optional.
+
+## Run the competition demo
+
+Verify and prewarm the already-installed local Ollama model without downloading anything:
 
 ```powershell
-.venv\Scripts\python.exe scripts\check_api.py
-.venv\Scripts\python.exe scripts\run_notebook_cells.py 09_fastapi_integration.ipynb
+powershell -ExecutionPolicy Bypass -File scripts\prewarm_ollama.ps1
 ```
 
-`/plans`, `/plans/adapt`, and `/plans/full` are deterministic and never call Ollama. `/explanations` and the demo-only `/plans/full-with-explanation` use the configured deadline and return a validated deterministic fallback with HTTP 200 when Ollama is unavailable or invalid. See [docs/api_contract.md](docs/api_contract.md) and [docs/flutter_integration_guide.md](docs/flutter_integration_guide.md).
+Start the prepared demonstration:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\run_demo.ps1 -SkipPrewarm
+```
+
+If prewarm fails, continue normally and show the deterministic fallback. Use `-RefreshOutputs` only when intentionally rerunning the final scenarios. The 5–7 minute presentation flow and backup paths are in [the competition demo script](docs/competition_demo_script.md).
+
+## Run validation and tests
+
+```powershell
+.venv\Scripts\python.exe scripts\final_validation.py
+.venv\Scripts\python.exe -m unittest discover -s tests -v
+.venv\Scripts\python.exe scripts\run_notebook_cells.py 10_end_to_end_demo.ipynb
+.venv\Scripts\python.exe -m compileall -q api src scripts
+git diff --check
+```
+
+`final_validation.py` preserves the 12 inputs/responses, per-scenario checks, cold/warm performance statistics, concurrent smoke, real optional Ollama result, and deterministic fallback measurements in `data/processed`.
+
+## Build the source handoff
+
+After checking out the final tag:
+
+```powershell
+.venv\Scripts\python.exe scripts\build_handoff_package.py
+```
+
+The ignored `handoff` directory receives the source ZIP. The ignored external `data/processed/package_manifest.json` records included count/size, exclusions, Git commit, project version, ZIP size, and SHA-256. The builder audits package entries, machine-specific paths, and common secret patterns.
+
+## Project documentation
+
+- [Final system report](docs/final_system_report.md)
+- [Competition demo script](docs/competition_demo_script.md)
+- [Discussion guide](docs/discussion_guide.md)
+- [Final handoff guide](docs/final_handoff_guide.md)
+- [Project file map](docs/project_file_map.md)
+- [API contract](docs/api_contract.md)
+- [Flutter integration guide](docs/flutter_integration_guide.md)
+- [Stage reports](docs)
+
+## Known limitations
+
+- The corpus is curriculum-neutral and is not a course-specific tutoring dataset.
+- The sealed final retrieval evaluation contains 32 queries.
+- Planner and sensor thresholds are prototype product settings requiring user testing.
+- Sensor input is normalized application data; raw hardware transport and calibration are not implemented.
+- Sensor behavior is non-medical and must not be presented as diagnosis or treatment.
+- Real Ollama latency varies and may exceed a live presentation window without prewarming.
+- The local API has no authentication, TLS, rate limiting, or production hardening.
+- There is no Flutter UI or deployment in this release.
+
+The project version deliberately includes `prototype`; completion means the competition prototype and handoff are complete, not that a production service is ready.

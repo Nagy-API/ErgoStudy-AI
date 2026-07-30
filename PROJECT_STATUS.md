@@ -1,231 +1,80 @@
-# Project Status
+# Project status
 
-## Project name
+## Release
 
-ErgoStudy AI - Posture-Aware Daily Study Planner
+- Project: ErgoStudy AI — Posture-Aware Daily Study Planner
+- Version: `1.0.0-prototype`
+- Status: competition prototype complete
+- API: local FastAPI `v1`
+- Production readiness: not production-ready
 
 ## Completed stages
 
-### Environment and scaffold
+All planned prototype stages are complete:
 
-The repository structure, project rules, initial documentation, architecture draft, environment inspection notebook, and Git repository have been created and validated.
+1. Environment and repository scaffold.
+2. Dataset design and source strategy.
+3. Deterministic 477-record dataset creation and validation.
+4. Local embedding selection and persistent Chroma index.
+5. Frozen hybrid retrieval and sealed final evaluation.
+6. Deterministic subject scoring, time allocation, sessions, and breaks.
+7. Deterministic normalized sensor adaptation with safe fallback.
+8. Grounded local-LLM wording with strict validation and deterministic fallback.
+9. Versioned FastAPI integration for a future Flutter client.
+10. Final end-to-end evaluation, demo, packaging, and handoff.
 
-### Dataset design and source strategy
+Flutter UI implementation and deployment have not started and are outside this release.
 
-The knowledge domains, seven document families, conditional record schema, retrieval-text and chunking rules, source strategy, data-quality gates, sensor contract draft, source catalog, example records, and retrieval-evaluation seed have been designed and validated. These files are design artifacts, not the final knowledge dataset. No embeddings, vector-database ingestion, retrieval implementation, planner, sensor-adaptation logic, local-model integration, or API implementation has started.
+## Final implementation checkpoint
 
-### Dataset creation and validation
+The completed pipeline validates user input, resolves controlled aliases, retrieves source-traceable records with the frozen `alias_plus_dense` configuration, calculates academic priority and time with deterministic Python, builds ordered sessions and breaks, optionally adapts future timing from normalized sensor observations, optionally asks local `qwen3:4b-instruct` for English wording, validates or replaces that wording, and returns strict FastAPI JSON.
 
-The `1.0.0-prototype` English corpus contains 477 retrievable records: 80 subject profiles, 141 topic profiles, 24 study strategies, 18 session templates, 14 sensor interventions, and 200 controlled subject aliases. It also contains 96 held-out evaluation queries outside the corpus. The deterministic builder, standard-library validator, notebooks, unit tests, processed family files, statistics, source expansion, source-role audit, structured manual sample, and Stage 3 report are complete. All blocking validations and 13 unit tests pass.
+The three primary planning endpoints never construct or call Ollama. Missing or unreliable sensor input leaves the timer-based plan unchanged. Unknown knowledge uses an explicit fallback. LLM failure returns a validated deterministic response with HTTP 200.
 
-### Embedding model evaluation and persistent ChromaDB
+## Frozen data and retrieval facts
 
-Stage 4 created a CPython 3.12 `.venv`, verified CUDA execution on the RTX 3050 6GB Laptop GPU, and compared MiniLM, plain BGE, instruction BGE, and prefixed E5 on 64 development queries using direct normalized cosine similarity. The 32 final-test query IDs remain sealed and were not evaluated. `minilm_plain` using `sentence-transformers/all-MiniLM-L6-v2` revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` was selected by the documented development-only rule.
+- Dataset version: `1.0.0-prototype`.
+- Corpus: 477 retrievable records, including 277 canonical records and 200 controlled aliases.
+- Sources: 29 recorded and used.
+- Evaluation queries: 96, separated from the corpus.
+- Selected embedding: `sentence-transformers/all-MiniLM-L6-v2`, pinned revision, 384 dimensions.
+- Chroma collection: `ergostudy-knowledge-1-0-0`, 477 records.
+- Final retrieval: Recall@5 `0.8621`, MRR@10 `0.8728`, NDCG@10 `0.8673`, document-family Hit@5 `1.0000`, subject-family Hit@5 `1.0000`.
 
-The persistent `ergostudy-knowledge-1-0-0` Chroma collection contains all 477 corpus records with caller-provided embeddings and a scalar metadata projection. Persistence, full logical content, corpus/evaluation separation, nine metadata filters, direct-versus-Chroma top-10 identity, and reproducible tuned rebuild behavior pass. All 28 repository unit tests, both Stage 4 notebook executions, Stage 3 validation, package compatibility, Python compilation, notebook JSON parsing, and Git whitespace checks pass. Chroma contents, model caches, raw embeddings, and `.venv` remain untracked.
+No embedding benchmark, dataset rebuild, retrieval retuning, dataset expansion, new model, planner redesign, or sensor-policy redesign occurred in the final stage.
 
-### Production retrieval pipeline and final retrieval evaluation
+## Final Stage 9 checkpoint
 
-Stage 5 created a reusable `RetrievalService` with local-only `minilm_plain` loading, persistent Chroma access, `top_k`, scalar metadata filters, source-preserving structured results, documented cosine similarity conversion, deterministic ordering, safe invalid-query behavior, deterministic non-oracle intent analysis, and exact normalized subject and alias resolution with ambiguity preservation.
+- Stage 3 validator: zero errors and zero warnings.
+- End-to-end scenarios: 12 passed, 0 failed.
+- Repository tests: 171 passed.
+- OpenAPI: 3.1 document with all seven required versioned paths.
+- Notebook: valid JSON; four code cells executed successfully.
+- Python compilation: passed.
+- Warm `/plans`: average `113.010 ms`, median `114.041 ms`, p95 `121.351 ms` over 20 requests.
+- Warm `/plans/adapt`: average `3.893 ms`, median `3.885 ms`, p95 `4.371 ms` over 20 requests.
+- Warm `/plans/full`: average `114.440 ms`, median `113.779 ms`, p95 `129.181 ms` over 20 requests.
+- Warm readiness: average `5.045 ms`, median `4.410 ms`, p95 `5.170 ms` over 20 requests.
+- Deterministic explanation fallback: average `5.444 ms`, p95 `6.612 ms` over 20 requests.
+- Cold lifecycle: `7,807.915 ms` to ready, `220.419 ms` first plan request, `8,036.636 ms` combined.
+- Concurrent correctness smoke: 5 of 5 deterministic requests succeeded with one plan ID in `784.756 ms` total.
+- Prewarmed real Ollama explanation: `local_llm_corrected` in `17,610.080 ms`.
+- Simulated timeout: validated `OLLAMA_TIMEOUT` deterministic fallback.
 
-The 64-query development split compared baseline dense retrieval, exact alias resolution plus dense retrieval, and an intent-aware blend. Twenty baseline failures were classified without changing the corpus: seven ambiguous queries, four embedding limitations, four narrow or incorrect labels, four wrong document-family rankings, and one alias-resolution failure. The frozen `alias_plus_dense` configuration improved development Recall@5 from 0.7143 to 0.8661 and MRR@10 from 0.6429 to 0.8750.
+The repeated measurement did not reproduce the earlier single-request result in which `/plans` appeared slower than `/plans/full`; no implementation defect or planner change was justified.
 
-After split hashes and zero final-ID use were verified, the guarded 32-query final test ran exactly once. It achieved Recall@1 0.7241, Recall@3 0.8448, Recall@5 0.8621, Recall@10 0.8966, MRR@10 0.8728, nDCG@10 0.8673, document-family Hit@1/Hit@5 0.9688/1.0000, and subject-family Hit@1/Hit@5 1.0000/1.0000. No retriever change was made after these results.
+## Final artifacts
 
-### Deterministic non-sensor daily study planner
+Stage 9 adds the final scenario inputs/outputs, evaluation/performance/validation results, end-to-end notebook, no-download Ollama prewarm, demo runner, package builder, consolidated report, competition script, discussion guide, handoff guide, and project file map. The source ZIP and its external manifest are generated after the final commit and remain ignored by Git.
 
-Stage 6A created a deterministic, JSON-compatible one-day planner. It validates available time, optional start time and session preference, subject ratings, topics, and duplicate names. It scores subjects using configurable prototype weights for priority, workload, user-provided difficulty, and knowledge gap; selects only subjects that can receive meaningful time; allocates minutes proportionally; creates 20-to-60-minute sessions; inserts configured breaks; and avoids adjacent high-demand sessions when lower-demand work is available.
+## Remaining limitations
 
-The planner retrieves subject profiles, topic profiles, study strategies, and session templates through the frozen Stage 5 service. Exact and alias resolution precede dense acceptance, every study session retains corpus record IDs, and ambiguous, weak, unknown, or unavailable retrieval uses a clearly marked generic fallback. Plan IDs hash normalized input plus the complete configuration. Four committed demos, a reusable CLI, a notebook, unit tests, and persistent-Chroma integration coverage are complete.
+- Curriculum-neutral knowledge rather than course-specific tutoring lessons.
+- Small sealed final retrieval set.
+- Prototype planner and sensor parameters still need user testing.
+- No confirmed raw sensor hardware transport/calibration contract.
+- Optional local generation may be slow despite prewarming.
+- No independent production security, accessibility, content, or clinical review.
+- No authentication, TLS, rate limiting, deployment, Flutter UI, or cloud service.
 
-### Deterministic sensor-aware study plan adaptation
-
-Stage 6B created a normalized application-level sensor model, one configurable prototype policy, and a deterministic adapter layered after the daily planner. Sensor-disabled, disconnected, missing, stale, invalid, and unknown states preserve the timer-based plan. Valid long-sitting, extended-sitting, sustained directional posture, and pressure-imbalance observations can reuse, extend, or insert one future movement break and shorten only upcoming study blocks.
-
-Completed and current sessions are protected. Adapted sessions remain at least 20 minutes, the total never exceeds the original available window, and reduced study time is reported as deferred. Academic scores, priority decisions, study methods, reasons, and retrieved record IDs remain unchanged. All user notices are short, calm, English-only, and non-medical. Six demos, a reusable CLI, a notebook, focused tests, and Stage 6A integration coverage are complete.
-
-### Local grounded response generation
-
-Stage 7 adds a local-only wording layer after deterministic planning and optional sensor adaptation. It uses `qwen3:4b-instruct` through the Ollama API with streaming disabled, temperature zero, a 4096-token context, and an explicit JSON schema. The context contains only the original validated input, final plan, relevant retrieved-record summaries, and applicable sensor result; evaluation data, local paths, Git details, and unrelated corpus documents are excluded.
-
-Strict post-generation validation preserves exact subject names, allocated minutes, final session orders, study and break durations, warning coverage, record traceability, English-only output, and non-medical sensor language. One constrained correction is allowed. A second invalid response or unavailable local API returns a stable deterministic response instead of failing the plan request. Six real local demos, controlled adversarial tests, environment and validation artifacts, a reusable script, a notebook, and the Stage 7 report are complete.
-
-### Local FastAPI integration for Flutter
-
-Stage 8 exposes seven versioned endpoints for health, readiness, deterministic planning, normalized sensor adaptation, the combined deterministic flow, isolated grounded explanations, and a slower demo-only full flow. Strict Pydantic models reject unknown fields and enforce planner, rating, topic, time, and sensor boundaries. Every validation or service error follows one safe envelope with a UUID4 request ID and no local paths, stack traces, secrets, cache locations, or evaluation data.
-
-FastAPI lifespan validates the dataset artifacts, planner configuration, sensor policy, generation configuration, cached selected embedding model, and existing Chroma collection, then initializes reusable retrieval, planner, and sensor services. Ollama is not preloaded and is reported separately by readiness, so its absence never makes deterministic planning unready. The three normal plan endpoints never construct or call the local model.
-
-Explanation requests use the unchanged Stage 7 output schema and validation rules with a configurable 30-second default and a safe 1-to-60-second override range. Timeout, connection, malformed-output, failed-correction, and unexpected generation failures return a validated deterministic explanation with HTTP 200 and a non-sensitive reason code. Flutter addresses, complete JSON examples, model guidance, client timeouts, error handling, and public-exposure warnings are documented.
-
-## Current stage
-
-Stage 8 is complete at its final validation checkpoint. The local versioned API, strict request and response schemas, reusable lifespan services, safe error contract, configurable local CORS, isolated explanation deadline and fallback, OpenAPI document, Flutter guide, demos, notebook, scripts, and tests are implemented. Raw hardware communication, Flutter UI implementation, authentication, deployment, and cloud integration have not started.
-
-## Next planned stage
-
-Stage 9: final end-to-end evaluation, packaging, and handoff. It should validate reproducible complete scenarios and prepare the local prototype for demonstration without beginning public deployment or cloud integration.
-
-## Confirmed product requirements
-
-- All system content, code, documentation, API fields, notebooks, and generated responses must be in English.
-- The system is intended for school and university students.
-- Users will enter custom subject names rather than choosing only from a fixed subject list.
-- The system will create one-day study plans.
-- Plans will include study sessions and breaks.
-- The project will use local and free models only.
-- Development will target a Windows environment.
-- The product will support both sensor and non-sensor modes.
-- Sensor data may include continuous sitting duration, posture direction, pressure distribution or imbalance, and poor-posture duration.
-- The system will use a substantial validated dataset.
-- The target architecture includes a persistent vector database, deterministic planner, sensor adapter, local LLM, and FastAPI.
-- Dataset quality and evaluation are more important than inflating the row count.
-
-## Initial user coverage
-
-- The first dataset release targets secondary-school and university students.
-- Content is English-only and curriculum-neutral.
-- Primary-school coverage, clinical or therapeutic advice, medical diagnosis, curriculum-specific tutoring, and multi-day planning are outside the initial scope.
-- Extending the product to younger children would require age-appropriate UX, stronger safety and consent design, and different learning-design assumptions; it is not a simple content expansion.
-
-## Confirmed technical decisions
-
-- Flutter will communicate with the local Python backend through FastAPI and structured JSON.
-- Python 3.12 is the recommended initial project interpreter for library compatibility.
-- Jupyter notebooks will be used for learning, development, demonstrations, and discussion.
-- Reusable production logic will live in Python modules.
-- Filesystem code will use `pathlib` where appropriate and remain Windows-friendly.
-- ChromaDB is the planned persistent vector database, with semantic retrieval and metadata filtering.
-- Planning, time allocation, break placement, rescheduling, and sensor adaptations will be deterministic and testable.
-- The local LLM will explain grounded results but will not override planner or sensor-adaptation decisions.
-- Stage 7 uses only the local Ollama model `qwen3:4b-instruct`, schema-constrained JSON, temperature zero, `stream=false`, and a deterministic validated fallback.
-- Factual educational and health-related records will preserve source, citation, and license metadata.
-- Source-backed records will be validated before any synthetic expansion.
-- Paid APIs will not be used.
-- LangChain will not be used unless a later stage demonstrates a concrete need.
-- No model or embedding choice is final until candidates are evaluated on the target hardware and project evaluation set.
-- Stage 4 selected normalized `sentence-transformers/all-MiniLM-L6-v2` embeddings with plain query and document text, based only on ErgoStudy development queries.
-- Retrieval evaluation uses a deterministic 64-query development split and a sealed 32-query final-test split. Stage 4 computed no final-test retrieval metrics.
-- Stage 5 freezes exact normalized alias resolution plus dense retrieval. Ambiguous aliases require educational context and never silently collapse multiple controlled subjects.
-- The sealed 32-query final test was executed exactly once after configuration freeze; final results are reporting artifacts, not tuning input.
-- Chroma uses one persistent collection named `ergostudy-knowledge-1-0-0`, cosine distance, caller-provided embeddings, stable corpus IDs, and scalar metadata filters.
-- The knowledge base uses seven document families: subject profiles, topic profiles, study strategies, session templates, sensor interventions, subject aliases, and retrieval evaluation queries.
-- Family-specific conditional requirements are used instead of forcing irrelevant fields onto every record.
-- Retrieval evaluation queries remain outside the retrieval corpus to reduce evaluation leakage.
-- Source-backed records use stable `source_id` foreign keys and concise paraphrases rather than copied passages.
-- Evidence strength, design proposals, synthetic status, and manual review status remain separate fields.
-- Review is risk-tiered: Tier A receives full manual review, Tier B receives automated checks plus manual review of canonical templates, and Tier C receives automated checks plus stratified sampling with escalation.
-- All study-strategy, sensor-intervention, health, wellbeing, posture, prolonged-sitting, break-safety, evidence-backed recommendation, and new factual-claim records are Tier A.
-- Synthetic records must preserve the exact reviewed canonical parent, inherited sources, derivation links, and generation-method metadata. Synthetic records are never described as source-verified evidence.
-- A second independent reviewer is recommended before production or public release, especially for Tier A records, but is not required for the competition prototype.
-- Production eligibility permits zero unreviewed sensor-intervention records.
-- Sensor interventions are limited to non-medical reminders and safe fallbacks. Hardware-dependent units, thresholds, calibration, and behavior remain unconfirmed.
-- Subject names do not imply fixed difficulty. Difficulty remains personalized user input.
-- Session and break ranges are bounded, versioned planner design parameters. They are testable and adjustable by task and user; they are not universal scientific facts.
-
-## Stage 3 corpus targets
-
-- Curate 250 to 390 canonical records across 60 to 90 subject profiles, 110 to 180 topic profiles, 30 to 45 study strategies, 30 to 45 session templates, and 20 to 30 sensor interventions.
-- Add 200 to 345 controlled expansions: 20 to 40 subject variants, 25 to 55 topic variants, 15 to 30 session variants, and 140 to 220 aliases or query paraphrases. Study-strategy and sensor-intervention expansions remain zero unless separately promoted to Tier A canonical records.
-- Target 450 to 735 retrievable records after canonical and controlled expansion counts are combined.
-- Maintain 80 to 120 held-out retrieval-evaluation queries outside the retrieval corpus.
-- Keep ordinary retrieval records near 80 to 250 words and review any record above 350 words.
-- Use adaptable session and break ranges as planning proposals, never as universal scientific optima.
-
-## Stage 3 source priorities
-
-The 29-source catalog now includes descriptive coverage for business, economics, accounting, law, health and medical education, engineering, art and design, architecture, music, and film/media in addition to the Stage 2 learning-science, literacy, computing, school-science, and ergonomics sources. All sources are used and carry an explicit source role. Domain-specific causal learning evidence remains thinner than general learning-science evidence for several professional subjects, so later releases should expand it carefully.
-
-## Open questions
-
-- Which secondary-school age bands, university levels, and first-release subjects should receive priority within the curriculum-neutral design?
-- Who will perform the primary manual review, and is an independent second reviewer available before production or public release?
-- Is the intended dataset distribution strictly non-commercial, and is WHO's CC BY-NC-SA 3.0 IGO material compatible with that plan?
-- Which source licenses marked unknown or paraphrase-only will receive final approval before public distribution?
-- Should final generated responses use a compact source-ID citation, author-year display, or both?
-- Which proposed session-duration ranges should be retained after task-level review and later planner testing?
-- What are the confirmed sensor fields, units, sampling rate, timestamps, status flags, calibration method, pressure layout, and missing-data behavior?
-- Which sensor thresholds, if any, are firmware facts versus product configuration proposals?
-- What user-facing safety text will be approved for concerning symptoms without entering medical-advice scope?
-- Which independent reviewer can verify Tier A records and the Tier C sample before public deployment?
-
-## Last validation results
-
-The Stage 8 validation completed successfully on July 30, 2026:
-
-- All 35 focused Stage 8 API tests pass, covering health; readiness with available and unavailable Ollama; school and university plans; aliases; optional topics; the 30-minute boundary; invalid times, ratings, names, sensor values, and unknown fields; disabled, missing, stale, and valid sensor flows; deterministic full flows; mocked valid, corrected, timed-out, unavailable, malformed, and correction-failed explanations; plan immutability; concurrent requests; OpenAPI; safe path-free responses; and unchanged planner/sensor results.
-- All 171 repository tests pass, including the required planner, sensor, persistent retrieval, local client, grounding, validation, and deterministic fallback regressions.
-- The production lifespan path located the cached fixed MiniLM revision, opened the existing 477-record Chroma collection, and initialized reusable services without rebuilding Chroma, downloading a model, or running a benchmark.
-- One measured actual local smoke flow returned `/plans` in 464.772 ms, `/plans/adapt` in 3.377 ms, and `/plans/full` in 210.115 ms after startup. These are single-machine prototype measurements, not production-scale claims.
-- The one permitted real Ollama explanation smoke request reached the 30-second endpoint deadline at 30,011.231 ms and returned HTTP 200 with `generation_mode=deterministic_fallback`, `fallback_reason_code=OLLAMA_TIMEOUT`, and a validated grounded response. No six-case LLM benchmark was rerun.
-- OpenAPI 3.1 generation passes with all seven required paths and 28 component schemas. The Stage 8 notebook parses and executes all seven code cells, including plan, sensor, full deterministic, successful mocked explanation, timeout fallback, validation error, and clean TestClient shutdown.
-- The six generated API demo artifacts cover health, readiness, school planning, sensor adaptation, the full deterministic pipeline, and the real explanation-timeout fallback. Python compilation, notebook and JSON parsing, local API smoke behavior, and Git whitespace validation pass.
-- `fastapi==0.139.2`, `uvicorn==0.52.0`, and `httpx==0.28.1` are pinned for the Python 3.12 environment. No unrelated package, paid service, cloud API, model, dataset, or database account was added.
-
-The Stage 7 validation completed successfully on July 30, 2026:
-
-- Ollama 0.32.5 responds on the local API. The exact `qwen3:4b-instruct` model has digest `0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0`, size 2.497 GB (2,497,293,803 bytes), and executed on the `NVIDIA GeForce RTX 3050 6GB Laptop GPU`.
-- All 40 focused Stage 7 tests pass, including strict models, grounding minimization, structured parsing, duration and subject preservation, session references, record-ID safety, English-only and medical-language rejection, one retry, unavailable-API fallback, determinism, and input immutability.
-- All 41 required Stage 6A and 6B planner, persistent-retrieval integration, sensor-model, policy, adapter, and planner-adapter tests pass unchanged.
-- The six real local demos produced 1 valid first response, 2 corrected responses, and 3 deterministic fallbacks.
-- Average, median, and maximum end-to-end generation latency were 50.9421, 26.3237, and 180.0673 seconds.
-- Numeric preservation, grounding validation, and sensor safety pass for all six outputs.
-- All six Stage 7 notebook code cells execute. Python compilation, notebook and generated JSON parsing, deterministic fallback repetition, and Git whitespace checks pass.
-- No embedding benchmark ran, retrieval and planner settings did not change, the Chroma collection was not rebuilt, and no other language model or Python package was installed.
-
-The Stage 6B validation completed successfully on July 30, 2026:
-
-- All 26 focused sensor tests pass, covering the 25 required disabled, normal, trigger, fallback, time-preservation, academic-integrity, determinism, and immutability cases plus planner-warning preservation.
-- All 49 targeted Stage 6B and required Stage 6A planner/integration tests pass, including the existing persistent-Chroma integration path.
-- Six committed demos cover sensor disabled, normal observation, long sitting, extended sitting, combined posture and pressure imbalance, and missing-data fallback.
-- Every adapted demo stays within its original available time. Normal and fallback scenarios preserve all study and timer-break minutes; constrained adaptations report 5 or 10 deferred study minutes explicitly.
-- Sensor notices and action reasons remain short, calm, English-only, and non-medical. Invalid data never produces a posture-based decision.
-- Demo regeneration is byte-identical with SHA-256 `49863dbc760f53f085d6703dd0205e72a4a4c7f28dcde21517c92a469b3f8a13`.
-- All five Stage 6B notebook code cells execute, including original-plan, normal, long-sitting, posture-imbalance, fallback, timeline, total-time, minimum-length, and determinism checks.
-- Sensor source and test compilation, notebook and JSON parsing, and Git whitespace checks pass.
-- No embedding benchmark ran, the frozen retrieval configuration did not change, the Chroma collection was not rebuilt, and no model or package was downloaded.
-
-### Previous Stage 6A validation
-
-The Stage 6A validation completed successfully on July 30, 2026:
-
-- All 42 focused planner and required retrieval tests pass, including real integration with the existing persistent Chroma collection.
-- A separate sweep passed 2,073 boundary combinations covering every total from 30 to 720 minutes and preferred session values of 20, 40, and 60 minutes.
-- Every generated study session stays between 20 and 60 minutes, every duration is positive, and no plan exceeds its available time.
-- The school demo allocates 135 study and 15 break minutes; the university demo allocates 205 study and 35 break minutes.
-- The 30-minute demo schedules one meaningful subject and reports the other as unscheduled. The unknown-subject demo uses a clearly marked generic fallback with no invented record IDs.
-- All returned retrieval record IDs in the integration plan exist in the 477-record corpus, and planner source inspection confirms that sealed evaluation fields and files are not used.
-- Demo regeneration is byte-identical with SHA-256 `f6f543c5b297bb6c88e6cf3339e0f5b4b0eded2f50e30918c130c1312b6d3962`.
-- All six Stage 6A notebook code cells execute, including score, retrieval, allocation, time-constraint, and repeated-output assertions.
-- Planner and test compilation, notebook and JSON parsing, and Git whitespace checks pass.
-- No embedding benchmark ran, the frozen retrieval configuration did not change, and the Chroma collection was not rebuilt.
-
-### Previous Stage 5 validation
-
-The Stage 5 validation completed successfully on July 30, 2026:
-
-- The existing 477-record Chroma collection passed full count, ID, document, metadata, and manifest verification and was not rebuilt.
-- The service returns the required structured schema and retains source, review, lineage, evidence, and safety metadata.
-- Development Recall@5 improved from 0.7143 to 0.8661 and MRR@10 from 0.6429 to 0.8750.
-- All 20 development baseline failures were classified; no corpus modification was justified.
-- The frozen configuration and split hashes prove that no final-test ID entered development artifacts.
-- The sealed final test ran once and produced Recall@5 0.8621, MRR@10 0.8728, and document/subject family Hit@5 1.0000.
-- The final checkpoint includes the complete repository test suite, persistent-index integration tests, notebook execution and JSON parsing, Python compilation, and Git whitespace validation.
-
-### Previous Stage 3 validation
-
-The Stage 3 validation completed successfully on July 30, 2026:
-
-- The deterministic build produced 477 retrievable records: 277 canonical and 200 synthetic.
-- All six required retrievable document-family files match the combined corpus.
-- The separate held-out set contains 96 queries and has zero corpus leakage.
-- The source catalog contains 29 unique records, every source is used, and source roles pass compatibility checks.
-- Required fields, conditional fields, controlled values, ranges, unique IDs, sources, parents, lineage, evidence inheritance, and review tiers pass.
-- Exact and near-duplicate checks report zero candidates.
-- All 14 sensor records are Tier A, reviewed, hardware-confirmation-dependent, non-medical, and safe under missing or invalid data.
-- The Tier C reviewed set contains 44 of 200 aliases (22%), including every explicitly ambiguous alias and controlled misspelling; the structured 25-record audit sample covers every controlled subject family and all generation methods.
-- Two temporary builds produced byte-identical outputs.
-- All 13 unit tests pass.
-- Both notebooks parse as JSON and all nine code cells execute successfully with the standard-library runner.
-- Python compilation and Git whitespace checks pass.
-- No models, heavy packages, embeddings, ChromaDB data, retrieval code, planner code, FastAPI code, or local-LLM integration were added.
+Future work is documented but is not part of the completed `1.0.0-prototype` handoff.

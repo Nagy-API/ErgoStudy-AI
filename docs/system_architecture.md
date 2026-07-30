@@ -1,21 +1,22 @@
-# Planned System Architecture
+# Final prototype system architecture
 
-The diagram shows the intended end-to-end request path. These components are planned boundaries, not a claim that the system is already implemented.
+The diagram shows the implemented `1.0.0-prototype` request path. Flutter is the planned client and is not implemented in this repository; every backend component shown after the client is implemented and validated locally.
 
 ```mermaid
 flowchart LR
-    A["Flutter App"] --> B["FastAPI"]
+    A["Flutter App (future)"] --> B["FastAPI"]
     B --> C["Input Validation"]
     C --> D["Knowledge Retrieval"]
     D --> E["ChromaDB"]
     E --> F["Planning Engine"]
     F --> G["Sensor Adapter"]
-    G --> H["Local LLM"]
-    H --> I["Structured JSON Response"]
-    I --> A
+    G --> H["Optional Local LLM"]
+    H --> I["Validation or Deterministic Fallback"]
+    I --> J["Structured JSON Response"]
+    J --> A
 ```
 
-In implementation, knowledge retrieval will query ChromaDB and pass relevant passages plus source metadata onward. If no sensor is present, the sensor adapter will act as a documented no-op rather than blocking the request. FastAPI will validate the final response schema before returning it to Flutter.
+Knowledge retrieval queries ChromaDB and passes relevant records and traceable metadata to the planner. If no usable sensor observation is present, the sensor adapter is a documented no-op rather than a blocker. Explanation is optional. FastAPI validates the response schema before returning JSON for a future Flutter client.
 
 ## Deterministic decisions
 

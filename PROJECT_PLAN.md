@@ -2,6 +2,8 @@
 
 Each stage should leave evidence that its completion criteria were met. A stage is not complete merely because code was written.
 
+**Final status:** All ten prototype stages are complete for release `1.0.0-prototype`. This plan records the completed work; it does not authorize Flutter implementation, deployment, production hardening, dataset expansion, or model/retrieval retuning.
+
 ## 1. Environment and scaffold
 
 **Goal:** Establish a safe, documented, Windows-friendly repository and record the local development capabilities.
@@ -81,3 +83,5 @@ Each stage should leave evidence that its completion criteria were met. A stage 
 **Expected outputs:** End-to-end scenarios, quality and performance results, latency and resource measurements, limitations, demo script, and final documentation.
 
 **Completion criteria:** The full pipeline passes agreed functional tests; retrieval and planner results meet their thresholds; target-hardware latency is recorded; both modes have reproducible demos; limitations and future work are clearly reported.
+
+**Completion evidence:** Twelve final scenarios passed; 171 repository tests passed; deterministic endpoint distributions were measured after warm-up with 20 requests each; a five-request concurrent correctness smoke passed; real prewarmed Ollama and timeout fallback behavior were preserved; OpenAPI, notebook execution, compilation, data formats, scans, and the source-package audit passed. Final reports, presentation material, handoff instructions, and machine-readable evidence are included.

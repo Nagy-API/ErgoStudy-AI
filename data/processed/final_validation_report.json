@@ -1,0 +1,54 @@
+{
+  "project_version": "1.0.0-prototype",
+  "validated_at": "2026-07-30T21:06:31+00:00",
+  "blocking_checks_passed": true,
+  "checks": {
+    "deterministic_services_ready": true,
+    "stage3_dataset_validator": {
+      "passed": true,
+      "retrievable_record_count": 477,
+      "source_count": 29,
+      "error_count": 0,
+      "warning_count": 0
+    },
+    "retrieval_planner_sensor_generation_api_and_full_unit_suite": {
+      "passed": true,
+      "test_count": 171,
+      "note": "The full discovery suite includes the focused retrieval, planner, sensor, generation, and API test modules."
+    },
+    "end_to_end_scenarios": {
+      "passed": 12,
+      "failed": 0,
+      "not_run": 0
+    },
+    "performance_measurements_completed": true,
+    "concurrent_batch_successful": true,
+    "openapi": {
+      "passed": true,
+      "version": "3.1.0",
+      "path_count": 7,
+      "required_paths_present": true
+    },
+    "notebook": {
+      "json_valid": true,
+      "executed_code_cells": 4,
+      "execution_passed": true
+    },
+    "python_compilation_passed": true,
+    "artifact_validation": {
+      "passed": true,
+      "json_and_notebook_files": 48,
+      "jsonl_files": 13,
+      "csv_files": 2
+    },
+    "secret_scan_passed": true,
+    "machine_specific_absolute_path_scan_passed": true,
+    "git_whitespace_check_passed": true,
+    "package_content_audit_passed": true
+  },
+  "notes": [
+    "The real Ollama scenario used the installed qwen3:4b-instruct model and did not download a model.",
+    "Timeout and immediate-unavailable behavior were simulated only to exercise deterministic fallback classification without artificial waiting.",
+    "The handoff ZIP and its external self-hash manifest are generated after the final commit and remain ignored by Git."
+  ]
+}

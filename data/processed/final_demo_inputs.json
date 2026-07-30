@@ -1,0 +1,155 @@
+{
+  "project_version": "1.0.0-prototype",
+  "scenarios": [
+    {
+      "id": "secondary_without_sensor",
+      "title": "Secondary-school plan without sensor",
+      "endpoint": "/api/v1/plans",
+      "request": {
+        "total_available_minutes": 150,
+        "preferred_start_time": "16:00",
+        "preferred_session_length": 40,
+        "subjects": [
+          {"name": "Mathematics", "topics": ["Equations and identities"], "difficulty": 4, "priority": 5, "workload": 4, "current_understanding": 2},
+          {"name": "Biology", "topics": ["Cell structure"], "difficulty": 3, "priority": 3, "workload": 3, "current_understanding": 3}
+        ]
+      }
+    },
+    {
+      "id": "university_without_sensor",
+      "title": "University plan without sensor",
+      "endpoint": "/api/v1/plans",
+      "request": {
+        "total_available_minutes": 180,
+        "preferred_start_time": "13:30",
+        "preferred_session_length": 45,
+        "subjects": [
+          {"name": "Calculus 2", "topics": ["Integration"], "difficulty": 5, "priority": 5, "workload": 4, "current_understanding": 2},
+          {"name": "Computer Science", "topics": ["Algorithms"], "difficulty": 4, "priority": 4, "workload": 5, "current_understanding": 3}
+        ]
+      }
+    },
+    {
+      "id": "custom_subjects_and_topics",
+      "title": "Custom subject names and topics",
+      "endpoint": "/api/v1/plans",
+      "request": {
+        "total_available_minutes": 120,
+        "subjects": [
+          {"name": "Robotics Design Studio", "topics": ["PID controller tuning"], "difficulty": 5, "priority": 4, "workload": 5, "current_understanding": 2},
+          {"name": "Modern Egyptian History", "topics": ["Source comparison"], "difficulty": 3, "priority": 3, "workload": 3, "current_understanding": 3}
+        ]
+      }
+    },
+    {
+      "id": "aliases_cs_stats",
+      "title": "Aliases CS and Stats",
+      "endpoint": "/api/v1/plans",
+      "request": {
+        "total_available_minutes": 100,
+        "subjects": [
+          {"name": "CS", "topics": ["Debugging programs"], "difficulty": 4, "priority": 5, "workload": 4, "current_understanding": 2},
+          {"name": "Stats", "topics": ["Probability"], "difficulty": 3, "priority": 4, "workload": 3, "current_understanding": 3}
+        ]
+      }
+    },
+    {
+      "id": "short_window_unscheduled",
+      "title": "Short available time with an unscheduled subject",
+      "endpoint": "/api/v1/plans",
+      "request": {
+        "total_available_minutes": 30,
+        "subjects": [
+          {"name": "Mathematics", "difficulty": 5, "priority": 5, "workload": 5, "current_understanding": 1},
+          {"name": "Biology", "difficulty": 4, "priority": 4, "workload": 4, "current_understanding": 2},
+          {"name": "History", "difficulty": 3, "priority": 2, "workload": 2, "current_understanding": 4}
+        ]
+      }
+    },
+    {
+      "id": "unknown_subject_fallback",
+      "title": "Unknown-subject fallback",
+      "endpoint": "/api/v1/plans",
+      "request": {
+        "total_available_minutes": 60,
+        "subjects": [
+          {"name": "Quantum Basket Weaving", "topics": ["Impossible knots"], "difficulty": 3, "priority": 4, "workload": 3, "current_understanding": 2}
+        ]
+      }
+    },
+    {
+      "id": "long_sitting_adaptation",
+      "title": "Valid long-sitting sensor adaptation",
+      "endpoint": "/api/v1/plans/full",
+      "request": {
+        "total_available_minutes": 150,
+        "preferred_start_time": "16:00",
+        "preferred_session_length": 40,
+        "subjects": [
+          {"name": "Mathematics", "topics": ["Equations"], "difficulty": 4, "priority": 5, "workload": 4, "current_understanding": 2},
+          {"name": "Biology", "difficulty": 3, "priority": 3, "workload": 3, "current_understanding": 3}
+        ],
+        "sensor_observation": {"sensor_enabled": true, "connection_status": "connected", "observation_status": "valid", "continuous_sitting_minutes": 65, "poor_posture_duration_minutes": 2, "posture_direction": "upright", "pressure_imbalance_detected": false, "reading_age_seconds": 5, "current_session_order": 1, "elapsed_session_minutes": 20}
+      }
+    },
+    {
+      "id": "pressure_imbalance_adaptation",
+      "title": "Pressure-imbalance or leaning adaptation",
+      "endpoint": "/api/v1/plans/full",
+      "request": {
+        "total_available_minutes": 150,
+        "preferred_start_time": "16:00",
+        "preferred_session_length": 40,
+        "subjects": [
+          {"name": "Mathematics", "topics": ["Equations"], "difficulty": 4, "priority": 5, "workload": 4, "current_understanding": 2},
+          {"name": "Biology", "difficulty": 3, "priority": 3, "workload": 3, "current_understanding": 3}
+        ],
+        "sensor_observation": {"sensor_enabled": true, "connection_status": "connected", "observation_status": "valid", "continuous_sitting_minutes": 25, "poor_posture_duration_minutes": 12, "posture_direction": "leaning_right", "pressure_imbalance_detected": true, "reading_age_seconds": 5, "current_session_order": 1, "elapsed_session_minutes": 20}
+      }
+    },
+    {
+      "id": "stale_sensor_fallback",
+      "title": "Missing or stale sensor fallback",
+      "endpoint": "/api/v1/plans/full",
+      "request": {
+        "total_available_minutes": 90,
+        "subjects": [
+          {"name": "Physics", "topics": ["Forces"], "difficulty": 4, "priority": 5, "workload": 4, "current_understanding": 2}
+        ],
+        "sensor_observation": {"sensor_enabled": true, "connection_status": "connected", "observation_status": "stale", "continuous_sitting_minutes": 80, "poor_posture_duration_minutes": 20, "posture_direction": "leaning_left", "pressure_imbalance_detected": true, "reading_age_seconds": 180, "current_session_order": 1, "elapsed_session_minutes": 15}
+      }
+    },
+    {
+      "id": "ollama_available_explanation",
+      "title": "Ollama available explanation",
+      "endpoint": "/api/v1/plans/full-with-explanation",
+      "request": {
+        "total_available_minutes": 60,
+        "subjects": [
+          {"name": "Mathematics", "topics": ["Equations"], "difficulty": 4, "priority": 5, "workload": 4, "current_understanding": 2}
+        ],
+        "explanation_timeout_seconds": 30
+      }
+    },
+    {
+      "id": "ollama_timeout_fallback",
+      "title": "Ollama timeout fallback",
+      "endpoint": "/api/v1/explanations",
+      "mode": "simulated_timeout",
+      "request_from": "secondary_without_sensor"
+    },
+    {
+      "id": "invalid_api_request",
+      "title": "Invalid API request",
+      "endpoint": "/api/v1/plans",
+      "expected_status": 422,
+      "request": {
+        "total_available_minutes": 20,
+        "subjects": [
+          {"name": "Mathematics", "difficulty": 4, "priority": 6, "workload": 4, "current_understanding": 2}
+        ],
+        "unexpected_field": "rejected"
+      }
+    }
+  ]
+}
