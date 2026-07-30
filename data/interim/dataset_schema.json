@@ -1,0 +1,378 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ergostudy.local/schemas/dataset-record-0.1.0.json",
+  "title": "ErgoStudy AI dataset record",
+  "description": "Stage 2 conditional schema for knowledge records and retrieval evaluation queries.",
+  "type": "object",
+  "required": [
+    "record_id",
+    "document_family",
+    "dataset_version"
+  ],
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "pattern": "^(subject|topic|strategy|session|sensor|alias|eval)-[a-z0-9]+(?:-[a-z0-9]+)*-v[0-9]+$"
+    },
+    "document_family": {
+      "enum": [
+        "subject_profile",
+        "topic_profile",
+        "study_strategy",
+        "session_template",
+        "sensor_intervention",
+        "subject_alias",
+        "retrieval_evaluation_query"
+      ]
+    },
+    "title": { "type": "string", "minLength": 5 },
+    "retrieval_text": { "type": "string", "minLength": 40, "maxLength": 3000 },
+    "educational_level": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["school", "university", "cross_level"] }
+    },
+    "subject_family": {
+      "enum": [
+        "mathematics",
+        "natural_sciences",
+        "language_and_literature",
+        "social_sciences",
+        "computing",
+        "engineering",
+        "health_sciences",
+        "business_and_economics",
+        "arts_and_design",
+        "law",
+        "general",
+        null
+      ]
+    },
+    "subject_name": { "type": ["string", "null"] },
+    "aliases": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "topic": { "type": ["string", "null"] },
+    "learning_task": {
+      "enum": [
+        "theory_learning",
+        "memorization",
+        "reading_comprehension",
+        "writing",
+        "problem_solving",
+        "coding",
+        "debugging",
+        "laboratory",
+        "design",
+        "case_analysis",
+        "mixed",
+        null
+      ]
+    },
+    "cognitive_demand": {
+      "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create", "mixed", null]
+    },
+    "recommended_methods": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 }
+    },
+    "typical_learning_activities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "characteristics": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "theory",
+          "practice",
+          "problem_solving",
+          "memorization",
+          "reading",
+          "writing",
+          "coding",
+          "laboratory",
+          "design"
+        ]
+      }
+    },
+    "suitable_learning_tasks": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 }
+    },
+    "unsuitable_use_cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 }
+    },
+    "implementation_guidance": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 }
+    },
+    "session_duration_min": { "type": "integer", "minimum": 10, "maximum": 120 },
+    "session_duration_max": { "type": "integer", "minimum": 10, "maximum": 120 },
+    "break_duration_min": { "type": "integer", "minimum": 2, "maximum": 30 },
+    "break_duration_max": { "type": "integer", "minimum": 2, "maximum": 30 },
+    "phases": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "duration_status": { "const": "design_proposal_requires_evaluation" },
+    "sensor_mode": { "enum": ["not_applicable", "sensor_optional", "sensor_required"] },
+    "sensor_condition": { "type": "string", "minLength": 10 },
+    "intervention": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 }
+    },
+    "missing_data_behavior": { "type": "string", "minLength": 10 },
+    "hardware_confirmation_required": { "type": "boolean" },
+    "contraindications": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 }
+    },
+    "matching_notes": { "type": "string", "minLength": 5 },
+    "ambiguous": { "type": "boolean" },
+    "ambiguity_notes": { "type": ["string", "null"] },
+    "canonical_subject_record_id": { "type": ["string", "null"] },
+    "related_subject_record_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    },
+    "compatible_session_templates": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    },
+    "parent_record_id": { "type": ["string", "null"] },
+    "chunk_index": { "type": ["integer", "null"], "minimum": 0 },
+    "supersedes_record_id": { "type": ["string", "null"] },
+    "derived_from_record_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    },
+    "evidence_level": {
+      "enum": [
+        "high",
+        "moderate",
+        "emerging",
+        "expert_consensus",
+        "source_descriptive",
+        "design_proposal",
+        "not_applicable"
+      ]
+    },
+    "source_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^src-[a-z0-9]+(?:-[a-z0-9]+)*-[0-9]{3}$" }
+    },
+    "safety_scope": { "enum": ["none", "non_medical_wellbeing", "stop_and_seek_help"] },
+    "synthetic": { "type": "boolean" },
+    "reviewed": { "type": "boolean" },
+    "review_tier": { "enum": ["tier_a", "tier_b", "tier_c"] },
+    "generation_method": { "type": "string", "minLength": 3 },
+    "dataset_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-z0-9.-]+)?$"
+    },
+    "query_id": { "type": "string", "pattern": "^rq-[0-9]{3}$" },
+    "query_text": { "type": "string", "minLength": 5 },
+    "expected_document_families": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "subject_profile",
+          "topic_profile",
+          "study_strategy",
+          "session_template",
+          "sensor_intervention",
+          "subject_alias"
+        ]
+      }
+    },
+    "expected_subject_family": { "type": ["string", "null"] },
+    "expected_relevant_record_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    },
+    "relevance_criteria": { "type": "string", "minLength": 10 },
+    "difficulty_type": {
+      "enum": [
+        "exact_name",
+        "alias",
+        "unseen_wording",
+        "ambiguous",
+        "topic_level",
+        "school_level",
+        "university_level",
+        "method_selection",
+        "session_structure",
+        "sensor_situation",
+        "missing_or_unreliable_sensor",
+        "safety_boundary"
+      ]
+    },
+    "notes": { "type": "string", "minLength": 5 },
+    "deliberately_invalid": { "type": "boolean" },
+    "validation_expectation": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "document_family": { "not": { "const": "retrieval_evaluation_query" } } },
+        "required": ["document_family"]
+      },
+      "then": {
+        "required": [
+          "title",
+          "retrieval_text",
+          "evidence_level",
+          "source_ids",
+          "safety_scope",
+          "synthetic",
+          "reviewed",
+          "review_tier"
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "document_family": { "const": "subject_profile" } } },
+      "then": {
+        "required": [
+          "subject_name",
+          "aliases",
+          "subject_family",
+          "educational_level",
+          "typical_learning_activities",
+          "characteristics"
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "document_family": { "const": "topic_profile" } } },
+      "then": {
+        "required": [
+          "topic",
+          "subject_family",
+          "educational_level",
+          "learning_task",
+          "cognitive_demand",
+          "recommended_methods"
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "document_family": { "const": "study_strategy" } } },
+      "then": {
+        "required": [
+          "recommended_methods",
+          "suitable_learning_tasks",
+          "implementation_guidance",
+          "unsuitable_use_cases",
+          "limitations"
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "document_family": { "const": "session_template" } } },
+      "then": {
+        "required": [
+          "session_duration_min",
+          "session_duration_max",
+          "break_duration_min",
+          "break_duration_max",
+          "phases",
+          "suitable_learning_tasks",
+          "unsuitable_use_cases",
+          "duration_status"
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "document_family": { "const": "sensor_intervention" } } },
+      "then": {
+        "required": [
+          "sensor_condition",
+          "intervention",
+          "missing_data_behavior",
+          "hardware_confirmation_required",
+          "contraindications",
+          "sensor_mode"
+        ],
+        "properties": {
+          "hardware_confirmation_required": { "const": true },
+          "safety_scope": { "enum": ["non_medical_wellbeing", "stop_and_seek_help"] }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "document_family": { "const": "subject_alias" } } },
+      "then": {
+        "required": [
+          "subject_name",
+          "aliases",
+          "subject_family",
+          "educational_level",
+          "matching_notes",
+          "ambiguous",
+          "ambiguity_notes"
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "document_family": { "const": "retrieval_evaluation_query" } } },
+      "then": {
+        "required": [
+          "query_id",
+          "query_text",
+          "expected_document_families",
+          "expected_subject_family",
+          "difficulty_type",
+          "notes"
+        ],
+        "anyOf": [
+          { "required": ["expected_relevant_record_ids"] },
+          { "required": ["relevance_criteria"] }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": { "synthetic": { "const": true } },
+        "required": ["synthetic"]
+      },
+      "then": {
+        "required": ["derived_from_record_ids", "generation_method"],
+        "properties": {
+          "derived_from_record_ids": { "minItems": 1 }
+        }
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}
