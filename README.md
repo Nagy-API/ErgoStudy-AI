@@ -39,9 +39,9 @@ See [docs/system_architecture.md](docs/system_architecture.md) for the planned c
 
 ## Current status
 
-Stages 1 through 7 are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, a reusable production `RetrievalService`, a deterministic daily planner, a deterministic sensor-adaptation layer, and a local grounded wording layer. Stage 7 uses only `qwen3:4b-instruct` through the local Ollama API with schema-constrained JSON, strict value and safety validation, one correction attempt, and a deterministic fallback.
+Stages 1 through 8 are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, a reusable production `RetrievalService`, a deterministic daily planner, a deterministic sensor-adaptation layer, a local grounded wording layer, and a versioned local FastAPI service for Flutter. Stage 7 uses only `qwen3:4b-instruct` through the local Ollama API with schema-constrained JSON, strict value and safety validation, one correction attempt, and a deterministic fallback.
 
-The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. FastAPI integration is the next stage; API implementation and Flutter integration have not started.
+The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. The Stage 8 API keeps normal planning endpoints independent of Ollama and isolates optional explanation latency behind a configurable 30-second deadline. Stage 9 final end-to-end evaluation, packaging, and handoff is next; Flutter UI implementation and deployment have not started.
 
 See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md), [docs/stage6a_daily_planner_report.md](docs/stage6a_daily_planner_report.md), [docs/stage6b_sensor_adaptation_report.md](docs/stage6b_sensor_adaptation_report.md), and [docs/stage7_grounded_generation_report.md](docs/stage7_grounded_generation_report.md) for the completed checkpoints.
 
@@ -210,3 +210,27 @@ Stage 7 explains an already-complete deterministic plan. It cannot change alloca
 ```
 
 The generation settings in `config/generation_config.json` lock the client to the local Ollama API, `qwen3:4b-instruct`, `stream=false`, temperature zero, a 4096-token context, and one correction attempt. If Ollama is unavailable or both model responses fail validation, the request returns a stable template response with `generation_mode` set to `deterministic_fallback`.
+
+## Stage 8 FastAPI workflow
+
+Install the exact packages in `requirements.txt`, then start the local API:
+
+```powershell
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+powershell -ExecutionPolicy Bypass -File scripts\run_api.ps1
+```
+
+The main local URLs are:
+
+- API base: `http://127.0.0.1:8000/api/v1`
+- Interactive OpenAPI: `http://127.0.0.1:8000/docs`
+- Raw OpenAPI: `http://127.0.0.1:8000/openapi.json`
+
+Run the API smoke check and notebook without making a real Ollama generation request:
+
+```powershell
+.venv\Scripts\python.exe scripts\check_api.py
+.venv\Scripts\python.exe scripts\run_notebook_cells.py 09_fastapi_integration.ipynb
+```
+
+`/plans`, `/plans/adapt`, and `/plans/full` are deterministic and never call Ollama. `/explanations` and the demo-only `/plans/full-with-explanation` use the configured deadline and return a validated deterministic fallback with HTTP 200 when Ollama is unavailable or invalid. See [docs/api_contract.md](docs/api_contract.md) and [docs/flutter_integration_guide.md](docs/flutter_integration_guide.md).

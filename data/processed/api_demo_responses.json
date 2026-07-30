@@ -1,0 +1,996 @@
+[
+  {
+    "example_id": "health",
+    "response": {
+      "status": "ok",
+      "api_version": "v1",
+      "request_id": "36d4f50e-66e9-4fdb-a9cb-947dafe68364"
+    }
+  },
+  {
+    "example_id": "readiness",
+    "response": {
+      "ready": true,
+      "components": {
+        "dataset": {
+          "status": "ready",
+          "detail": "Required processed dataset artifacts are available."
+        },
+        "planner_config": {
+          "status": "ready",
+          "detail": "Planner configuration is valid."
+        },
+        "sensor_policy": {
+          "status": "ready",
+          "detail": "Sensor policy is valid."
+        },
+        "generation_config": {
+          "status": "ready",
+          "detail": "Generation configuration is valid."
+        },
+        "embedding_model": {
+          "status": "ready",
+          "detail": "The selected embedding model is available locally."
+        },
+        "chroma_collection": {
+          "status": "ready",
+          "detail": "The persistent Chroma collection is accessible."
+        },
+        "services": {
+          "status": "ready",
+          "detail": "Reusable planner, retrieval, and sensor services are initialized."
+        }
+      },
+      "ollama": {
+        "status": "ready",
+        "detail": "Local Ollama API version 0.32.5 is available."
+      },
+      "api_version": "v1",
+      "request_id": "0d91bf27-1e50-4ca0-99ad-66f8250b46e0"
+    }
+  },
+  {
+    "example_id": "school_plan",
+    "response": {
+      "plan": {
+        "plan_id": "plan-50967ab05fd1703a",
+        "total_available_minutes": 150,
+        "total_study_minutes": 125,
+        "total_break_minutes": 25,
+        "total_planned_minutes": 150,
+        "unallocated_minutes": 0,
+        "scheduled_subjects": [
+          {
+            "subject": "Mathematics",
+            "canonical_subject": "Mathematics",
+            "score": 4.35,
+            "allocated_study_minutes": 70,
+            "session_count": 2,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "subject": "Biology",
+            "canonical_subject": "Biology",
+            "score": 3.0,
+            "allocated_study_minutes": 55,
+            "session_count": 2,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          }
+        ],
+        "unscheduled_subjects": [],
+        "sessions": [
+          {
+            "order": 1,
+            "session_type": "study",
+            "duration_minutes": 35,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "start_time": "16:00",
+            "subject": "Mathematics",
+            "topic": "Equations and identities",
+            "cognitive_demand": "high",
+            "recommended_methods": [
+              "worked examples",
+              "independent practice",
+              "error checking"
+            ],
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 2,
+            "session_type": "break",
+            "duration_minutes": 10,
+            "reason": "Scheduled recovery break after a demanding session.",
+            "start_time": "16:35",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 3,
+            "session_type": "study",
+            "duration_minutes": 28,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "start_time": "16:45",
+            "subject": "Biology",
+            "topic": "Cells and organization",
+            "cognitive_demand": "medium",
+            "recommended_methods": [
+              "retrieval practice",
+              "self explanation",
+              "spaced review"
+            ],
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 4,
+            "session_type": "break",
+            "duration_minutes": 5,
+            "reason": "Scheduled short recovery break.",
+            "start_time": "17:13",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 5,
+            "session_type": "study",
+            "duration_minutes": 35,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "start_time": "17:18",
+            "subject": "Mathematics",
+            "topic": "Equations and identities",
+            "cognitive_demand": "high",
+            "recommended_methods": [
+              "worked examples",
+              "independent practice",
+              "error checking"
+            ],
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 6,
+            "session_type": "break",
+            "duration_minutes": 10,
+            "reason": "Scheduled recovery break after a demanding session.",
+            "start_time": "17:53",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 7,
+            "session_type": "study",
+            "duration_minutes": 27,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "start_time": "18:03",
+            "subject": "Biology",
+            "topic": "Cells and organization",
+            "cognitive_demand": "medium",
+            "recommended_methods": [
+              "retrieval practice",
+              "self explanation",
+              "spaced review"
+            ],
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          }
+        ],
+        "warnings": [],
+        "planner_version": "1.0.0-prototype"
+      },
+      "request_id": "c48e115b-9dd7-4f26-8bb4-3c9b3d22b808",
+      "processing_time_ms": 464.772,
+      "fallback": {
+        "used": false,
+        "reason_codes": [],
+        "subjects": []
+      },
+      "api_version": "v1"
+    }
+  },
+  {
+    "example_id": "sensor_adaptation",
+    "response": {
+      "adapted_plan": {
+        "original_plan_id": "plan-50967ab05fd1703a",
+        "adapted_plan_id": "adapted-27dc160008e5f0ce",
+        "adaptation_applied": true,
+        "mode": "sensor",
+        "severity": "high",
+        "triggers": [
+          "extended_continuous_sitting",
+          "leaning_right",
+          "pressure_imbalance"
+        ],
+        "actions": [
+          {
+            "action": "shorten_next_session",
+            "reason": "The next long study block was reduced after extended continuous sitting.",
+            "duration_minutes": null,
+            "minutes_reduced": 8,
+            "session_order": 3
+          },
+          {
+            "action": "use_existing_movement_break",
+            "reason": "The upcoming timer-based break already provides enough movement time.",
+            "duration_minutes": 10,
+            "minutes_reduced": null,
+            "session_order": 2
+          },
+          {
+            "action": "show_posture_reminder",
+            "reason": "Adjust your sitting position to a comfortable, balanced posture.",
+            "duration_minutes": null,
+            "minutes_reduced": null,
+            "session_order": null
+          }
+        ],
+        "sessions": [
+          {
+            "order": 1,
+            "session_type": "study",
+            "duration_minutes": 35,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "start_time": "16:00",
+            "subject": "Mathematics",
+            "topic": "Equations and identities",
+            "cognitive_demand": "high",
+            "recommended_methods": [
+              "worked examples",
+              "independent practice",
+              "error checking"
+            ],
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 2,
+            "session_type": "break",
+            "duration_minutes": 10,
+            "reason": "Scheduled recovery break after a demanding session.",
+            "start_time": "16:35",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 3,
+            "session_type": "study",
+            "duration_minutes": 20,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "start_time": "16:45",
+            "subject": "Biology",
+            "topic": "Cells and organization",
+            "cognitive_demand": "medium",
+            "recommended_methods": [
+              "retrieval practice",
+              "self explanation",
+              "spaced review"
+            ],
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 4,
+            "session_type": "break",
+            "duration_minutes": 5,
+            "reason": "Scheduled short recovery break.",
+            "start_time": "17:05",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 5,
+            "session_type": "study",
+            "duration_minutes": 35,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "start_time": "17:10",
+            "subject": "Mathematics",
+            "topic": "Equations and identities",
+            "cognitive_demand": "high",
+            "recommended_methods": [
+              "worked examples",
+              "independent practice",
+              "error checking"
+            ],
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 6,
+            "session_type": "break",
+            "duration_minutes": 10,
+            "reason": "Scheduled recovery break after a demanding session.",
+            "start_time": "17:45",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 7,
+            "session_type": "study",
+            "duration_minutes": 27,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "start_time": "17:55",
+            "subject": "Biology",
+            "topic": "Cells and organization",
+            "cognitive_demand": "medium",
+            "recommended_methods": [
+              "retrieval practice",
+              "self explanation",
+              "spaced review"
+            ],
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          }
+        ],
+        "total_available_minutes": 150,
+        "total_study_minutes": 117,
+        "total_break_minutes": 25,
+        "total_planned_minutes": 142,
+        "unallocated_minutes": 8,
+        "deferred_study_minutes": 8,
+        "sensor_notice": "Take an extended movement break before the next study block.",
+        "warnings": [
+          "8 study minutes were deferred to keep the plan within its available time."
+        ],
+        "sensor_policy_version": "1.0.0-prototype"
+      },
+      "request_id": "2edf045c-7773-4bc1-8d4b-ab9aad977b62",
+      "processing_time_ms": 3.377,
+      "api_version": "v1"
+    }
+  },
+  {
+    "example_id": "full_deterministic",
+    "response": {
+      "original_plan": {
+        "plan_id": "plan-50967ab05fd1703a",
+        "total_available_minutes": 150,
+        "total_study_minutes": 125,
+        "total_break_minutes": 25,
+        "total_planned_minutes": 150,
+        "unallocated_minutes": 0,
+        "scheduled_subjects": [
+          {
+            "subject": "Mathematics",
+            "canonical_subject": "Mathematics",
+            "score": 4.35,
+            "allocated_study_minutes": 70,
+            "session_count": 2,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "subject": "Biology",
+            "canonical_subject": "Biology",
+            "score": 3.0,
+            "allocated_study_minutes": 55,
+            "session_count": 2,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          }
+        ],
+        "unscheduled_subjects": [],
+        "sessions": [
+          {
+            "order": 1,
+            "session_type": "study",
+            "duration_minutes": 35,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "start_time": "16:00",
+            "subject": "Mathematics",
+            "topic": "Equations and identities",
+            "cognitive_demand": "high",
+            "recommended_methods": [
+              "worked examples",
+              "independent practice",
+              "error checking"
+            ],
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 2,
+            "session_type": "break",
+            "duration_minutes": 10,
+            "reason": "Scheduled recovery break after a demanding session.",
+            "start_time": "16:35",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 3,
+            "session_type": "study",
+            "duration_minutes": 28,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "start_time": "16:45",
+            "subject": "Biology",
+            "topic": "Cells and organization",
+            "cognitive_demand": "medium",
+            "recommended_methods": [
+              "retrieval practice",
+              "self explanation",
+              "spaced review"
+            ],
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 4,
+            "session_type": "break",
+            "duration_minutes": 5,
+            "reason": "Scheduled short recovery break.",
+            "start_time": "17:13",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 5,
+            "session_type": "study",
+            "duration_minutes": 35,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "start_time": "17:18",
+            "subject": "Mathematics",
+            "topic": "Equations and identities",
+            "cognitive_demand": "high",
+            "recommended_methods": [
+              "worked examples",
+              "independent practice",
+              "error checking"
+            ],
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 6,
+            "session_type": "break",
+            "duration_minutes": 10,
+            "reason": "Scheduled recovery break after a demanding session.",
+            "start_time": "17:53",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 7,
+            "session_type": "study",
+            "duration_minutes": 27,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "start_time": "18:03",
+            "subject": "Biology",
+            "topic": "Cells and organization",
+            "cognitive_demand": "medium",
+            "recommended_methods": [
+              "retrieval practice",
+              "self explanation",
+              "spaced review"
+            ],
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          }
+        ],
+        "warnings": [],
+        "planner_version": "1.0.0-prototype"
+      },
+      "adapted_plan": {
+        "original_plan_id": "plan-50967ab05fd1703a",
+        "adapted_plan_id": "adapted-27dc160008e5f0ce",
+        "adaptation_applied": true,
+        "mode": "sensor",
+        "severity": "high",
+        "triggers": [
+          "extended_continuous_sitting",
+          "leaning_right",
+          "pressure_imbalance"
+        ],
+        "actions": [
+          {
+            "action": "shorten_next_session",
+            "reason": "The next long study block was reduced after extended continuous sitting.",
+            "duration_minutes": null,
+            "minutes_reduced": 8,
+            "session_order": 3
+          },
+          {
+            "action": "use_existing_movement_break",
+            "reason": "The upcoming timer-based break already provides enough movement time.",
+            "duration_minutes": 10,
+            "minutes_reduced": null,
+            "session_order": 2
+          },
+          {
+            "action": "show_posture_reminder",
+            "reason": "Adjust your sitting position to a comfortable, balanced posture.",
+            "duration_minutes": null,
+            "minutes_reduced": null,
+            "session_order": null
+          }
+        ],
+        "sessions": [
+          {
+            "order": 1,
+            "session_type": "study",
+            "duration_minutes": 35,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "start_time": "16:00",
+            "subject": "Mathematics",
+            "topic": "Equations and identities",
+            "cognitive_demand": "high",
+            "recommended_methods": [
+              "worked examples",
+              "independent practice",
+              "error checking"
+            ],
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 2,
+            "session_type": "break",
+            "duration_minutes": 10,
+            "reason": "Scheduled recovery break after a demanding session.",
+            "start_time": "16:35",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 3,
+            "session_type": "study",
+            "duration_minutes": 20,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "start_time": "16:45",
+            "subject": "Biology",
+            "topic": "Cells and organization",
+            "cognitive_demand": "medium",
+            "recommended_methods": [
+              "retrieval practice",
+              "self explanation",
+              "spaced review"
+            ],
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 4,
+            "session_type": "break",
+            "duration_minutes": 5,
+            "reason": "Scheduled short recovery break.",
+            "start_time": "17:05",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 5,
+            "session_type": "study",
+            "duration_minutes": 35,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+            "start_time": "17:10",
+            "subject": "Mathematics",
+            "topic": "Equations and identities",
+            "cognitive_demand": "high",
+            "recommended_methods": [
+              "worked examples",
+              "independent practice",
+              "error checking"
+            ],
+            "retrieved_record_ids": [
+              "subject-mathematics-cross-level-v1",
+              "topic-equations-and-identities-mathematics-v1",
+              "strategy-problem-representation-check-v1",
+              "strategy-visual-representation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          },
+          {
+            "order": 6,
+            "session_type": "break",
+            "duration_minutes": 10,
+            "reason": "Scheduled recovery break after a demanding session.",
+            "start_time": "17:45",
+            "subject": null,
+            "topic": null,
+            "cognitive_demand": null,
+            "recommended_methods": [],
+            "retrieved_record_ids": [],
+            "used_fallback": false
+          },
+          {
+            "order": 7,
+            "session_type": "study",
+            "duration_minutes": 27,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+            "start_time": "17:55",
+            "subject": "Biology",
+            "topic": "Cells and organization",
+            "cognitive_demand": "medium",
+            "recommended_methods": [
+              "retrieval practice",
+              "self explanation",
+              "spaced review"
+            ],
+            "retrieved_record_ids": [
+              "subject-biology-cross-level-v1",
+              "topic-cell-structure-and-function-biology-v1",
+              "strategy-science-data-interpretation-v1",
+              "strategy-self-explanation-v1",
+              "session-data-analysis-v1"
+            ],
+            "used_fallback": false
+          }
+        ],
+        "total_available_minutes": 150,
+        "total_study_minutes": 117,
+        "total_break_minutes": 25,
+        "total_planned_minutes": 142,
+        "unallocated_minutes": 8,
+        "deferred_study_minutes": 8,
+        "sensor_notice": "Take an extended movement break before the next study block.",
+        "warnings": [
+          "8 study minutes were deferred to keep the plan within its available time."
+        ],
+        "sensor_policy_version": "1.0.0-prototype"
+      },
+      "final_sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 35,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "16:00",
+          "subject": "Mathematics",
+          "topic": "Equations and identities",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "16:35",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 20,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "16:45",
+          "subject": "Biology",
+          "topic": "Cells and organization",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "retrieval practice",
+            "self explanation",
+            "spaced review"
+          ],
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 4,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": "17:05",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 5,
+          "session_type": "study",
+          "duration_minutes": 35,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "17:10",
+          "subject": "Mathematics",
+          "topic": "Equations and identities",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 6,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "17:45",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 7,
+          "session_type": "study",
+          "duration_minutes": 27,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:55",
+          "subject": "Biology",
+          "topic": "Cells and organization",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "retrieval practice",
+            "self explanation",
+            "spaced review"
+          ],
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "request_id": "e53cd4e8-db41-4ad3-926f-a8a3dc952512",
+      "processing_time_ms": 210.115,
+      "fallback": {
+        "used": false,
+        "reason_codes": [],
+        "subjects": []
+      },
+      "api_version": "v1"
+    }
+  },
+  {
+    "example_id": "grounded_explanation",
+    "response": {
+      "grounded_response": {
+        "summary": "Today's plan includes 117 minutes of study across 2 subjects, with 25 minutes of breaks.",
+        "allocation_explanations": [
+          {
+            "subject": "Mathematics",
+            "allocated_minutes": 70,
+            "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap."
+          },
+          {
+            "subject": "Biology",
+            "allocated_minutes": 55,
+            "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap."
+          }
+        ],
+        "session_messages": [
+          {
+            "session_order": 1,
+            "message": "Session 1: Study Mathematics for 35 minutes using worked examples, independent practice, error checking."
+          },
+          {
+            "session_order": 2,
+            "message": "Session 2: Take the planned 10-minute break."
+          },
+          {
+            "session_order": 3,
+            "message": "Session 3: Study Biology for 20 minutes using retrieval practice, self explanation, spaced review."
+          },
+          {
+            "session_order": 4,
+            "message": "Session 4: Take the planned 5-minute break."
+          },
+          {
+            "session_order": 5,
+            "message": "Session 5: Study Mathematics for 35 minutes using worked examples, independent practice, error checking."
+          },
+          {
+            "session_order": 6,
+            "message": "Session 6: Take the planned 10-minute break."
+          },
+          {
+            "session_order": 7,
+            "message": "Session 7: Study Biology for 27 minutes using retrieval practice, self explanation, spaced review."
+          }
+        ],
+        "sensor_message": "Take an extended movement break before the next study block.",
+        "unscheduled_message": null,
+        "warnings": [
+          "8 study minutes were deferred to keep the plan within its available time."
+        ]
+      },
+      "generation_mode": "deterministic_fallback",
+      "model_status": "timed_out",
+      "validation_status": "fallback_valid",
+      "fallback_reason_code": "OLLAMA_TIMEOUT",
+      "attempt_count": 0,
+      "generation_latency_ms": 30011.231,
+      "request_id": "7660b2d6-ed60-43d4-89a0-551179e4acaa",
+      "api_version": "v1"
+    }
+  }
+]

@@ -7,3 +7,6 @@ numpy==2.4.3
 huggingface-hub==1.4.1
 ipykernel==7.2.0
 psutil==7.2.2
+fastapi==0.139.2
+uvicorn==0.52.0
+httpx==0.28.1

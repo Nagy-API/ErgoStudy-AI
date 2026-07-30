@@ -50,13 +50,21 @@ Stage 7 adds a local-only wording layer after deterministic planning and optiona
 
 Strict post-generation validation preserves exact subject names, allocated minutes, final session orders, study and break durations, warning coverage, record traceability, English-only output, and non-medical sensor language. One constrained correction is allowed. A second invalid response or unavailable local API returns a stable deterministic response instead of failing the plan request. Six real local demos, controlled adversarial tests, environment and validation artifacts, a reusable script, a notebook, and the Stage 7 report are complete.
 
+### Local FastAPI integration for Flutter
+
+Stage 8 exposes seven versioned endpoints for health, readiness, deterministic planning, normalized sensor adaptation, the combined deterministic flow, isolated grounded explanations, and a slower demo-only full flow. Strict Pydantic models reject unknown fields and enforce planner, rating, topic, time, and sensor boundaries. Every validation or service error follows one safe envelope with a UUID4 request ID and no local paths, stack traces, secrets, cache locations, or evaluation data.
+
+FastAPI lifespan validates the dataset artifacts, planner configuration, sensor policy, generation configuration, cached selected embedding model, and existing Chroma collection, then initializes reusable retrieval, planner, and sensor services. Ollama is not preloaded and is reported separately by readiness, so its absence never makes deterministic planning unready. The three normal plan endpoints never construct or call the local model.
+
+Explanation requests use the unchanged Stage 7 output schema and validation rules with a configurable 30-second default and a safe 1-to-60-second override range. Timeout, connection, malformed-output, failed-correction, and unexpected generation failures return a validated deterministic explanation with HTTP 200 and a non-sensitive reason code. Flutter addresses, complete JSON examples, model guidance, client timeouts, error handling, and public-exposure warnings are documented.
+
 ## Current stage
 
-Stage 7 is complete at its final validation checkpoint. The local Ollama client, minimized grounding context, strict response models and validator, one-retry orchestrator, deterministic fallback, six demos, notebook, tests, and documentation are implemented. Raw hardware communication, API, and Flutter integration have not started.
+Stage 8 is complete at its final validation checkpoint. The local versioned API, strict request and response schemas, reusable lifespan services, safe error contract, configurable local CORS, isolated explanation deadline and fallback, OpenAPI document, Flutter guide, demos, notebook, scripts, and tests are implemented. Raw hardware communication, Flutter UI implementation, authentication, deployment, and cloud integration have not started.
 
 ## Next planned stage
 
-Stage 8: FastAPI integration. It should expose the validated deterministic planner, optional sensor adapter, and grounded response generator through local structured endpoints without changing their decision ownership.
+Stage 9: final end-to-end evaluation, packaging, and handoff. It should validate reproducible complete scenarios and prepare the local prototype for demonstration without beginning public deployment or cloud integration.
 
 ## Confirmed product requirements
 
@@ -142,6 +150,17 @@ The 29-source catalog now includes descriptive coverage for business, economics,
 - Which independent reviewer can verify Tier A records and the Tier C sample before public deployment?
 
 ## Last validation results
+
+The Stage 8 validation completed successfully on July 30, 2026:
+
+- All 35 focused Stage 8 API tests pass, covering health; readiness with available and unavailable Ollama; school and university plans; aliases; optional topics; the 30-minute boundary; invalid times, ratings, names, sensor values, and unknown fields; disabled, missing, stale, and valid sensor flows; deterministic full flows; mocked valid, corrected, timed-out, unavailable, malformed, and correction-failed explanations; plan immutability; concurrent requests; OpenAPI; safe path-free responses; and unchanged planner/sensor results.
+- All 171 repository tests pass, including the required planner, sensor, persistent retrieval, local client, grounding, validation, and deterministic fallback regressions.
+- The production lifespan path located the cached fixed MiniLM revision, opened the existing 477-record Chroma collection, and initialized reusable services without rebuilding Chroma, downloading a model, or running a benchmark.
+- One measured actual local smoke flow returned `/plans` in 464.772 ms, `/plans/adapt` in 3.377 ms, and `/plans/full` in 210.115 ms after startup. These are single-machine prototype measurements, not production-scale claims.
+- The one permitted real Ollama explanation smoke request reached the 30-second endpoint deadline at 30,011.231 ms and returned HTTP 200 with `generation_mode=deterministic_fallback`, `fallback_reason_code=OLLAMA_TIMEOUT`, and a validated grounded response. No six-case LLM benchmark was rerun.
+- OpenAPI 3.1 generation passes with all seven required paths and 28 component schemas. The Stage 8 notebook parses and executes all seven code cells, including plan, sensor, full deterministic, successful mocked explanation, timeout fallback, validation error, and clean TestClient shutdown.
+- The six generated API demo artifacts cover health, readiness, school planning, sensor adaptation, the full deterministic pipeline, and the real explanation-timeout fallback. Python compilation, notebook and JSON parsing, local API smoke behavior, and Git whitespace validation pass.
+- `fastapi==0.139.2`, `uvicorn==0.52.0`, and `httpx==0.28.1` are pinned for the Python 3.12 environment. No unrelated package, paid service, cloud API, model, dataset, or database account was added.
 
 The Stage 7 validation completed successfully on July 30, 2026:
 
