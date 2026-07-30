@@ -39,11 +39,11 @@ See [docs/system_architecture.md](docs/system_architecture.md) for the planned c
 
 ## Current status
 
-Stages 1 through 6B are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, a reusable production `RetrievalService`, a deterministic daily planner, and a deterministic sensor-adaptation layer. Stage 6B adds normalized sensor validation, configurable prototype thresholds, bounded future-timeline changes, calm non-sensor fallback, explicit deferred minutes, non-medical notices, and stable adapted plan hashes.
+Stages 1 through 7 are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, a reusable production `RetrievalService`, a deterministic daily planner, a deterministic sensor-adaptation layer, and a local grounded wording layer. Stage 7 uses only `qwen3:4b-instruct` through the local Ollama API with schema-constrained JSON, strict value and safety validation, one correction attempt, and a deterministic fallback.
 
-The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. Local grounded response generation is the next stage; API implementation and Flutter integration have not started.
+The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. FastAPI integration is the next stage; API implementation and Flutter integration have not started.
 
-See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md), [docs/stage6a_daily_planner_report.md](docs/stage6a_daily_planner_report.md), and [docs/stage6b_sensor_adaptation_report.md](docs/stage6b_sensor_adaptation_report.md) for the completed checkpoints.
+See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md), [docs/stage6a_daily_planner_report.md](docs/stage6a_daily_planner_report.md), [docs/stage6b_sensor_adaptation_report.md](docs/stage6b_sensor_adaptation_report.md), and [docs/stage7_grounded_generation_report.md](docs/stage7_grounded_generation_report.md) for the completed checkpoints.
 
 ## Project tracking
 
@@ -198,3 +198,15 @@ Regenerate and inspect the committed sensor scenarios with:
 ```
 
 Sensor thresholds and time bounds are in `config/sensor_policy.json`. They are configurable, non-medical prototype product parameters pending user testing and hardware-team confirmation.
+
+## Stage 7 local grounded-generation workflow
+
+Stage 7 explains an already-complete deterministic plan. It cannot change allocations, session or break durations, priorities, record IDs, or sensor actions. Check the local environment and run the six focused demos with:
+
+```powershell
+.venv\Scripts\python.exe scripts\check_ollama.py
+.venv\Scripts\python.exe scripts\generate_grounded_response.py
+.venv\Scripts\python.exe scripts\run_notebook_cells.py 08_grounded_generation.ipynb
+```
+
+The generation settings in `config/generation_config.json` lock the client to the local Ollama API, `qwen3:4b-instruct`, `stream=false`, temperature zero, a 4096-token context, and one correction attempt. If Ollama is unavailable or both model responses fail validation, the request returns a stable template response with `generation_mode` set to `deterministic_fallback`.

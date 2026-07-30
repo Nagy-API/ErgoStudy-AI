@@ -1,0 +1,1621 @@
+[
+  {
+    "case_id": "school_without_sensor",
+    "original_user_input": {
+      "total_available_minutes": 150,
+      "preferred_start_time": "16:00",
+      "preferred_session_length": 40,
+      "subjects": [
+        {
+          "name": "Mathematics",
+          "topics": [
+            "Equations and identities"
+          ],
+          "difficulty": 4,
+          "priority": 5,
+          "workload": 4,
+          "current_understanding": 2
+        },
+        {
+          "name": "Biology",
+          "topics": [
+            "Cells and organization"
+          ],
+          "difficulty": 3,
+          "priority": 3,
+          "workload": 3,
+          "current_understanding": 3
+        },
+        {
+          "name": "History",
+          "topics": [
+            "Source analysis"
+          ],
+          "difficulty": 2,
+          "priority": 2,
+          "workload": 2,
+          "current_understanding": 4
+        }
+      ]
+    },
+    "plan": {
+      "plan_id": "plan-788bedb7048474bf",
+      "total_available_minutes": 150,
+      "total_study_minutes": 135,
+      "total_break_minutes": 15,
+      "total_planned_minutes": 150,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Mathematics",
+          "canonical_subject": "Mathematics",
+          "score": 4.35,
+          "allocated_study_minutes": 60,
+          "session_count": 1,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "Biology",
+          "canonical_subject": "Biology",
+          "score": 3.0,
+          "allocated_study_minutes": 41,
+          "session_count": 1,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "History",
+          "canonical_subject": "History",
+          "score": 2.0,
+          "allocated_study_minutes": 34,
+          "session_count": 1,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-history-cross-level-v1",
+            "topic-primary-source-analysis-history-v1",
+            "strategy-self-explanation-v1",
+            "strategy-science-data-interpretation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "unscheduled_subjects": [],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 60,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "16:00",
+          "subject": "Mathematics",
+          "topic": "Equations and identities",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "17:00",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 41,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:10",
+          "subject": "Biology",
+          "topic": "Cells and organization",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "retrieval practice",
+            "self explanation",
+            "spaced review"
+          ],
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 4,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": "17:51",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 5,
+          "session_type": "study",
+          "duration_minutes": 34,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:56",
+          "subject": "History",
+          "topic": "Source analysis",
+          "cognitive_demand": "low",
+          "recommended_methods": [
+            "purposeful reading",
+            "section summaries",
+            "self explanation"
+          ],
+          "retrieved_record_ids": [
+            "subject-history-cross-level-v1",
+            "topic-primary-source-analysis-history-v1",
+            "strategy-self-explanation-v1",
+            "strategy-science-data-interpretation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "warnings": [],
+      "planner_version": "1.0.0-prototype"
+    },
+    "retrieved_record_summaries": [
+      {
+        "record_id": "session-data-analysis-v1",
+        "title": "Data interpretation and explanation block",
+        "document_family": "session_template",
+        "summary": "Session template proposal: Data interpretation and explanation block. Use these phases: identify the question and variables; inspect or prepare the representation; analyze patterns and calculations; state a supported...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-accounting-qaa-022"
+        ],
+        "evidence_level": "design_proposal",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-problem-representation-check-v1",
+        "title": "Represent, solve, and check a quantitative problem",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Represent, solve, and check a quantitative problem. Translate the situation into knowns, unknowns, constraints, and a representation before calculating. After solving, check units, plausibility, and...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "moderate",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-science-data-interpretation-v1",
+        "title": "Interpret scientific data and limitations",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Interpret scientific data and limitations. Identify variables, patterns, uncertainty, and the claim a dataset can support. Compare the evidence with a model and state limitations without extending...",
+        "source_ids": [
+          "src-science-standards-013"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-self-explanation-v1",
+        "title": "Self-explanation of examples and concepts",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Self-explanation of examples and concepts. Explain why a step, relationship, or claim makes sense and connect it to prior knowledge. The explanation should expose gaps rather than paraphrase each line...",
+        "source_ids": [
+          "src-learn-selfexplain-005",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "moderate",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-visual-representation-v1",
+        "title": "Connect visual and symbolic representations",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Connect visual and symbolic representations. Represent a problem or concept with an appropriate diagram, table, graph, model, or notation, then explain how the representations correspond. The visual...",
+        "source_ids": [
+          "src-math-guide-011"
+        ],
+        "evidence_level": "moderate",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-biology-cross-level-v1",
+        "title": "Biology subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Biology belongs to the curriculum-neutral natural sciences family. Common names include Bio, Life Science. A useful study plan should match the learner's current topic and required task, because the...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-history-cross-level-v1",
+        "title": "History subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: History belongs to the curriculum-neutral social sciences family. Common names include Historical Studies, Hist. A useful study plan should match the learner's current topic and required task...",
+        "source_ids": [
+          "src-reading-guide-010",
+          "src-writing-guide-009",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-mathematics-cross-level-v1",
+        "title": "Mathematics subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Mathematics belongs to the curriculum-neutral mathematics family. Common names include Math, Maths. A useful study plan should match the learner's current topic and required task, because the subject...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-cell-structure-and-function-biology-v1",
+        "title": "Cell structure and function in Biology",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Cell structure and function is studied within Biology and is classified here as a theory learning task. The practical goal is to build and explain connected concepts rather than only rereading....",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-equations-and-identities-mathematics-v1",
+        "title": "Equations and identities in Mathematics",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Equations and identities is studied within Mathematics and is classified here as a problem solving task. The practical goal is to select a method, carry out the steps, and check the result. Suitable...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-primary-source-analysis-history-v1",
+        "title": "Primary-source analysis in History",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Primary-source analysis is studied within History and is classified here as a reading comprehension task. The practical goal is to identify the reading purpose, main claims, evidence, and a concise...",
+        "source_ids": [
+          "src-reading-guide-010",
+          "src-writing-guide-009",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      }
+    ],
+    "sensor_result": null
+  },
+  {
+    "case_id": "university_without_sensor",
+    "original_user_input": {
+      "total_available_minutes": 240,
+      "preferred_start_time": "13:30",
+      "preferred_session_length": 45,
+      "subjects": [
+        {
+          "name": "Calculus 2",
+          "topics": [
+            "Integration"
+          ],
+          "difficulty": 5,
+          "priority": 5,
+          "workload": 4,
+          "current_understanding": 2
+        },
+        {
+          "name": "CS",
+          "topics": [
+            "Algorithms"
+          ],
+          "difficulty": 4,
+          "priority": 4,
+          "workload": 5,
+          "current_understanding": 3
+        },
+        {
+          "name": "Stats",
+          "topics": [
+            "Probability"
+          ],
+          "difficulty": 4,
+          "priority": 3,
+          "workload": 3,
+          "current_understanding": 2
+        }
+      ]
+    },
+    "plan": {
+      "plan_id": "plan-8d8aa717f116a82b",
+      "total_available_minutes": 240,
+      "total_study_minutes": 205,
+      "total_break_minutes": 35,
+      "total_planned_minutes": 240,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Calculus 2",
+          "canonical_subject": "Calculus",
+          "score": 4.55,
+          "allocated_study_minutes": 78,
+          "session_count": 2,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-calculus-cross-level-v1",
+            "topic-integration-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-worked-example-fading-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "CS",
+          "canonical_subject": "Computer Science",
+          "score": 4.05,
+          "allocated_study_minutes": 67,
+          "session_count": 2,
+          "reason": "Scheduled because of high priority, high workload, and high difficulty.",
+          "retrieved_record_ids": [
+            "subject-computer-science-university-v1",
+            "topic-algorithms-and-data-structures-computer-science-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-code-trace-build-test-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "Stats",
+          "canonical_subject": "Statistics",
+          "score": 3.4,
+          "allocated_study_minutes": 60,
+          "session_count": 1,
+          "reason": "Scheduled because of high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-statistics-cross-level-v1",
+            "topic-probability-rules-probability-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-problem-representation-check-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "unscheduled_subjects": [],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 39,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "13:30",
+          "subject": "Calculus 2",
+          "topic": "Integration",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-calculus-cross-level-v1",
+            "topic-integration-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-worked-example-fading-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "14:09",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 60,
+          "reason": "Scheduled because of high difficulty, and a large knowledge gap.",
+          "start_time": "14:19",
+          "subject": "Stats",
+          "topic": "Probability",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-statistics-cross-level-v1",
+            "topic-probability-rules-probability-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-problem-representation-check-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 4,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": "15:19",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 5,
+          "session_type": "study",
+          "duration_minutes": 39,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "15:24",
+          "subject": "Calculus 2",
+          "topic": "Integration",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-calculus-cross-level-v1",
+            "topic-integration-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-worked-example-fading-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 6,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "16:03",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 7,
+          "session_type": "study",
+          "duration_minutes": 34,
+          "reason": "Scheduled because of high priority, high workload, and high difficulty.",
+          "start_time": "16:13",
+          "subject": "CS",
+          "topic": "Algorithms",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-computer-science-university-v1",
+            "topic-algorithms-and-data-structures-computer-science-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-code-trace-build-test-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 8,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "16:47",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 9,
+          "session_type": "study",
+          "duration_minutes": 33,
+          "reason": "Scheduled because of high priority, high workload, and high difficulty.",
+          "start_time": "16:57",
+          "subject": "CS",
+          "topic": "Algorithms",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-computer-science-university-v1",
+            "topic-algorithms-and-data-structures-computer-science-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-code-trace-build-test-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "warnings": [],
+      "planner_version": "1.0.0-prototype"
+    },
+    "retrieved_record_summaries": [
+      {
+        "record_id": "session-data-analysis-v1",
+        "title": "Data interpretation and explanation block",
+        "document_family": "session_template",
+        "summary": "Session template proposal: Data interpretation and explanation block. Use these phases: identify the question and variables; inspect or prepare the representation; analyze patterns and calculations; state a supported...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-accounting-qaa-022"
+        ],
+        "evidence_level": "design_proposal",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-code-trace-build-test-v1",
+        "title": "Trace, build, and test small programs",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Trace, build, and test small programs. Predict code behavior, trace important state, write a small program, run it, and use tests or examples to compare expected and actual behavior. Explain the...",
+        "source_ids": [
+          "src-computing-curriculum-012",
+          "src-learn-selfexplain-005"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-problem-representation-check-v1",
+        "title": "Represent, solve, and check a quantitative problem",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Represent, solve, and check a quantitative problem. Translate the situation into knowns, unknowns, constraints, and a representation before calculating. After solving, check units, plausibility, and...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "moderate",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-science-data-interpretation-v1",
+        "title": "Interpret scientific data and limitations",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Interpret scientific data and limitations. Identify variables, patterns, uncertainty, and the claim a dataset can support. Compare the evidence with a model and state limitations without extending...",
+        "source_ids": [
+          "src-science-standards-013"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-worked-example-fading-v1",
+        "title": "Worked examples followed by independent problems",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Worked examples followed by independent problems. Study a relevant worked solution, explain its decisions, and then solve a related problem with progressively less support. Independent performance is...",
+        "source_ids": [
+          "src-learn-guide-004",
+          "src-learn-selfexplain-005"
+        ],
+        "evidence_level": "moderate",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-calculus-cross-level-v1",
+        "title": "Calculus subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Calculus belongs to the curriculum-neutral mathematics family. Common names include Differential and Integral Calculus, Calc. A useful study plan should match the learner's current topic and required...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-computer-science-university-v1",
+        "title": "Computer Science subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Computer Science belongs to the curriculum-neutral computing family. Common names include CS, Computing. A useful study plan should match the learner's current topic and required task, because the...",
+        "source_ids": [
+          "src-computing-curriculum-012"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-statistics-cross-level-v1",
+        "title": "Statistics subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Statistics belongs to the curriculum-neutral mathematics family. Common names include Stats, Statistical Methods. A useful study plan should match the learner's current topic and required task...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-algorithms-and-data-structures-computer-science-v1",
+        "title": "Algorithms and data structures in Computer Science",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Algorithms and data structures is studied within Computer Science and is classified here as a problem solving task. The practical goal is to select a method, carry out the steps, and check the result....",
+        "source_ids": [
+          "src-computing-curriculum-012"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-integration-mathematics-v1",
+        "title": "Integration in Calculus",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Integration is studied within Calculus and is classified here as a problem solving task. The practical goal is to select a method, carry out the steps, and check the result. Suitable methods include...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-probability-rules-probability-v1",
+        "title": "Probability rules in Probability",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Probability rules is studied within Probability and is classified here as a problem solving task. The practical goal is to select a method, carry out the steps, and check the result. Suitable methods...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      }
+    ],
+    "sensor_result": null
+  },
+  {
+    "case_id": "unscheduled_subject",
+    "original_user_input": {
+      "total_available_minutes": 30,
+      "subjects": [
+        {
+          "name": "Chemistry",
+          "difficulty": 5,
+          "priority": 5,
+          "workload": 4,
+          "current_understanding": 1
+        },
+        {
+          "name": "English Literature",
+          "difficulty": 3,
+          "priority": 2,
+          "workload": 3,
+          "current_understanding": 3
+        }
+      ]
+    },
+    "plan": {
+      "plan_id": "plan-73a1c52793b818b2",
+      "total_available_minutes": 30,
+      "total_study_minutes": 30,
+      "total_break_minutes": 0,
+      "total_planned_minutes": 30,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Chemistry",
+          "canonical_subject": "Chemistry",
+          "score": 4.75,
+          "allocated_study_minutes": 30,
+          "session_count": 1,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-chemistry-cross-level-v1",
+            "strategy-practice-questions-transfer-v1",
+            "strategy-laboratory-preparation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "unscheduled_subjects": [
+        {
+          "subject": "English Literature",
+          "score": 2.65,
+          "reason": "Not scheduled because the remaining time cannot fit the configured minimum useful study session and required break reserve."
+        }
+      ],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 30,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": null,
+          "subject": "Chemistry",
+          "topic": null,
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "target matched practice",
+            "feedback",
+            "variation"
+          ],
+          "retrieved_record_ids": [
+            "subject-chemistry-cross-level-v1",
+            "strategy-practice-questions-transfer-v1",
+            "strategy-laboratory-preparation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "warnings": [
+        "English Literature: the subject alias was ambiguous; a generic session was used",
+        "Some subjects were left unscheduled because meaningful sessions would not fit."
+      ],
+      "planner_version": "1.0.0-prototype"
+    },
+    "retrieved_record_summaries": [
+      {
+        "record_id": "session-data-analysis-v1",
+        "title": "Data interpretation and explanation block",
+        "document_family": "session_template",
+        "summary": "Session template proposal: Data interpretation and explanation block. Use these phases: identify the question and variables; inspect or prepare the representation; analyze patterns and calculations; state a supported...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-accounting-qaa-022"
+        ],
+        "evidence_level": "design_proposal",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-laboratory-preparation-v1",
+        "title": "Pre-laboratory preparation and post-laboratory explanation",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Pre-laboratory preparation and post-laboratory explanation. Before practical work, review the purpose, variables, approved procedure, and safety instructions. Afterward, organize observations and...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-engineering-abet-025"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-practice-questions-transfer-v1",
+        "title": "Practice questions matched to the target performance",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Practice questions matched to the target performance. Use questions that require the same kind of recall, explanation, calculation, analysis, or production expected later. Vary surface features after...",
+        "source_ids": [
+          "src-learn-review-001",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "high",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-chemistry-cross-level-v1",
+        "title": "Chemistry subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Chemistry belongs to the curriculum-neutral natural sciences family. Common names include Chem, Chemical Science. A useful study plan should match the learner's current topic and required task...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      }
+    ],
+    "sensor_result": null
+  },
+  {
+    "case_id": "unknown_subject_fallback",
+    "original_user_input": {
+      "total_available_minutes": 60,
+      "preferred_session_length": 30,
+      "subjects": [
+        {
+          "name": "Quantum Basket Weaving",
+          "topics": [
+            "Pattern review"
+          ],
+          "difficulty": 3,
+          "priority": 4,
+          "workload": 3,
+          "current_understanding": 2
+        }
+      ]
+    },
+    "plan": {
+      "plan_id": "plan-60376eca5443c3c8",
+      "total_available_minutes": 60,
+      "total_study_minutes": 55,
+      "total_break_minutes": 5,
+      "total_planned_minutes": 60,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Quantum Basket Weaving",
+          "canonical_subject": null,
+          "score": 3.55,
+          "allocated_study_minutes": 55,
+          "session_count": 2,
+          "reason": "Scheduled because of high priority, and a large knowledge gap.",
+          "retrieved_record_ids": [],
+          "used_fallback": true
+        }
+      ],
+      "unscheduled_subjects": [],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 28,
+          "reason": "Scheduled because of high priority, and a large knowledge gap.",
+          "start_time": null,
+          "subject": "Quantum Basket Weaving",
+          "topic": "Pattern review",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "active recall",
+            "guided practice",
+            "self-check"
+          ],
+          "retrieved_record_ids": [],
+          "used_fallback": true
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": null,
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 27,
+          "reason": "Scheduled because of high priority, and a large knowledge gap.",
+          "start_time": null,
+          "subject": "Quantum Basket Weaving",
+          "topic": "Pattern review",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "active recall",
+            "guided practice",
+            "self-check"
+          ],
+          "retrieved_record_ids": [],
+          "used_fallback": true
+        }
+      ],
+      "warnings": [
+        "Quantum Basket Weaving: no reliable subject profile was found; a generic session was used"
+      ],
+      "planner_version": "1.0.0-prototype"
+    },
+    "retrieved_record_summaries": [],
+    "sensor_result": null
+  },
+  {
+    "case_id": "sensor_movement_break",
+    "original_user_input": {
+      "total_available_minutes": 30,
+      "subjects": [
+        {
+          "name": "Chemistry",
+          "difficulty": 5,
+          "priority": 5,
+          "workload": 4,
+          "current_understanding": 1
+        },
+        {
+          "name": "English Literature",
+          "difficulty": 3,
+          "priority": 2,
+          "workload": 3,
+          "current_understanding": 3
+        }
+      ]
+    },
+    "plan": {
+      "plan_id": "plan-73a1c52793b818b2",
+      "total_available_minutes": 30,
+      "total_study_minutes": 30,
+      "total_break_minutes": 0,
+      "total_planned_minutes": 30,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Chemistry",
+          "canonical_subject": "Chemistry",
+          "score": 4.75,
+          "allocated_study_minutes": 30,
+          "session_count": 1,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-chemistry-cross-level-v1",
+            "strategy-practice-questions-transfer-v1",
+            "strategy-laboratory-preparation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "unscheduled_subjects": [
+        {
+          "subject": "English Literature",
+          "score": 2.65,
+          "reason": "Not scheduled because the remaining time cannot fit the configured minimum useful study session and required break reserve."
+        }
+      ],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 30,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": null,
+          "subject": "Chemistry",
+          "topic": null,
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "target matched practice",
+            "feedback",
+            "variation"
+          ],
+          "retrieved_record_ids": [
+            "subject-chemistry-cross-level-v1",
+            "strategy-practice-questions-transfer-v1",
+            "strategy-laboratory-preparation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "warnings": [
+        "English Literature: the subject alias was ambiguous; a generic session was used",
+        "Some subjects were left unscheduled because meaningful sessions would not fit."
+      ],
+      "planner_version": "1.0.0-prototype"
+    },
+    "retrieved_record_summaries": [
+      {
+        "record_id": "session-data-analysis-v1",
+        "title": "Data interpretation and explanation block",
+        "document_family": "session_template",
+        "summary": "Session template proposal: Data interpretation and explanation block. Use these phases: identify the question and variables; inspect or prepare the representation; analyze patterns and calculations; state a supported...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-accounting-qaa-022"
+        ],
+        "evidence_level": "design_proposal",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-laboratory-preparation-v1",
+        "title": "Pre-laboratory preparation and post-laboratory explanation",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Pre-laboratory preparation and post-laboratory explanation. Before practical work, review the purpose, variables, approved procedure, and safety instructions. Afterward, organize observations and...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-engineering-abet-025"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-practice-questions-transfer-v1",
+        "title": "Practice questions matched to the target performance",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Practice questions matched to the target performance. Use questions that require the same kind of recall, explanation, calculation, analysis, or production expected later. Vary surface features after...",
+        "source_ids": [
+          "src-learn-review-001",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "high",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-chemistry-cross-level-v1",
+        "title": "Chemistry subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Chemistry belongs to the curriculum-neutral natural sciences family. Common names include Chem, Chemical Science. A useful study plan should match the learner's current topic and required task...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      }
+    ],
+    "sensor_result": {
+      "original_plan_id": "plan-73a1c52793b818b2",
+      "adapted_plan_id": "adapted-46ef26284449e2b9",
+      "adaptation_applied": true,
+      "mode": "sensor",
+      "severity": "medium",
+      "triggers": [
+        "long_continuous_sitting"
+      ],
+      "actions": [
+        {
+          "action": "insert_movement_break",
+          "reason": "A short movement or repositioning break is appropriate.",
+          "duration_minutes": 5
+        },
+        {
+          "action": "shorten_future_session",
+          "reason": "A future study block was shortened to keep the plan within its time window.",
+          "minutes_reduced": 5,
+          "session_order": 1
+        }
+      ],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Sensor-guided movement and repositioning break.",
+          "start_time": null,
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 2,
+          "session_type": "study",
+          "duration_minutes": 25,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": null,
+          "subject": "Chemistry",
+          "topic": null,
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "target matched practice",
+            "feedback",
+            "variation"
+          ],
+          "retrieved_record_ids": [
+            "subject-chemistry-cross-level-v1",
+            "strategy-practice-questions-transfer-v1",
+            "strategy-laboratory-preparation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "total_available_minutes": 30,
+      "total_study_minutes": 25,
+      "total_break_minutes": 5,
+      "total_planned_minutes": 30,
+      "unallocated_minutes": 0,
+      "deferred_study_minutes": 5,
+      "sensor_notice": "Take a short movement break before the next study block.",
+      "warnings": [
+        "English Literature: the subject alias was ambiguous; a generic session was used",
+        "Some subjects were left unscheduled because meaningful sessions would not fit.",
+        "5 study minutes were deferred to keep the plan within its available time."
+      ],
+      "sensor_policy_version": "1.0.0-prototype"
+    }
+  },
+  {
+    "case_id": "missing_sensor_data_fallback",
+    "original_user_input": {
+      "total_available_minutes": 150,
+      "preferred_start_time": "16:00",
+      "preferred_session_length": 40,
+      "subjects": [
+        {
+          "name": "Mathematics",
+          "topics": [
+            "Equations and identities"
+          ],
+          "difficulty": 4,
+          "priority": 5,
+          "workload": 4,
+          "current_understanding": 2
+        },
+        {
+          "name": "Biology",
+          "topics": [
+            "Cells and organization"
+          ],
+          "difficulty": 3,
+          "priority": 3,
+          "workload": 3,
+          "current_understanding": 3
+        },
+        {
+          "name": "History",
+          "topics": [
+            "Source analysis"
+          ],
+          "difficulty": 2,
+          "priority": 2,
+          "workload": 2,
+          "current_understanding": 4
+        }
+      ]
+    },
+    "plan": {
+      "plan_id": "plan-788bedb7048474bf",
+      "total_available_minutes": 150,
+      "total_study_minutes": 135,
+      "total_break_minutes": 15,
+      "total_planned_minutes": 150,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Mathematics",
+          "canonical_subject": "Mathematics",
+          "score": 4.35,
+          "allocated_study_minutes": 60,
+          "session_count": 1,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "Biology",
+          "canonical_subject": "Biology",
+          "score": 3.0,
+          "allocated_study_minutes": 41,
+          "session_count": 1,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "History",
+          "canonical_subject": "History",
+          "score": 2.0,
+          "allocated_study_minutes": 34,
+          "session_count": 1,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-history-cross-level-v1",
+            "topic-primary-source-analysis-history-v1",
+            "strategy-self-explanation-v1",
+            "strategy-science-data-interpretation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "unscheduled_subjects": [],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 60,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "16:00",
+          "subject": "Mathematics",
+          "topic": "Equations and identities",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "17:00",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 41,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:10",
+          "subject": "Biology",
+          "topic": "Cells and organization",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "retrieval practice",
+            "self explanation",
+            "spaced review"
+          ],
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 4,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": "17:51",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 5,
+          "session_type": "study",
+          "duration_minutes": 34,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:56",
+          "subject": "History",
+          "topic": "Source analysis",
+          "cognitive_demand": "low",
+          "recommended_methods": [
+            "purposeful reading",
+            "section summaries",
+            "self explanation"
+          ],
+          "retrieved_record_ids": [
+            "subject-history-cross-level-v1",
+            "topic-primary-source-analysis-history-v1",
+            "strategy-self-explanation-v1",
+            "strategy-science-data-interpretation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "warnings": [],
+      "planner_version": "1.0.0-prototype"
+    },
+    "retrieved_record_summaries": [
+      {
+        "record_id": "session-data-analysis-v1",
+        "title": "Data interpretation and explanation block",
+        "document_family": "session_template",
+        "summary": "Session template proposal: Data interpretation and explanation block. Use these phases: identify the question and variables; inspect or prepare the representation; analyze patterns and calculations; state a supported...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-accounting-qaa-022"
+        ],
+        "evidence_level": "design_proposal",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-problem-representation-check-v1",
+        "title": "Represent, solve, and check a quantitative problem",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Represent, solve, and check a quantitative problem. Translate the situation into knowns, unknowns, constraints, and a representation before calculating. After solving, check units, plausibility, and...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "moderate",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-science-data-interpretation-v1",
+        "title": "Interpret scientific data and limitations",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Interpret scientific data and limitations. Identify variables, patterns, uncertainty, and the claim a dataset can support. Compare the evidence with a model and state limitations without extending...",
+        "source_ids": [
+          "src-science-standards-013"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-self-explanation-v1",
+        "title": "Self-explanation of examples and concepts",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Self-explanation of examples and concepts. Explain why a step, relationship, or claim makes sense and connect it to prior knowledge. The explanation should expose gaps rather than paraphrase each line...",
+        "source_ids": [
+          "src-learn-selfexplain-005",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "moderate",
+        "reviewed": true
+      },
+      {
+        "record_id": "strategy-visual-representation-v1",
+        "title": "Connect visual and symbolic representations",
+        "document_family": "study_strategy",
+        "summary": "Study strategy: Connect visual and symbolic representations. Represent a problem or concept with an appropriate diagram, table, graph, model, or notation, then explain how the representations correspond. The visual...",
+        "source_ids": [
+          "src-math-guide-011"
+        ],
+        "evidence_level": "moderate",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-biology-cross-level-v1",
+        "title": "Biology subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Biology belongs to the curriculum-neutral natural sciences family. Common names include Bio, Life Science. A useful study plan should match the learner's current topic and required task, because the...",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-history-cross-level-v1",
+        "title": "History subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: History belongs to the curriculum-neutral social sciences family. Common names include Historical Studies, Hist. A useful study plan should match the learner's current topic and required task...",
+        "source_ids": [
+          "src-reading-guide-010",
+          "src-writing-guide-009",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "subject-mathematics-cross-level-v1",
+        "title": "Mathematics subject profile",
+        "document_family": "subject_profile",
+        "summary": "Subject profile: Mathematics belongs to the curriculum-neutral mathematics family. Common names include Math, Maths. A useful study plan should match the learner's current topic and required task, because the subject...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-cell-structure-and-function-biology-v1",
+        "title": "Cell structure and function in Biology",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Cell structure and function is studied within Biology and is classified here as a theory learning task. The practical goal is to build and explain connected concepts rather than only rereading....",
+        "source_ids": [
+          "src-science-standards-013",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-equations-and-identities-mathematics-v1",
+        "title": "Equations and identities in Mathematics",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Equations and identities is studied within Mathematics and is classified here as a problem solving task. The practical goal is to select a method, carry out the steps, and check the result. Suitable...",
+        "source_ids": [
+          "src-math-guide-011",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      },
+      {
+        "record_id": "topic-primary-source-analysis-history-v1",
+        "title": "Primary-source analysis in History",
+        "document_family": "topic_profile",
+        "summary": "Topic profile: Primary-source analysis is studied within History and is classified here as a reading comprehension task. The practical goal is to identify the reading purpose, main claims, evidence, and a concise...",
+        "source_ids": [
+          "src-reading-guide-010",
+          "src-writing-guide-009",
+          "src-learn-guide-004"
+        ],
+        "evidence_level": "source_descriptive",
+        "reviewed": true
+      }
+    ],
+    "sensor_result": {
+      "original_plan_id": "plan-788bedb7048474bf",
+      "adapted_plan_id": "adapted-fed914c49dbb08e6",
+      "adaptation_applied": false,
+      "mode": "non_sensor",
+      "severity": "data_unavailable",
+      "triggers": [
+        "missing_observation"
+      ],
+      "actions": [],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 60,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "16:00",
+          "subject": "Mathematics",
+          "topic": "Equations and identities",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "17:00",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 41,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:10",
+          "subject": "Biology",
+          "topic": "Cells and organization",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "retrieval practice",
+            "self explanation",
+            "spaced review"
+          ],
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 4,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": "17:51",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 5,
+          "session_type": "study",
+          "duration_minutes": 34,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:56",
+          "subject": "History",
+          "topic": "Source analysis",
+          "cognitive_demand": "low",
+          "recommended_methods": [
+            "purposeful reading",
+            "section summaries",
+            "self explanation"
+          ],
+          "retrieved_record_ids": [
+            "subject-history-cross-level-v1",
+            "topic-primary-source-analysis-history-v1",
+            "strategy-self-explanation-v1",
+            "strategy-science-data-interpretation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "total_available_minutes": 150,
+      "total_study_minutes": 135,
+      "total_break_minutes": 15,
+      "total_planned_minutes": 150,
+      "unallocated_minutes": 0,
+      "deferred_study_minutes": 0,
+      "sensor_notice": "No current sensor observation is available; the timer-based plan remains active.",
+      "warnings": [],
+      "sensor_policy_version": "1.0.0-prototype"
+    }
+  }
+]

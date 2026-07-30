@@ -1,0 +1,56 @@
+{
+  "case_count": 6,
+  "first_attempt_json_success_count": 1,
+  "corrected_response_count": 2,
+  "deterministic_fallback_count": 3,
+  "average_latency_seconds": 50.9421,
+  "median_latency_seconds": 26.3237,
+  "maximum_latency_seconds": 180.0673,
+  "numeric_preservation_result": true,
+  "grounding_validation_result": true,
+  "sensor_safety_result": true,
+  "cases": [
+    {
+      "case_id": "school_without_sensor",
+      "valid": true,
+      "errors": [],
+      "numeric_preservation": true,
+      "sensor_safe": true
+    },
+    {
+      "case_id": "university_without_sensor",
+      "valid": true,
+      "errors": [],
+      "numeric_preservation": true,
+      "sensor_safe": true
+    },
+    {
+      "case_id": "unscheduled_subject",
+      "valid": true,
+      "errors": [],
+      "numeric_preservation": true,
+      "sensor_safe": true
+    },
+    {
+      "case_id": "unknown_subject_fallback",
+      "valid": true,
+      "errors": [],
+      "numeric_preservation": true,
+      "sensor_safe": true
+    },
+    {
+      "case_id": "sensor_movement_break",
+      "valid": true,
+      "errors": [],
+      "numeric_preservation": true,
+      "sensor_safe": true
+    },
+    {
+      "case_id": "missing_sensor_data_fallback",
+      "valid": true,
+      "errors": [],
+      "numeric_preservation": true,
+      "sensor_safe": true
+    }
+  ]
+}

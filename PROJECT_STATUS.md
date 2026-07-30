@@ -44,13 +44,19 @@ Stage 6B created a normalized application-level sensor model, one configurable p
 
 Completed and current sessions are protected. Adapted sessions remain at least 20 minutes, the total never exceeds the original available window, and reduced study time is reported as deferred. Academic scores, priority decisions, study methods, reasons, and retrieved record IDs remain unchanged. All user notices are short, calm, English-only, and non-medical. Six demos, a reusable CLI, a notebook, focused tests, and Stage 6A integration coverage are complete.
 
+### Local grounded response generation
+
+Stage 7 adds a local-only wording layer after deterministic planning and optional sensor adaptation. It uses `qwen3:4b-instruct` through the Ollama API with streaming disabled, temperature zero, a 4096-token context, and an explicit JSON schema. The context contains only the original validated input, final plan, relevant retrieved-record summaries, and applicable sensor result; evaluation data, local paths, Git details, and unrelated corpus documents are excluded.
+
+Strict post-generation validation preserves exact subject names, allocated minutes, final session orders, study and break durations, warning coverage, record traceability, English-only output, and non-medical sensor language. One constrained correction is allowed. A second invalid response or unavailable local API returns a stable deterministic response instead of failing the plan request. Six real local demos, controlled adversarial tests, environment and validation artifacts, a reusable script, a notebook, and the Stage 7 report are complete.
+
 ## Current stage
 
-Stage 6B is complete at its final validation checkpoint. The deterministic sensor adapter, normalized models, configurable policy, demo generator, notebook, tests, and documentation are implemented. Raw hardware communication, local-model integration, API, and Flutter integration have not started.
+Stage 7 is complete at its final validation checkpoint. The local Ollama client, minimized grounding context, strict response models and validator, one-retry orchestrator, deterministic fallback, six demos, notebook, tests, and documentation are implemented. Raw hardware communication, API, and Flutter integration have not started.
 
 ## Next planned stage
 
-Stage 7: local grounded response generation. It should explain planner and sensor-adapter outputs with a local model while preserving deterministic decisions and source traceability.
+Stage 8: FastAPI integration. It should expose the validated deterministic planner, optional sensor adapter, and grounded response generator through local structured endpoints without changing their decision ownership.
 
 ## Confirmed product requirements
 
@@ -84,6 +90,7 @@ Stage 7: local grounded response generation. It should explain planner and senso
 - ChromaDB is the planned persistent vector database, with semantic retrieval and metadata filtering.
 - Planning, time allocation, break placement, rescheduling, and sensor adaptations will be deterministic and testable.
 - The local LLM will explain grounded results but will not override planner or sensor-adaptation decisions.
+- Stage 7 uses only the local Ollama model `qwen3:4b-instruct`, schema-constrained JSON, temperature zero, `stream=false`, and a deterministic validated fallback.
 - Factual educational and health-related records will preserve source, citation, and license metadata.
 - Source-backed records will be validated before any synthetic expansion.
 - Paid APIs will not be used.
@@ -135,6 +142,17 @@ The 29-source catalog now includes descriptive coverage for business, economics,
 - Which independent reviewer can verify Tier A records and the Tier C sample before public deployment?
 
 ## Last validation results
+
+The Stage 7 validation completed successfully on July 30, 2026:
+
+- Ollama 0.32.5 responds on the local API. The exact `qwen3:4b-instruct` model has digest `0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0`, size 2.497 GB (2,497,293,803 bytes), and executed on the `NVIDIA GeForce RTX 3050 6GB Laptop GPU`.
+- All 40 focused Stage 7 tests pass, including strict models, grounding minimization, structured parsing, duration and subject preservation, session references, record-ID safety, English-only and medical-language rejection, one retry, unavailable-API fallback, determinism, and input immutability.
+- All 41 required Stage 6A and 6B planner, persistent-retrieval integration, sensor-model, policy, adapter, and planner-adapter tests pass unchanged.
+- The six real local demos produced 1 valid first response, 2 corrected responses, and 3 deterministic fallbacks.
+- Average, median, and maximum end-to-end generation latency were 50.9421, 26.3237, and 180.0673 seconds.
+- Numeric preservation, grounding validation, and sensor safety pass for all six outputs.
+- All six Stage 7 notebook code cells execute. Python compilation, notebook and generated JSON parsing, deterministic fallback repetition, and Git whitespace checks pass.
+- No embedding benchmark ran, retrieval and planner settings did not change, the Chroma collection was not rebuilt, and no other language model or Python package was installed.
 
 The Stage 6B validation completed successfully on July 30, 2026:
 

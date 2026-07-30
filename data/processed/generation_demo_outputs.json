@@ -1,0 +1,290 @@
+[
+  {
+    "case_id": "school_without_sensor",
+    "generation_mode": "deterministic_fallback",
+    "attempt_count": 0,
+    "latency_seconds": 180.0673,
+    "validation_errors": [
+      "Local Ollama API unavailable: timed out"
+    ],
+    "response": {
+      "summary": "Today's plan includes 135 minutes of study across 3 subjects, with 15 minutes of breaks.",
+      "allocation_explanations": [
+        {
+          "subject": "Mathematics",
+          "allocated_minutes": 60,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap."
+        },
+        {
+          "subject": "Biology",
+          "allocated_minutes": 41,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap."
+        },
+        {
+          "subject": "History",
+          "allocated_minutes": 34,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap."
+        }
+      ],
+      "session_messages": [
+        {
+          "session_order": 1,
+          "message": "Session 1: Study Mathematics for 60 minutes using worked examples, independent practice, error checking."
+        },
+        {
+          "session_order": 2,
+          "message": "Session 2: Take the planned 10-minute break."
+        },
+        {
+          "session_order": 3,
+          "message": "Session 3: Study Biology for 41 minutes using retrieval practice, self explanation, spaced review."
+        },
+        {
+          "session_order": 4,
+          "message": "Session 4: Take the planned 5-minute break."
+        },
+        {
+          "session_order": 5,
+          "message": "Session 5: Study History for 34 minutes using purposeful reading, section summaries, self explanation."
+        }
+      ],
+      "sensor_message": null,
+      "unscheduled_message": null,
+      "warnings": []
+    }
+  },
+  {
+    "case_id": "university_without_sensor",
+    "generation_mode": "local_llm_corrected",
+    "attempt_count": 2,
+    "latency_seconds": 42.2419,
+    "validation_errors": [
+      "unscheduled_message must be null when no subject is unscheduled",
+      "sensor_message must be null without a sensor result"
+    ],
+    "response": {
+      "summary": "A structured study plan has been created with balanced cognitive load, recovery breaks, and subject-specific strategies. All subjects are scheduled with appropriate time allocations based on priority, difficulty, and knowledge gaps.",
+      "allocation_explanations": [
+        {
+          "subject": "Calculus 2",
+          "allocated_minutes": 78,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap."
+        },
+        {
+          "subject": "CS",
+          "allocated_minutes": 67,
+          "reason": "Scheduled because of high priority, high workload, and high difficulty."
+        },
+        {
+          "subject": "Stats",
+          "allocated_minutes": 60,
+          "reason": "Scheduled because of high difficulty, and a large knowledge gap."
+        }
+      ],
+      "session_messages": [
+        {
+          "session_order": 1,
+          "message": "Start with a high-demand session on Integration in Calculus 2 using worked examples and independent practice to build understanding and check for errors."
+        },
+        {
+          "session_order": 2,
+          "message": "Take a 10-minute recovery break to rest and reset after a demanding session."
+        },
+        {
+          "session_order": 3,
+          "message": "Engage with Probability rules in Stats using problem representation and error checking to strengthen understanding and application."
+        },
+        {
+          "session_order": 4,
+          "message": "Take a 5-minute short recovery break to maintain focus and reduce cognitive load."
+        },
+        {
+          "session_order": 5,
+          "message": "Return to Integration in Calculus 2 with a focused session using worked examples and independent practice to reinforce mastery."
+        },
+        {
+          "session_order": 6,
+          "message": "Take a 10-minute recovery break after a high-demand session to restore mental energy."
+        },
+        {
+          "session_order": 7,
+          "message": "Study Algorithms and Data Structures in CS using trace, build, and test strategies to develop problem-solving skills and code logic."
+        },
+        {
+          "session_order": 8,
+          "message": "Take a 10-minute recovery break after a demanding session to recover cognitive resources."
+        },
+        {
+          "session_order": 9,
+          "message": "Complete a final session on Algorithms in CS with independent practice and error checking to solidify understanding and application."
+        }
+      ],
+      "sensor_message": null,
+      "unscheduled_message": null,
+      "warnings": []
+    }
+  },
+  {
+    "case_id": "unscheduled_subject",
+    "generation_mode": "local_llm_corrected",
+    "attempt_count": 2,
+    "latency_seconds": 19.5154,
+    "validation_errors": [
+      "sensor_message must be null without a sensor result"
+    ],
+    "response": {
+      "summary": "Chemistry was scheduled for a 30-minute session due to high priority, workload, and knowledge gap. English Literature could not be scheduled due to insufficient time and minimum session requirements.",
+      "allocation_explanations": [
+        {
+          "subject": "Chemistry",
+          "allocated_minutes": 30,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap."
+        }
+      ],
+      "session_messages": [
+        {
+          "session_order": 1,
+          "message": "Chemistry session initiated with target matched practice, feedback, and variation strategies. Focus on data analysis and laboratory preparation as per retrieved strategies."
+        }
+      ],
+      "sensor_message": null,
+      "unscheduled_message": "English Literature was not scheduled because the remaining time cannot fit the configured minimum useful study session and required break reserve.",
+      "warnings": [
+        "English Literature: the subject alias was ambiguous; a generic session was used",
+        "Some subjects were left unscheduled because meaningful sessions would not fit."
+      ]
+    }
+  },
+  {
+    "case_id": "unknown_subject_fallback",
+    "generation_mode": "deterministic_fallback",
+    "attempt_count": 2,
+    "latency_seconds": 20.3079,
+    "validation_errors": [
+      "unscheduled_message must be null when no subject is unscheduled",
+      "sensor_message must be null without a sensor result",
+      "session 1 omits its exact subject name",
+      "session 3 omits its exact subject name"
+    ],
+    "response": {
+      "summary": "Today's plan includes 55 minutes of study across 1 subject, with 5 minutes of breaks.",
+      "allocation_explanations": [
+        {
+          "subject": "Quantum Basket Weaving",
+          "allocated_minutes": 55,
+          "reason": "Scheduled because of high priority, and a large knowledge gap."
+        }
+      ],
+      "session_messages": [
+        {
+          "session_order": 1,
+          "message": "Session 1: Study Quantum Basket Weaving for 28 minutes using active recall, guided practice, self-check."
+        },
+        {
+          "session_order": 2,
+          "message": "Session 2: Take the planned 5-minute break."
+        },
+        {
+          "session_order": 3,
+          "message": "Session 3: Study Quantum Basket Weaving for 27 minutes using active recall, guided practice, self-check."
+        }
+      ],
+      "sensor_message": null,
+      "unscheduled_message": null,
+      "warnings": [
+        "Quantum Basket Weaving: no reliable subject profile was found; a generic session was used"
+      ]
+    }
+  },
+  {
+    "case_id": "sensor_movement_break",
+    "generation_mode": "local_llm",
+    "attempt_count": 1,
+    "latency_seconds": 11.1808,
+    "validation_errors": [],
+    "response": {
+      "summary": "Chemistry is prioritized due to high workload, difficulty, and knowledge gap. A 5-minute movement break is scheduled to support physical well-being. The study session uses targeted practice, feedback, and structured lab preparation methods. English Literature is not scheduled due to insufficient time and ambiguous subject alias.",
+      "allocation_explanations": [
+        {
+          "subject": "Chemistry",
+          "allocated_minutes": 30,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap."
+        }
+      ],
+      "session_messages": [
+        {
+          "session_order": 1,
+          "message": "A short movement or repositioning break is appropriate."
+        },
+        {
+          "session_order": 2,
+          "message": "Chemistry study session: Use practice questions matched to the target performance, with variation in surface features, and apply pre-laboratory preparation and post-laboratory explanation strategies to build understanding and retention."
+        }
+      ],
+      "sensor_message": "Take a short movement break before the next study block.",
+      "unscheduled_message": "English Literature was not scheduled because the remaining time cannot fit a meaningful study session and required break reserve.",
+      "warnings": [
+        "English Literature: the subject alias was ambiguous; a generic session was used",
+        "Some subjects were left unscheduled because meaningful sessions would not fit.",
+        "5 study minutes were deferred to keep the plan within its available time."
+      ]
+    }
+  },
+  {
+    "case_id": "missing_sensor_data_fallback",
+    "generation_mode": "deterministic_fallback",
+    "attempt_count": 2,
+    "latency_seconds": 32.3394,
+    "validation_errors": [
+      "unsupported priority claim for Mathematics",
+      "unsupported priority claim for History",
+      "unscheduled_message must be null when no subject is unscheduled",
+      "sensor_message is required when a sensor result is supplied"
+    ],
+    "response": {
+      "summary": "Today's plan includes 135 minutes of study across 3 subjects, with 15 minutes of breaks.",
+      "allocation_explanations": [
+        {
+          "subject": "Mathematics",
+          "allocated_minutes": 60,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap."
+        },
+        {
+          "subject": "Biology",
+          "allocated_minutes": 41,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap."
+        },
+        {
+          "subject": "History",
+          "allocated_minutes": 34,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap."
+        }
+      ],
+      "session_messages": [
+        {
+          "session_order": 1,
+          "message": "Session 1: Study Mathematics for 60 minutes using worked examples, independent practice, error checking."
+        },
+        {
+          "session_order": 2,
+          "message": "Session 2: Take the planned 10-minute break."
+        },
+        {
+          "session_order": 3,
+          "message": "Session 3: Study Biology for 41 minutes using retrieval practice, self explanation, spaced review."
+        },
+        {
+          "session_order": 4,
+          "message": "Session 4: Take the planned 5-minute break."
+        },
+        {
+          "session_order": 5,
+          "message": "Session 5: Study History for 34 minutes using purposeful reading, section summaries, self explanation."
+        }
+      ],
+      "sensor_message": "No current sensor observation is available; the timer-based plan remains active.",
+      "unscheduled_message": null,
+      "warnings": []
+    }
+  }
+]

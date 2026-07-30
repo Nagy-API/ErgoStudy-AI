@@ -1,0 +1,30 @@
+{
+  "local_only": true,
+  "cloud_models_configured": false,
+  "api_url": "http://127.0.0.1:11434",
+  "api_status": "responding",
+  "ollama_version": "0.32.5",
+  "model_name": "qwen3:4b-instruct",
+  "model_digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+  "model_size_bytes": 2497293803,
+  "model_size_gb": 2.497,
+  "gpu_usage": {
+    "status": "available",
+    "execution": "gpu",
+    "size_vram_bytes": 3178149969,
+    "model_size_bytes": 3178149969,
+    "nvidia_smi": "NVIDIA GeForce RTX 3050 6GB Laptop GPU, 6144, 3129"
+  },
+  "model_details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "qwen3",
+    "families": [
+      "qwen3"
+    ],
+    "parameter_size": "4.0B",
+    "quantization_level": "Q4_K_M",
+    "context_length": 262144,
+    "embedding_length": 2560
+  }
+}
