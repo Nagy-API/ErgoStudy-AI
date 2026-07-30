@@ -1,0 +1,37 @@
+{
+  "benchmark_version": "1.0.0",
+  "batch_size": 32,
+  "configurations": [
+    {
+      "config_id": "minilm_plain",
+      "document_prefix": "",
+      "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+      "normalize_embeddings": true,
+      "query_prefix": ""
+    },
+    {
+      "config_id": "bge_small_plain",
+      "document_prefix": "",
+      "model_id": "BAAI/bge-small-en-v1.5",
+      "normalize_embeddings": true,
+      "query_prefix": ""
+    },
+    {
+      "config_id": "bge_small_instruction",
+      "document_prefix": "",
+      "model_id": "BAAI/bge-small-en-v1.5",
+      "normalize_embeddings": true,
+      "query_prefix": "Represent this sentence for searching relevant passages: "
+    },
+    {
+      "config_id": "e5_small_prefix",
+      "document_prefix": "passage: ",
+      "model_id": "intfloat/e5-small-v2",
+      "normalize_embeddings": true,
+      "query_prefix": "query: "
+    }
+  ],
+  "development_count": 64,
+  "final_test_count": 32,
+  "split_seed": 20260730
+}

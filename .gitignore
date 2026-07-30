@@ -32,6 +32,14 @@ desktop.ini
 chroma_db/*
 !chroma_db/.gitkeep
 
+# Local model downloads and benchmark scratch data
+.cache/
+huggingface_cache/
+models/
+data/processed/embedding_cache/
+data/processed/*.npy
+data/processed/*.npz
+
 # Logs and temporary files
 *.log
 tmp/

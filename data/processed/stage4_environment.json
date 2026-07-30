@@ -1,0 +1,45 @@
+{
+  "cpu_fallback_reason": null,
+  "gpu": {
+    "available_memory_bytes_at_check": 5376049152,
+    "compute_capability": "8.6",
+    "name": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+    "total_memory_bytes": 6441926656
+  },
+  "logical_cpu_count": 16,
+  "operating_system": {
+    "machine": "AMD64",
+    "release": "11",
+    "system": "Windows"
+  },
+  "packages": {
+    "chromadb": "1.5.9",
+    "huggingface-hub": "1.4.1",
+    "ipykernel": "7.2.0",
+    "numpy": "2.4.3",
+    "psutil": "7.2.2",
+    "sentence-transformers": "5.5.0",
+    "torch": "2.12.0+cu130"
+  },
+  "portable_paths_only": true,
+  "python": {
+    "implementation": "CPython",
+    "is_64_bit": true,
+    "version": "3.12.13"
+  },
+  "report_version": "1.0.0",
+  "selected_device": "cuda",
+  "system_memory_bytes": 25463480320,
+  "tensor_operation_check": {
+    "device": "cuda:0",
+    "operation": "dot([1,2,3],[4,5,6])",
+    "passed": true,
+    "result": 32.0
+  },
+  "torch": {
+    "cuda_available": true,
+    "cuda_runtime": "13.0",
+    "cudnn_version": 92000,
+    "version": "2.12.0+cu130"
+  }
+}

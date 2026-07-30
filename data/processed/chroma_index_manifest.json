@@ -1,0 +1,37 @@
+{
+  "collection_name": "ergostudy-knowledge-1-0-0",
+  "corpus_record_count": 477,
+  "corpus_sha256": "7b2156a6e49c742041edc53eb721033e042cb3329c0e50ee0cc19e4aa5b024df",
+  "dataset_version": "1.0.0-prototype",
+  "distance_metric": "cosine",
+  "embedding_dimension": 384,
+  "index_configuration": {
+    "hnsw": {
+      "ef_construction": 400,
+      "ef_search": 1000,
+      "max_neighbors": 32,
+      "space": "cosine"
+    }
+  },
+  "manifest_version": "1.0.0",
+  "metadata_projection_hash": "fce86973f7d0115ef569c9f1f699b2dca31ba01b77301658960e0deea1904bc4",
+  "normalized_embeddings": true,
+  "package_versions": {
+    "chromadb": "1.5.9",
+    "huggingface-hub": "1.4.1",
+    "ipykernel": "7.2.0",
+    "numpy": "2.4.3",
+    "psutil": "7.2.2",
+    "sentence-transformers": "5.5.0",
+    "torch": "2.12.0+cu130"
+  },
+  "preprocessing_configuration": {
+    "config_id": "minilm_plain",
+    "document_prefix": "",
+    "query_prefix": ""
+  },
+  "record_id_set_hash": "9e0997c6e66f66c477f9d5915d4b8348c115b298a7464f6efd63dd9c782210ad",
+  "retrieval_text_hash": "052c23c5c339bba852ac40b86fca4c56cd8f83489616b92633ceb11b0149ed8c",
+  "selected_model_id": "sentence-transformers/all-MiniLM-L6-v2",
+  "selected_model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+}

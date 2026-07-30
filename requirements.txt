@@ -1,2 +1,9 @@
-# The environment notebook uses only the Python standard library.
-# Project dependencies will be added in the stage that first requires them.
+# Stage 4 top-level dependencies. Install PyTorch with the CUDA 13.0 wheel index
+# as shown in scripts/setup_stage4_environment.ps1.
+torch==2.12.0+cu130
+sentence-transformers==5.5.0
+chromadb==1.5.9
+numpy==2.4.3
+huggingface-hub==1.4.1
+ipykernel==7.2.0
+psutil==7.2.2

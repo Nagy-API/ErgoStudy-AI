@@ -18,13 +18,19 @@ The knowledge domains, seven document families, conditional record schema, retri
 
 The `1.0.0-prototype` English corpus contains 477 retrievable records: 80 subject profiles, 141 topic profiles, 24 study strategies, 18 session templates, 14 sensor interventions, and 200 controlled subject aliases. It also contains 96 held-out evaluation queries outside the corpus. The deterministic builder, standard-library validator, notebooks, unit tests, processed family files, statistics, source expansion, source-role audit, structured manual sample, and Stage 3 report are complete. All blocking validations and 13 unit tests pass.
 
+### Embedding model evaluation and persistent ChromaDB
+
+Stage 4 created a CPython 3.12 `.venv`, verified CUDA execution on the RTX 3050 6GB Laptop GPU, and compared MiniLM, plain BGE, instruction BGE, and prefixed E5 on 64 development queries using direct normalized cosine similarity. The 32 final-test query IDs remain sealed and were not evaluated. `minilm_plain` using `sentence-transformers/all-MiniLM-L6-v2` revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` was selected by the documented development-only rule.
+
+The persistent `ergostudy-knowledge-1-0-0` Chroma collection contains all 477 corpus records with caller-provided embeddings and a scalar metadata projection. Persistence, full logical content, corpus/evaluation separation, nine metadata filters, direct-versus-Chroma top-10 identity, and reproducible tuned rebuild behavior pass. All 28 repository unit tests, both Stage 4 notebook executions, Stage 3 validation, package compatibility, Python compilation, notebook JSON parsing, and Git whitespace checks pass. Chroma contents, model caches, raw embeddings, and `.venv` remain untracked.
+
 ## Current stage
 
-Stage 3 is complete at its final validation checkpoint. No embedding, vector-database, retrieval, planner, sensor-adapter, local-model, or API implementation has started.
+Stage 4 is complete at its final validation checkpoint. Embedding evaluation and persistent Chroma indexing are implemented. The Stage 5 retrieval pipeline, planning engine, sensor adapter, local-model integration, API, and Flutter integration have not started.
 
 ## Next planned stage
 
-Stage 4: embeddings and ChromaDB. The next stage should compare suitable free local embedding models on the target hardware, define metadata filters, index only the validated knowledge corpus, preserve stable IDs and provenance, and verify deterministic persistent indexing. The held-out evaluation queries must remain outside the vector collection.
+Stage 5: retrieval pipeline and retrieval evaluation. It should use the fixed Stage 4 collection and selected embedding configuration, preserve record citations and metadata, freeze pipeline behavior before using the 32 sealed final-test queries, and report final retrieval quality without tuning on the final-test results.
 
 ## Confirmed product requirements
 
@@ -63,6 +69,9 @@ Stage 4: embeddings and ChromaDB. The next stage should compare suitable free lo
 - Paid APIs will not be used.
 - LangChain will not be used unless a later stage demonstrates a concrete need.
 - No model or embedding choice is final until candidates are evaluated on the target hardware and project evaluation set.
+- Stage 4 selected normalized `sentence-transformers/all-MiniLM-L6-v2` embeddings with plain query and document text, based only on ErgoStudy development queries.
+- Retrieval evaluation uses a deterministic 64-query development split and a sealed 32-query final-test split. Stage 4 computed no final-test retrieval metrics.
+- Chroma uses one persistent collection named `ergostudy-knowledge-1-0-0`, cosine distance, caller-provided embeddings, stable corpus IDs, and scalar metadata filters.
 - The knowledge base uses seven document families: subject profiles, topic profiles, study strategies, session templates, sensor interventions, subject aliases, and retrieval evaluation queries.
 - Family-specific conditional requirements are used instead of forcing irrelevant fields onto every record.
 - Retrieval evaluation queries remain outside the retrieval corpus to reduce evaluation leakage.
