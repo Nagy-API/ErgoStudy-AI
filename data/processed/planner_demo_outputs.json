@@ -1,0 +1,537 @@
+[
+  {
+    "example_id": "school_evening",
+    "plan": {
+      "plan_id": "plan-788bedb7048474bf",
+      "total_available_minutes": 150,
+      "total_study_minutes": 135,
+      "total_break_minutes": 15,
+      "total_planned_minutes": 150,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Mathematics",
+          "canonical_subject": "Mathematics",
+          "score": 4.35,
+          "allocated_study_minutes": 60,
+          "session_count": 1,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "Biology",
+          "canonical_subject": "Biology",
+          "score": 3.0,
+          "allocated_study_minutes": 41,
+          "session_count": 1,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "History",
+          "canonical_subject": "History",
+          "score": 2.0,
+          "allocated_study_minutes": 34,
+          "session_count": 1,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-history-cross-level-v1",
+            "topic-primary-source-analysis-history-v1",
+            "strategy-self-explanation-v1",
+            "strategy-science-data-interpretation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "unscheduled_subjects": [],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 60,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "16:00",
+          "subject": "Mathematics",
+          "topic": "Equations and identities",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-mathematics-cross-level-v1",
+            "topic-equations-and-identities-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-visual-representation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "17:00",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 41,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:10",
+          "subject": "Biology",
+          "topic": "Cells and organization",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "retrieval practice",
+            "self explanation",
+            "spaced review"
+          ],
+          "retrieved_record_ids": [
+            "subject-biology-cross-level-v1",
+            "topic-cell-structure-and-function-biology-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-self-explanation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 4,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": "17:51",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 5,
+          "session_type": "study",
+          "duration_minutes": 34,
+          "reason": "Scheduled based on its combined priority, workload, difficulty, and knowledge gap.",
+          "start_time": "17:56",
+          "subject": "History",
+          "topic": "Source analysis",
+          "cognitive_demand": "low",
+          "recommended_methods": [
+            "purposeful reading",
+            "section summaries",
+            "self explanation"
+          ],
+          "retrieved_record_ids": [
+            "subject-history-cross-level-v1",
+            "topic-primary-source-analysis-history-v1",
+            "strategy-self-explanation-v1",
+            "strategy-science-data-interpretation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "warnings": [],
+      "planner_version": "1.0.0-prototype"
+    }
+  },
+  {
+    "example_id": "university_afternoon",
+    "plan": {
+      "plan_id": "plan-8d8aa717f116a82b",
+      "total_available_minutes": 240,
+      "total_study_minutes": 205,
+      "total_break_minutes": 35,
+      "total_planned_minutes": 240,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Calculus 2",
+          "canonical_subject": "Calculus",
+          "score": 4.55,
+          "allocated_study_minutes": 78,
+          "session_count": 2,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-calculus-cross-level-v1",
+            "topic-integration-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-worked-example-fading-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "CS",
+          "canonical_subject": "Computer Science",
+          "score": 4.05,
+          "allocated_study_minutes": 67,
+          "session_count": 2,
+          "reason": "Scheduled because of high priority, high workload, and high difficulty.",
+          "retrieved_record_ids": [
+            "subject-computer-science-university-v1",
+            "topic-algorithms-and-data-structures-computer-science-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-code-trace-build-test-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "subject": "Stats",
+          "canonical_subject": "Statistics",
+          "score": 3.4,
+          "allocated_study_minutes": 60,
+          "session_count": 1,
+          "reason": "Scheduled because of high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-statistics-cross-level-v1",
+            "topic-probability-rules-probability-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-problem-representation-check-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "unscheduled_subjects": [],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 39,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "13:30",
+          "subject": "Calculus 2",
+          "topic": "Integration",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-calculus-cross-level-v1",
+            "topic-integration-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-worked-example-fading-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "14:09",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 60,
+          "reason": "Scheduled because of high difficulty, and a large knowledge gap.",
+          "start_time": "14:19",
+          "subject": "Stats",
+          "topic": "Probability",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-statistics-cross-level-v1",
+            "topic-probability-rules-probability-v1",
+            "strategy-science-data-interpretation-v1",
+            "strategy-problem-representation-check-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 4,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": "15:19",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 5,
+          "session_type": "study",
+          "duration_minutes": 39,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": "15:24",
+          "subject": "Calculus 2",
+          "topic": "Integration",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-calculus-cross-level-v1",
+            "topic-integration-mathematics-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-worked-example-fading-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 6,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "16:03",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 7,
+          "session_type": "study",
+          "duration_minutes": 34,
+          "reason": "Scheduled because of high priority, high workload, and high difficulty.",
+          "start_time": "16:13",
+          "subject": "CS",
+          "topic": "Algorithms",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-computer-science-university-v1",
+            "topic-algorithms-and-data-structures-computer-science-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-code-trace-build-test-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        },
+        {
+          "order": 8,
+          "session_type": "break",
+          "duration_minutes": 10,
+          "reason": "Scheduled recovery break after a demanding session.",
+          "start_time": "16:47",
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 9,
+          "session_type": "study",
+          "duration_minutes": 33,
+          "reason": "Scheduled because of high priority, high workload, and high difficulty.",
+          "start_time": "16:57",
+          "subject": "CS",
+          "topic": "Algorithms",
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "worked examples",
+            "independent practice",
+            "error checking"
+          ],
+          "retrieved_record_ids": [
+            "subject-computer-science-university-v1",
+            "topic-algorithms-and-data-structures-computer-science-v1",
+            "strategy-problem-representation-check-v1",
+            "strategy-code-trace-build-test-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "warnings": [],
+      "planner_version": "1.0.0-prototype"
+    }
+  },
+  {
+    "example_id": "short_window",
+    "plan": {
+      "plan_id": "plan-73a1c52793b818b2",
+      "total_available_minutes": 30,
+      "total_study_minutes": 30,
+      "total_break_minutes": 0,
+      "total_planned_minutes": 30,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Chemistry",
+          "canonical_subject": "Chemistry",
+          "score": 4.75,
+          "allocated_study_minutes": 30,
+          "session_count": 1,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "retrieved_record_ids": [
+            "subject-chemistry-cross-level-v1",
+            "strategy-practice-questions-transfer-v1",
+            "strategy-laboratory-preparation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "unscheduled_subjects": [
+        {
+          "subject": "English Literature",
+          "score": 2.65,
+          "reason": "Not scheduled because the remaining time cannot fit the configured minimum useful study session and required break reserve."
+        }
+      ],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 30,
+          "reason": "Scheduled because of high priority, high workload, high difficulty, and a large knowledge gap.",
+          "start_time": null,
+          "subject": "Chemistry",
+          "topic": null,
+          "cognitive_demand": "high",
+          "recommended_methods": [
+            "target matched practice",
+            "feedback",
+            "variation"
+          ],
+          "retrieved_record_ids": [
+            "subject-chemistry-cross-level-v1",
+            "strategy-practice-questions-transfer-v1",
+            "strategy-laboratory-preparation-v1",
+            "session-data-analysis-v1"
+          ],
+          "used_fallback": false
+        }
+      ],
+      "warnings": [
+        "English Literature: the subject alias was ambiguous; a generic session was used",
+        "Some subjects were left unscheduled because meaningful sessions would not fit."
+      ],
+      "planner_version": "1.0.0-prototype"
+    }
+  },
+  {
+    "example_id": "unknown_subject_fallback",
+    "plan": {
+      "plan_id": "plan-60376eca5443c3c8",
+      "total_available_minutes": 60,
+      "total_study_minutes": 55,
+      "total_break_minutes": 5,
+      "total_planned_minutes": 60,
+      "unallocated_minutes": 0,
+      "scheduled_subjects": [
+        {
+          "subject": "Quantum Basket Weaving",
+          "canonical_subject": null,
+          "score": 3.55,
+          "allocated_study_minutes": 55,
+          "session_count": 2,
+          "reason": "Scheduled because of high priority, and a large knowledge gap.",
+          "retrieved_record_ids": [],
+          "used_fallback": true
+        }
+      ],
+      "unscheduled_subjects": [],
+      "sessions": [
+        {
+          "order": 1,
+          "session_type": "study",
+          "duration_minutes": 28,
+          "reason": "Scheduled because of high priority, and a large knowledge gap.",
+          "start_time": null,
+          "subject": "Quantum Basket Weaving",
+          "topic": "Pattern review",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "active recall",
+            "guided practice",
+            "self-check"
+          ],
+          "retrieved_record_ids": [],
+          "used_fallback": true
+        },
+        {
+          "order": 2,
+          "session_type": "break",
+          "duration_minutes": 5,
+          "reason": "Scheduled short recovery break.",
+          "start_time": null,
+          "subject": null,
+          "topic": null,
+          "cognitive_demand": null,
+          "recommended_methods": [],
+          "retrieved_record_ids": [],
+          "used_fallback": false
+        },
+        {
+          "order": 3,
+          "session_type": "study",
+          "duration_minutes": 27,
+          "reason": "Scheduled because of high priority, and a large knowledge gap.",
+          "start_time": null,
+          "subject": "Quantum Basket Weaving",
+          "topic": "Pattern review",
+          "cognitive_demand": "medium",
+          "recommended_methods": [
+            "active recall",
+            "guided practice",
+            "self-check"
+          ],
+          "retrieved_record_ids": [],
+          "used_fallback": true
+        }
+      ],
+      "warnings": [
+        "Quantum Basket Weaving: no reliable subject profile was found; a generic session was used"
+      ],
+      "planner_version": "1.0.0-prototype"
+    }
+  }
+]

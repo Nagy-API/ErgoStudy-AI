@@ -39,11 +39,11 @@ See [docs/system_architecture.md](docs/system_architecture.md) for the planned c
 
 ## Current status
 
-Stages 1 through 5 are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, and a reusable production `RetrievalService`. Stage 5 added exact ambiguity-preserving alias resolution, deterministic query analysis, scalar metadata filters, structured source-preserving results, development failure analysis, a frozen retrieval configuration, and a one-time evaluation of the 32-query sealed test set.
+Stages 1 through 6A are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, a reusable production `RetrievalService`, and a deterministic non-sensor daily study planner. Stage 6A adds validated subject inputs, configurable scoring and time rules, proportional allocation, bounded sessions, demand-aware ordering, breaks, traceable study methods, explicit fallbacks, unscheduled-subject reporting, and stable plan hashes.
 
-The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. The deterministic planning engine is the next stage; sensor adaptation, local-model integration, API implementation, and Flutter integration have not started.
+The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. Sensor-aware adaptation is the next stage; local-model integration, API implementation, and Flutter integration have not started.
 
-See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), and [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md) for the completed checkpoints.
+See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md), and [docs/stage6a_daily_planner_report.md](docs/stage6a_daily_planner_report.md) for the completed checkpoints.
 
 ## Project tracking
 
@@ -129,3 +129,39 @@ Development comparison, failure analysis, and the sealed final-test artifacts ar
 .venv\Scripts\python.exe scripts\inspect_retrieval_failures.py
 .venv\Scripts\python.exe scripts\run_notebook_cells.py 05_retrieval_pipeline.ipynb
 ```
+
+## Stage 6A daily planner workflow
+
+The planner accepts plain JSON-compatible dictionaries and does not require an LLM:
+
+```python
+from pathlib import Path
+from src.daily_planner import DailyPlanner
+from src.retriever import RetrievalService
+
+root = Path.cwd()
+with RetrievalService.from_frozen_config(root, device="cpu") as retriever:
+    planner = DailyPlanner(root, retrieval_service=retriever)
+    plan = planner.plan({
+        "total_available_minutes": 90,
+        "preferred_start_time": "16:00",
+        "subjects": [{
+            "name": "Stats",
+            "topics": ["Probability"],
+            "difficulty": 4,
+            "priority": 5,
+            "workload": 4,
+            "current_understanding": 2,
+        }],
+    })
+    print(plan.to_dict())
+```
+
+Regenerate the committed school, university, short-window, and fallback demos with:
+
+```powershell
+.venv\Scripts\python.exe scripts\generate_study_plan.py --device cpu
+.venv\Scripts\python.exe scripts\run_notebook_cells.py 06_daily_planner.ipynb
+```
+
+Planner weights and time bounds are in `config/planner_config.json`. They are versioned prototype product settings rather than universal scientific values.

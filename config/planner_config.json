@@ -1,0 +1,37 @@
+{
+  "planner_version": "1.0.0-prototype",
+  "planning_weights": {
+    "priority": 0.35,
+    "workload": 0.25,
+    "difficulty": 0.2,
+    "knowledge_gap": 0.2
+  },
+  "time_rules": {
+    "minimum_useful_session_minutes": 20,
+    "maximum_session_minutes": 60,
+    "default_session_minutes": 40,
+    "short_break_minutes": 5,
+    "normal_break_minutes": 10,
+    "minimum_total_available_minutes": 30,
+    "maximum_total_available_minutes": 720
+  },
+  "cognitive_demand": {
+    "high_score_threshold": 4.0,
+    "medium_score_threshold": 2.75
+  },
+  "retrieval": {
+    "subject_top_k": 5,
+    "topic_top_k": 3,
+    "strategy_top_k": 2,
+    "template_top_k": 2,
+    "minimum_similarity": 0.3,
+    "maximum_methods_per_session": 3
+  },
+  "fallback": {
+    "recommended_methods": [
+      "active recall",
+      "guided practice",
+      "self-check"
+    ]
+  }
+}

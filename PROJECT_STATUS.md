@@ -32,13 +32,19 @@ The 64-query development split compared baseline dense retrieval, exact alias re
 
 After split hashes and zero final-ID use were verified, the guarded 32-query final test ran exactly once. It achieved Recall@1 0.7241, Recall@3 0.8448, Recall@5 0.8621, Recall@10 0.8966, MRR@10 0.8728, nDCG@10 0.8673, document-family Hit@1/Hit@5 0.9688/1.0000, and subject-family Hit@1/Hit@5 1.0000/1.0000. No retriever change was made after these results.
 
+### Deterministic non-sensor daily study planner
+
+Stage 6A created a deterministic, JSON-compatible one-day planner. It validates available time, optional start time and session preference, subject ratings, topics, and duplicate names. It scores subjects using configurable prototype weights for priority, workload, user-provided difficulty, and knowledge gap; selects only subjects that can receive meaningful time; allocates minutes proportionally; creates 20-to-60-minute sessions; inserts configured breaks; and avoids adjacent high-demand sessions when lower-demand work is available.
+
+The planner retrieves subject profiles, topic profiles, study strategies, and session templates through the frozen Stage 5 service. Exact and alias resolution precede dense acceptance, every study session retains corpus record IDs, and ambiguous, weak, unknown, or unavailable retrieval uses a clearly marked generic fallback. Plan IDs hash normalized input plus the complete configuration. Four committed demos, a reusable CLI, a notebook, unit tests, and persistent-Chroma integration coverage are complete.
+
 ## Current stage
 
-Stage 5 is complete at its final validation checkpoint. Production retrieval, development failure analysis, frozen configuration selection, and the sealed final retrieval evaluation are implemented. The planning engine, sensor adapter, local-model integration, API, and Flutter integration have not started.
+Stage 6A is complete at its final validation checkpoint. The deterministic non-sensor daily planner, retrieval-backed knowledge adapter, demo generator, notebook, tests, and documentation are implemented. Sensor adaptation, local-model integration, API, and Flutter integration have not started.
 
 ## Next planned stage
 
-Stage 6: deterministic daily planning engine. It should consume structured retrieval results where useful while keeping time allocation, break placement, prioritization, and rescheduling deterministic, explainable, and independently testable.
+Stage 6B: sensor-aware adaptation. It should consume a confirmed sensor contract and apply deterministic, non-medical timing and break adjustments without changing the Stage 6A input scoring rules.
 
 ## Confirmed product requirements
 
@@ -123,6 +129,21 @@ The 29-source catalog now includes descriptive coverage for business, economics,
 - Which independent reviewer can verify Tier A records and the Tier C sample before public deployment?
 
 ## Last validation results
+
+The Stage 6A validation completed successfully on July 30, 2026:
+
+- All 42 focused planner and required retrieval tests pass, including real integration with the existing persistent Chroma collection.
+- A separate sweep passed 2,073 boundary combinations covering every total from 30 to 720 minutes and preferred session values of 20, 40, and 60 minutes.
+- Every generated study session stays between 20 and 60 minutes, every duration is positive, and no plan exceeds its available time.
+- The school demo allocates 135 study and 15 break minutes; the university demo allocates 205 study and 35 break minutes.
+- The 30-minute demo schedules one meaningful subject and reports the other as unscheduled. The unknown-subject demo uses a clearly marked generic fallback with no invented record IDs.
+- All returned retrieval record IDs in the integration plan exist in the 477-record corpus, and planner source inspection confirms that sealed evaluation fields and files are not used.
+- Demo regeneration is byte-identical with SHA-256 `f6f543c5b297bb6c88e6cf3339e0f5b4b0eded2f50e30918c130c1312b6d3962`.
+- All six Stage 6A notebook code cells execute, including score, retrieval, allocation, time-constraint, and repeated-output assertions.
+- Planner and test compilation, notebook and JSON parsing, and Git whitespace checks pass.
+- No embedding benchmark ran, the frozen retrieval configuration did not change, and the Chroma collection was not rebuilt.
+
+### Previous Stage 5 validation
 
 The Stage 5 validation completed successfully on July 30, 2026:
 

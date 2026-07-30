@@ -1,0 +1,109 @@
+[
+  {
+    "example_id": "school_evening",
+    "request": {
+      "total_available_minutes": 150,
+      "preferred_start_time": "16:00",
+      "preferred_session_length": 40,
+      "subjects": [
+        {
+          "name": "Mathematics",
+          "topics": ["Equations and identities"],
+          "difficulty": 4,
+          "priority": 5,
+          "workload": 4,
+          "current_understanding": 2
+        },
+        {
+          "name": "Biology",
+          "topics": ["Cells and organization"],
+          "difficulty": 3,
+          "priority": 3,
+          "workload": 3,
+          "current_understanding": 3
+        },
+        {
+          "name": "History",
+          "topics": ["Source analysis"],
+          "difficulty": 2,
+          "priority": 2,
+          "workload": 2,
+          "current_understanding": 4
+        }
+      ]
+    }
+  },
+  {
+    "example_id": "university_afternoon",
+    "request": {
+      "total_available_minutes": 240,
+      "preferred_start_time": "13:30",
+      "preferred_session_length": 45,
+      "subjects": [
+        {
+          "name": "Calculus 2",
+          "topics": ["Integration"],
+          "difficulty": 5,
+          "priority": 5,
+          "workload": 4,
+          "current_understanding": 2
+        },
+        {
+          "name": "CS",
+          "topics": ["Algorithms"],
+          "difficulty": 4,
+          "priority": 4,
+          "workload": 5,
+          "current_understanding": 3
+        },
+        {
+          "name": "Stats",
+          "topics": ["Probability"],
+          "difficulty": 4,
+          "priority": 3,
+          "workload": 3,
+          "current_understanding": 2
+        }
+      ]
+    }
+  },
+  {
+    "example_id": "short_window",
+    "request": {
+      "total_available_minutes": 30,
+      "subjects": [
+        {
+          "name": "Chemistry",
+          "difficulty": 5,
+          "priority": 5,
+          "workload": 4,
+          "current_understanding": 1
+        },
+        {
+          "name": "English Literature",
+          "difficulty": 3,
+          "priority": 2,
+          "workload": 3,
+          "current_understanding": 3
+        }
+      ]
+    }
+  },
+  {
+    "example_id": "unknown_subject_fallback",
+    "request": {
+      "total_available_minutes": 60,
+      "preferred_session_length": 30,
+      "subjects": [
+        {
+          "name": "Quantum Basket Weaving",
+          "topics": ["Pattern review"],
+          "difficulty": 3,
+          "priority": 4,
+          "workload": 3,
+          "current_understanding": 2
+        }
+      ]
+    }
+  }
+]
