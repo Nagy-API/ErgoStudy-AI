@@ -24,13 +24,21 @@ Stage 4 created a CPython 3.12 `.venv`, verified CUDA execution on the RTX 3050 
 
 The persistent `ergostudy-knowledge-1-0-0` Chroma collection contains all 477 corpus records with caller-provided embeddings and a scalar metadata projection. Persistence, full logical content, corpus/evaluation separation, nine metadata filters, direct-versus-Chroma top-10 identity, and reproducible tuned rebuild behavior pass. All 28 repository unit tests, both Stage 4 notebook executions, Stage 3 validation, package compatibility, Python compilation, notebook JSON parsing, and Git whitespace checks pass. Chroma contents, model caches, raw embeddings, and `.venv` remain untracked.
 
+### Production retrieval pipeline and final retrieval evaluation
+
+Stage 5 created a reusable `RetrievalService` with local-only `minilm_plain` loading, persistent Chroma access, `top_k`, scalar metadata filters, source-preserving structured results, documented cosine similarity conversion, deterministic ordering, safe invalid-query behavior, deterministic non-oracle intent analysis, and exact normalized subject and alias resolution with ambiguity preservation.
+
+The 64-query development split compared baseline dense retrieval, exact alias resolution plus dense retrieval, and an intent-aware blend. Twenty baseline failures were classified without changing the corpus: seven ambiguous queries, four embedding limitations, four narrow or incorrect labels, four wrong document-family rankings, and one alias-resolution failure. The frozen `alias_plus_dense` configuration improved development Recall@5 from 0.7143 to 0.8661 and MRR@10 from 0.6429 to 0.8750.
+
+After split hashes and zero final-ID use were verified, the guarded 32-query final test ran exactly once. It achieved Recall@1 0.7241, Recall@3 0.8448, Recall@5 0.8621, Recall@10 0.8966, MRR@10 0.8728, nDCG@10 0.8673, document-family Hit@1/Hit@5 0.9688/1.0000, and subject-family Hit@1/Hit@5 1.0000/1.0000. No retriever change was made after these results.
+
 ## Current stage
 
-Stage 4 is complete at its final validation checkpoint. Embedding evaluation and persistent Chroma indexing are implemented. The Stage 5 retrieval pipeline, planning engine, sensor adapter, local-model integration, API, and Flutter integration have not started.
+Stage 5 is complete at its final validation checkpoint. Production retrieval, development failure analysis, frozen configuration selection, and the sealed final retrieval evaluation are implemented. The planning engine, sensor adapter, local-model integration, API, and Flutter integration have not started.
 
 ## Next planned stage
 
-Stage 5: retrieval pipeline and retrieval evaluation. It should use the fixed Stage 4 collection and selected embedding configuration, preserve record citations and metadata, freeze pipeline behavior before using the 32 sealed final-test queries, and report final retrieval quality without tuning on the final-test results.
+Stage 6: deterministic daily planning engine. It should consume structured retrieval results where useful while keeping time allocation, break placement, prioritization, and rescheduling deterministic, explainable, and independently testable.
 
 ## Confirmed product requirements
 
@@ -71,6 +79,8 @@ Stage 5: retrieval pipeline and retrieval evaluation. It should use the fixed St
 - No model or embedding choice is final until candidates are evaluated on the target hardware and project evaluation set.
 - Stage 4 selected normalized `sentence-transformers/all-MiniLM-L6-v2` embeddings with plain query and document text, based only on ErgoStudy development queries.
 - Retrieval evaluation uses a deterministic 64-query development split and a sealed 32-query final-test split. Stage 4 computed no final-test retrieval metrics.
+- Stage 5 freezes exact normalized alias resolution plus dense retrieval. Ambiguous aliases require educational context and never silently collapse multiple controlled subjects.
+- The sealed 32-query final test was executed exactly once after configuration freeze; final results are reporting artifacts, not tuning input.
 - Chroma uses one persistent collection named `ergostudy-knowledge-1-0-0`, cosine distance, caller-provided embeddings, stable corpus IDs, and scalar metadata filters.
 - The knowledge base uses seven document families: subject profiles, topic profiles, study strategies, session templates, sensor interventions, subject aliases, and retrieval evaluation queries.
 - Family-specific conditional requirements are used instead of forcing irrelevant fields onto every record.
@@ -113,6 +123,18 @@ The 29-source catalog now includes descriptive coverage for business, economics,
 - Which independent reviewer can verify Tier A records and the Tier C sample before public deployment?
 
 ## Last validation results
+
+The Stage 5 validation completed successfully on July 30, 2026:
+
+- The existing 477-record Chroma collection passed full count, ID, document, metadata, and manifest verification and was not rebuilt.
+- The service returns the required structured schema and retains source, review, lineage, evidence, and safety metadata.
+- Development Recall@5 improved from 0.7143 to 0.8661 and MRR@10 from 0.6429 to 0.8750.
+- All 20 development baseline failures were classified; no corpus modification was justified.
+- The frozen configuration and split hashes prove that no final-test ID entered development artifacts.
+- The sealed final test ran once and produced Recall@5 0.8621, MRR@10 0.8728, and document/subject family Hit@5 1.0000.
+- The final checkpoint includes the complete repository test suite, persistent-index integration tests, notebook execution and JSON parsing, Python compilation, and Git whitespace validation.
+
+### Previous Stage 3 validation
 
 The Stage 3 validation completed successfully on July 30, 2026:
 

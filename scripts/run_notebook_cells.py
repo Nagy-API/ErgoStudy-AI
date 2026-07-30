@@ -29,6 +29,7 @@ def main() -> int:
     names = sys.argv[1:] or [
         "03_embedding_model_evaluation.ipynb",
         "04_chromadb_index.ipynb",
+        "05_retrieval_pipeline.ipynb",
     ]
     for name in names:
         path = PROJECT_ROOT / "notebooks" / name

@@ -1,0 +1,637 @@
+{
+  "analysis_scope": "64-query development split only",
+  "baseline_failure_count": 20,
+  "baseline_failure_definition": "Recall@5 below 1.0, document-family Hit@5 failure, or subject-family Hit@5 failure.",
+  "category_counts": {
+    "alias-resolution failure": 1,
+    "ambiguous query": 7,
+    "corpus coverage limitation": 0,
+    "embedding limitation": 4,
+    "metadata mismatch": 0,
+    "narrow or incorrect evaluation label": 4,
+    "wrong document-family ranking": 4
+  },
+  "failures": [
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "topic-genetics-vocabulary-and-mechanisms-biology-v1",
+          "topic-cell-structure-and-function-biology-v1",
+          "subject-biology-cross-level-v1",
+          "topic-protein-structure-and-function-biochemistry-v1",
+          "alias-biology-bio-v1"
+        ]
+      },
+      "explanation": "The dense top five resolves the stated subject but the labeled alias or companion method is narrower.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "narrow or incorrect evaluation label",
+      "query_id": "rq-107",
+      "query_text": "My Bio topic is genetics vocabulary."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "topic-integration-mathematics-v1",
+          "strategy-worked-example-fading-v1",
+          "topic-structural-analysis-civil-engineering-v1",
+          "strategy-problem-representation-check-v1",
+          "topic-numerical-methods-applied-mathematics-v1"
+        ]
+      },
+      "explanation": "The labeled record exists, but dense similarity ranks it too low.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "embedding limitation",
+      "query_id": "rq-110",
+      "query_text": "Which study method fits integration by parts?"
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "topic-french-vocabulary-recall-french-v1",
+          "subject-french-cross-level-v1",
+          "topic-german-vocabulary-recall-german-v1",
+          "topic-spanish-vocabulary-recall-spanish-v1",
+          "alias-french-french-studies-v1"
+        ]
+      },
+      "explanation": "The dense top five contains a family- and subject-compatible alternative but not the narrow labeled ID.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "narrow or incorrect evaluation label",
+      "query_id": "rq-112",
+      "query_text": "I have 80 French words to remember."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "strategy-conditional-interleaving-v1",
+          "subject-algebra-cross-level-v1",
+          "topic-equations-and-identities-mathematics-v1",
+          "topic-linear-equations-algebra-v1",
+          "topic-mathematical-modelling-applied-mathematics-v1"
+        ]
+      },
+      "explanation": "The dense top five contains a family- and subject-compatible alternative but not the narrow labeled ID.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "narrow or incorrect evaluation label",
+      "query_id": "rq-119",
+      "query_text": "Mix algebra problem types or finish one type first?"
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "topic-equations-and-identities-mathematics-v1",
+          "topic-linear-equations-algebra-v1",
+          "topic-mathematical-modelling-applied-mathematics-v1",
+          "topic-chemical-equations-and-stoichiometry-chemistry-v1",
+          "topic-quantitative-economics-problems-economics-v1"
+        ]
+      },
+      "explanation": "No expected document family appears in the dense top five.",
+      "intent_aware": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "wrong document-family ranking",
+      "query_id": "rq-120",
+      "query_text": "Can worked examples help me start difficult equations?"
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": null
+      },
+      "baseline": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": null,
+        "top_5_ids": [
+          "topic-equations-and-identities-mathematics-v1",
+          "topic-mass-and-energy-balances-chemical-engineering-v1",
+          "topic-linear-equations-algebra-v1",
+          "topic-integration-mathematics-v1",
+          "topic-chemical-equations-and-stoichiometry-chemistry-v1"
+        ]
+      },
+      "explanation": "No expected document family appears in the dense top five.",
+      "intent_aware": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": null
+      },
+      "primary_category": "wrong document-family ranking",
+      "query_id": "rq-121",
+      "query_text": "I can follow the solution but cannot explain why each step works."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "topic-anatomical-terminology-anatomy-and-physiology-v1",
+          "alias-anatomy-and-physiology-anatomy-and-physiology-course-v1",
+          "alias-anatomy-and-physiology-anatomy-and-physiology-studies-v1",
+          "alias-medical-science-medical-science-course-v1",
+          "alias-anatomy-and-physiology-a-and-p-v1"
+        ]
+      },
+      "explanation": "No expected document family appears in the dense top five.",
+      "intent_aware": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "wrong document-family ranking",
+      "query_id": "rq-122",
+      "query_text": "How should I use flashcards for anatomy terms?"
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": null,
+        "recall_at_5": null,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": null,
+        "recall_at_5": null,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "topic-political-institutions-political-science-v1",
+          "alias-political-science-politics-v1",
+          "alias-political-science-government-studies-v1",
+          "subject-political-science-cross-level-v1",
+          "topic-policy-case-analysis-political-science-v1"
+        ]
+      },
+      "explanation": "No expected document family appears in the dense top five.",
+      "intent_aware": {
+        "document_family_hit_at_5": false,
+        "mrr_at_10": null,
+        "recall_at_5": null,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "wrong document-family ranking",
+      "query_id": "rq-124",
+      "query_text": "How do I annotate a dense political science article?"
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.5,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.5,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "session-creative-critique-v1",
+          "session-writing-draft-revise-v1",
+          "session-literature-annotation-v1",
+          "session-purposeful-reading-v1",
+          "strategy-plan-draft-revise-v1"
+        ]
+      },
+      "explanation": "The labeled record exists, but dense similarity ranks it too low.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.5,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "embedding limitation",
+      "query_id": "rq-127",
+      "query_text": "I have 35 minutes to improve an essay draft."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "subject-design-cross-level-v1",
+          "topic-layout-prototype-and-critique-graphic-design-v1",
+          "subject-graphic-design-cross-level-v1",
+          "subject-architecture-cross-level-v1",
+          "topic-spatial-design-development-architecture-v1"
+        ]
+      },
+      "explanation": "The wording intentionally permits multiple reasonable interpretations.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "ambiguous query",
+      "query_id": "rq-142",
+      "query_text": "I need to study Design class this afternoon."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "subject-electrical-engineering-university-v1",
+          "subject-earth-science-cross-level-v1",
+          "topic-earth-systems-and-cycles-earth-science-v1",
+          "subject-general-science-cross-level-v1",
+          "subject-economics-cross-level-v1"
+        ]
+      },
+      "explanation": "The wording intentionally permits multiple reasonable interpretations.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "ambiguous query",
+      "query_id": "rq-143",
+      "query_text": "I need to study EE this afternoon."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "subject-english-language-cross-level-v1",
+          "subject-english-literature-cross-level-v1",
+          "topic-academic-vocabulary-english-language-v1",
+          "subject-linguistics-cross-level-v1",
+          "strategy-vocabulary-context-recall-v1"
+        ]
+      },
+      "explanation": "The wording intentionally permits multiple reasonable interpretations.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "ambiguous query",
+      "query_id": "rq-145",
+      "query_text": "I need to study English this afternoon."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": false,
+        "top_5_ids": [
+          "subject-english-language-cross-level-v1",
+          "topic-academic-vocabulary-english-language-v1",
+          "subject-english-literature-cross-level-v1",
+          "strategy-elaborative-questioning-v1",
+          "subject-economics-cross-level-v1"
+        ]
+      },
+      "explanation": "The wording intentionally permits multiple reasonable interpretations.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "ambiguous query",
+      "query_id": "rq-148",
+      "query_text": "I need to study IE this afternoon."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": false,
+        "top_5_ids": [
+          "topic-stellar-properties-and-evolution-astronomy-v1",
+          "topic-interpreting-geological-evidence-earth-science-v1",
+          "subject-general-science-cross-level-v1",
+          "subject-astronomy-cross-level-v1",
+          "subject-geometry-cross-level-v1"
+        ]
+      },
+      "explanation": "The wording intentionally permits multiple reasonable interpretations.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "ambiguous query",
+      "query_id": "rq-149",
+      "query_text": "I need to study IT this afternoon."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": false,
+        "top_5_ids": [
+          "subject-general-science-cross-level-v1",
+          "subject-mathematics-cross-level-v1",
+          "subject-algebra-cross-level-v1",
+          "strategy-laboratory-preparation-v1",
+          "subject-physics-cross-level-v1"
+        ]
+      },
+      "explanation": "The wording intentionally permits multiple reasonable interpretations.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "ambiguous query",
+      "query_id": "rq-151",
+      "query_text": "I need to study ME this afternoon."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 0.5,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "subject-programming-cross-level-v1",
+          "strategy-code-trace-build-test-v1",
+          "topic-loops-and-control-flow-programming-v1",
+          "topic-functions-and-modular-code-programming-v1",
+          "subject-computer-science-university-v1"
+        ]
+      },
+      "explanation": "Dense retrieval did not reliably resolve the controlled alias in the top five.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "alias-resolution failure",
+      "query_id": "rq-152",
+      "query_text": "I need to study Programing this afternoon."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": false,
+        "top_5_ids": [
+          "strategy-elaborative-questioning-v1",
+          "subject-sociology-cross-level-v1",
+          "topic-social-research-evidence-sociology-v1",
+          "subject-general-science-cross-level-v1",
+          "subject-law-university-v1"
+        ]
+      },
+      "explanation": "The wording intentionally permits multiple reasonable interpretations.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "ambiguous query",
+      "query_id": "rq-154",
+      "query_text": "I need to study SE this afternoon."
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": false,
+        "top_5_ids": [
+          "session-short-gap-review-v1",
+          "session-project-milestone-v1",
+          "session-recall-feedback-v1",
+          "session-literature-annotation-v1",
+          "session-creative-critique-v1"
+        ]
+      },
+      "explanation": "The labeled record exists, but dense similarity ranks it too low.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "embedding limitation",
+      "query_id": "rq-173",
+      "query_text": "How should I structure one focused block for Earth Science without assuming an ideal timer?"
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": true,
+        "top_5_ids": [
+          "session-language-vocabulary-v1",
+          "session-purposeful-reading-v1",
+          "session-recall-feedback-v1",
+          "session-literature-annotation-v1",
+          "session-short-gap-review-v1"
+        ]
+      },
+      "explanation": "The dense top five contains a family- and subject-compatible alternative but not the narrow labeled ID.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.5,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "narrow or incorrect evaluation label",
+      "query_id": "rq-178",
+      "query_text": "How should I structure one focused block for English Language without assuming an ideal timer?"
+    },
+    {
+      "alias_plus_dense": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "baseline": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 0.0,
+        "recall_at_5": 0.0,
+        "subject_family_hit_at_5": false,
+        "top_5_ids": [
+          "session-short-gap-review-v1",
+          "session-creative-critique-v1",
+          "session-writing-draft-revise-v1",
+          "session-concept-explanation-v1",
+          "session-recall-feedback-v1"
+        ]
+      },
+      "explanation": "The labeled record exists, but dense similarity ranks it too low.",
+      "intent_aware": {
+        "document_family_hit_at_5": true,
+        "mrr_at_10": 1.0,
+        "recall_at_5": 1.0,
+        "subject_family_hit_at_5": true
+      },
+      "primary_category": "embedding limitation",
+      "query_id": "rq-193",
+      "query_text": "How should I structure one focused block for Civics without assuming an ideal timer?"
+    }
+  ],
+  "final_test_query_ids_used": false
+}

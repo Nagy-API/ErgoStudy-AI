@@ -39,9 +39,11 @@ See [docs/system_architecture.md](docs/system_architecture.md) for the planned c
 
 ## Current status
 
-Stages 1 through 4 are complete. The repository contains a deterministic, validated 477-record knowledge corpus, a 64-query development split and sealed 32-query final-test split, a development-based comparison of four embedding configurations, and a persistent 477-record ChromaDB collection. `minilm_plain` using `sentence-transformers/all-MiniLM-L6-v2` is the selected Stage 4 embedding configuration. The collection is verified for persistence, metadata filtering, logical rebuild reproducibility, and corpus/evaluation separation. The Stage 5 retrieval pipeline, planning, sensor adaptation, local-model integration, API, and Flutter integration have not started.
+Stages 1 through 5 are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, and a reusable production `RetrievalService`. Stage 5 added exact ambiguity-preserving alias resolution, deterministic query analysis, scalar metadata filters, structured source-preserving results, development failure analysis, a frozen retrieval configuration, and a one-time evaluation of the 32-query sealed test set.
 
-See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md) for the dataset checkpoint and [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md) for environment, model, metric, performance, index, and persistence results.
+The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. The deterministic planning engine is the next stage; sensor adaptation, local-model integration, API implementation, and Flutter integration have not started.
+
+See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), and [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md) for the completed checkpoints.
 
 ## Project tracking
 
@@ -104,3 +106,26 @@ Use `--rebuild` only when intentionally replacing the exact ErgoStudy collection
 ```
 
 The `.venv`, Hugging Face model cache, raw embedding arrays, and `chroma_db` contents are local artifacts and are ignored by Git.
+
+## Stage 5 retrieval workflow
+
+The production service loads only the selected cached model and existing Chroma collection:
+
+```python
+from pathlib import Path
+from src.retriever import RetrievalService
+
+with RetrievalService.from_frozen_config(Path.cwd()) as retriever:
+    results = retriever.retrieve(
+        "How should I study Mathematics equations?",
+        top_k=5,
+        metadata_filters={"reviewed": True},
+    )
+```
+
+Development comparison, failure analysis, and the sealed final-test artifacts are already complete. The evaluator refuses another final run while the final artifacts exist:
+
+```powershell
+.venv\Scripts\python.exe scripts\inspect_retrieval_failures.py
+.venv\Scripts\python.exe scripts\run_notebook_cells.py 05_retrieval_pipeline.ipynb
+```
