@@ -1,0 +1,2 @@
+# The environment notebook uses only the Python standard library.
+# Project dependencies will be added in the stage that first requires them.
