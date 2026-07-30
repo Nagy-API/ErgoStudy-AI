@@ -14,13 +14,17 @@ The repository structure, project rules, initial documentation, architecture dra
 
 The knowledge domains, seven document families, conditional record schema, retrieval-text and chunking rules, source strategy, data-quality gates, sensor contract draft, source catalog, example records, and retrieval-evaluation seed have been designed and validated. These files are design artifacts, not the final knowledge dataset. No embeddings, vector-database ingestion, retrieval implementation, planner, sensor-adaptation logic, local-model integration, or API implementation has started.
 
+### Dataset creation and validation
+
+The `1.0.0-prototype` English corpus contains 477 retrievable records: 80 subject profiles, 141 topic profiles, 24 study strategies, 18 session templates, 14 sensor interventions, and 200 controlled subject aliases. It also contains 96 held-out evaluation queries outside the corpus. The deterministic builder, standard-library validator, notebooks, unit tests, processed family files, statistics, source expansion, source-role audit, structured manual sample, and Stage 3 report are complete. All blocking validations and 13 unit tests pass.
+
 ## Current stage
 
-Stage 2 is complete at its final validation checkpoint. The repository is ready for Stage 3 curation after this checkpoint is committed.
+Stage 3 is complete at its final validation checkpoint. No embedding, vector-database, retrieval, planner, sensor-adapter, local-model, or API implementation has started.
 
 ## Next planned stage
 
-Dataset creation and validation. Stage 3 should curate the tier-reviewed canonical dataset from approved sources, record claim-level provenance, implement reusable standard-library validation, resolve license questions, and validate canonical records before controlled expansion. Stage 3 must not begin with uncontrolled bulk generation.
+Stage 4: embeddings and ChromaDB. The next stage should compare suitable free local embedding models on the target hardware, define metadata filters, index only the validated knowledge corpus, preserve stable IDs and provenance, and verify deterministic persistent indexing. The held-out evaluation queries must remain outside the vector collection.
 
 ## Confirmed product requirements
 
@@ -84,37 +88,35 @@ Dataset creation and validation. Stage 3 should curate the tier-reviewed canonic
 
 ## Stage 3 source priorities
 
-The current 19-source catalog is sufficient for general learning science, mathematics and problem solving, reading and comprehension, writing and revision, and ergonomics, movement, posture, and prolonged sitting. It is partial for computer science and coding, school science, and languages and vocabulary learning. It requires expansion for business, economics, and accounting; law and case-based subjects; health and medical study tasks; and design, engineering, and project-based work.
-
-The priority order is business, economics, and accounting; law and case-based subjects; educational sources for health and medical study tasks; design, engineering, and project-based work; then reinforcement for computer science and coding, school science, and languages and vocabulary learning. Sources must be authoritative, reusable or safely paraphrasable, and appropriate to the non-clinical educational scope.
+The 29-source catalog now includes descriptive coverage for business, economics, accounting, law, health and medical education, engineering, art and design, architecture, music, and film/media in addition to the Stage 2 learning-science, literacy, computing, school-science, and ergonomics sources. All sources are used and carry an explicit source role. Domain-specific causal learning evidence remains thinner than general learning-science evidence for several professional subjects, so later releases should expand it carefully.
 
 ## Open questions
 
 - Which secondary-school age bands, university levels, and first-release subjects should receive priority within the curriculum-neutral design?
 - Who will perform the primary manual review, and is an independent second reviewer available before production or public release?
 - Is the intended dataset distribution strictly non-commercial, and is WHO's CC BY-NC-SA 3.0 IGO material compatible with that plan?
-- Which source licenses marked unknown or paraphrase-only will receive final approval in Stage 3?
+- Which source licenses marked unknown or paraphrase-only will receive final approval before public distribution?
 - Should final generated responses use a compact source-ID citation, author-year display, or both?
 - Which proposed session-duration ranges should be retained after task-level review and later planner testing?
 - What are the confirmed sensor fields, units, sampling rate, timestamps, status flags, calibration method, pressure layout, and missing-data behavior?
 - Which sensor thresholds, if any, are firmware facts versus product configuration proposals?
 - What user-facing safety text will be approved for concerning symptoms without entering medical-advice scope?
-- How will reviewer decisions, record supersession, and claim-level provenance be stored in Stage 3?
+- Which independent reviewer can verify Tier A records and the Tier C sample before public deployment?
 
 ## Last validation results
 
-The Stage 2 validation completed successfully on July 30, 2026:
+The Stage 3 validation completed successfully on July 30, 2026:
 
-- The dataset schema parsed as JSON Schema Draft 2020-12 design JSON.
-- The source catalog parsed as CSV with 19 unique, checked HTTPS source records across nine source-type labels.
-- All 14 valid example records passed conditional field, source-reference, range, and identifier checks.
-- Review-tier assignments passed: strategies and sensors are Tier A; canonical subject, topic, and session examples are Tier B; aliases are Tier C.
-- Every one of the seven document families has two valid examples.
-- The deliberately invalid fixture failed exactly the three expected checks: reversed session range, reversed break range, and unresolved source ID.
-- The retrieval-evaluation seed contains 32 unique queries covering exact names, aliases, unseen wording, ambiguity, topic-level, school, university, method, session, sensor, missing-data, and safety-boundary cases.
-- All requested JSON and JSONL files parsed successfully.
-- The English-content audit found no non-ASCII text in the new Stage 2 artifacts.
-- The source catalog received an artifact-tool import, table inspection, and visual preview check.
-- The corpus-size, initial-user-scope, twelve-area source-gap matrix, tiered review, synthetic-lineage, and zero-unreviewed-sensor policies passed documentation assertions.
-- No Stage 3 production dataset, models, large downloads, heavy packages, embeddings, ChromaDB data, RAG code, planner code, API code, or local-LLM integration were added.
-- Temporary catalog-building, inspection, and validation helpers remain under ignored `tmp/`; generated preview and Python cache artifacts are also ignored and are not part of this checkpoint.
+- The deterministic build produced 477 retrievable records: 277 canonical and 200 synthetic.
+- All six required retrievable document-family files match the combined corpus.
+- The separate held-out set contains 96 queries and has zero corpus leakage.
+- The source catalog contains 29 unique records, every source is used, and source roles pass compatibility checks.
+- Required fields, conditional fields, controlled values, ranges, unique IDs, sources, parents, lineage, evidence inheritance, and review tiers pass.
+- Exact and near-duplicate checks report zero candidates.
+- All 14 sensor records are Tier A, reviewed, hardware-confirmation-dependent, non-medical, and safe under missing or invalid data.
+- The Tier C reviewed set contains 44 of 200 aliases (22%), including every explicitly ambiguous alias and controlled misspelling; the structured 25-record audit sample covers every controlled subject family and all generation methods.
+- Two temporary builds produced byte-identical outputs.
+- All 13 unit tests pass.
+- Both notebooks parse as JSON and all nine code cells execute successfully with the standard-library runner.
+- Python compilation and Git whitespace checks pass.
+- No models, heavy packages, embeddings, ChromaDB data, retrieval code, planner code, FastAPI code, or local-LLM integration were added.

@@ -1,0 +1,151 @@
+{
+  "checks": {
+    "duplicate_records_and_retrieval_texts": {
+      "groups": [],
+      "passed": true
+    },
+    "educational_level_coverage": {
+      "missing": [],
+      "passed": true
+    },
+    "english_only_content": {
+      "invalid_records": [],
+      "passed": true
+    },
+    "evaluation_corpus_separation": {
+      "leaked_queries": [],
+      "passed": true
+    },
+    "evaluation_reference_validation": {
+      "missing_record_ids": [],
+      "passed": true
+    },
+    "evidence_level_consistency": {
+      "invalid_records": [],
+      "passed": true
+    },
+    "family_file_consistency": {
+      "invalid_families": [],
+      "passed": true
+    },
+    "json_and_jsonl_syntax": {
+      "details": "All seed, schema, corpus, family, and evaluation files parsed.",
+      "passed": true
+    },
+    "near_duplicate_retrieval_texts": {
+      "candidate_count": 0,
+      "passed": true,
+      "review_candidates": []
+    },
+    "parent_reference_validation": {
+      "invalid_references": [],
+      "passed": true
+    },
+    "reproducible_deterministic_build": {
+      "passed": true,
+      "sha256": {
+        "dataset_statistics.json": "a15498967d145352da9dcc024c9b2c13fc5e7f38023a7239b117b56765016f96",
+        "knowledge_corpus.jsonl": "7b2156a6e49c742041edc53eb721033e042cb3329c0e50ee0cc19e4aa5b024df",
+        "retrieval_evaluation_queries.jsonl": "ff1cf6d8d23832705678b5d61cb274d79655e792b1a6dcb7beb10572f2219abf",
+        "sensor_interventions.jsonl": "d8e9c31750a2de3fb95cf2fcefb1c42fabd6dee778ef56821357c3d86d2b7fa3",
+        "session_templates.jsonl": "073103025c62ca7d1b75e4b51a7d99d9f13c2aa59058047f1ee01f45821e6d9c",
+        "study_strategies.jsonl": "44a03982d0b60cff34aa649f4d1c8bd28f6a1586dc0d240071ce9e8346191fd2",
+        "subject_aliases.jsonl": "42e673b51fc68da0618933c0b61a7b3bd7fa5a4c708c9fd3b6ba5f0e1fbb8f23",
+        "subject_profiles.jsonl": "c1174be19cc37b13bc238cab27c2a369a847eb85bbc4cce3b012584ace39a4b7",
+        "topic_profiles.jsonl": "2cc2c297ce015b2fe6094f55a5df8a12d89f32c698f16c5986afd5ad490f7293"
+      }
+    },
+    "required_and_conditional_fields": {
+      "passed": true
+    },
+    "review_tier_compliance": {
+      "invalid_records": [],
+      "passed": true
+    },
+    "schema_compatibility": {
+      "passed": true,
+      "unknown_fields": []
+    },
+    "sensor_safety_and_medical_language": {
+      "invalid_records": [],
+      "passed": true
+    },
+    "session_and_break_bounds": {
+      "invalid_records": [],
+      "passed": true
+    },
+    "source_family_coverage": {
+      "passed": true,
+      "source_count": 29,
+      "source_type_count": 12,
+      "source_types": [
+        "curriculum_standard",
+        "government_ergonomics_guidance",
+        "government_evidence_practice_guide",
+        "higher_education_subject_benchmark",
+        "international_public_health_guideline",
+        "peer_reviewed_evidence_review",
+        "peer_reviewed_primary_research",
+        "professional_accreditation_standard",
+        "professional_curriculum_framework",
+        "professional_education_outcomes_framework",
+        "systematic_review",
+        "systematic_review_meta_analysis"
+      ]
+    },
+    "source_reference_validation": {
+      "broken_source_ids": [],
+      "passed": true
+    },
+    "source_role_correctness": {
+      "invalid_catalog_roles": [],
+      "invalid_record_uses": [],
+      "passed": true,
+      "role_counts": {
+        "ergonomics_guidance": 5,
+        "learning_evidence": 11,
+        "public_health_guidance": 1,
+        "subject_framework": 12
+      }
+    },
+    "stable_unique_record_ids": {
+      "duplicates": [],
+      "passed": true
+    },
+    "subject_family_coverage": {
+      "missing": [],
+      "passed": true
+    },
+    "synthetic_traceability": {
+      "invalid_records": [],
+      "passed": true
+    },
+    "valid_enumerations": {
+      "passed": true
+    }
+  },
+  "dataset_version": "1.0.0-prototype",
+  "error_count": 0,
+  "errors": [],
+  "passed": true,
+  "summary": {
+    "canonical_record_count": 277,
+    "document_family_counts": {
+      "sensor_intervention": 14,
+      "session_template": 18,
+      "study_strategy": 24,
+      "subject_alias": 200,
+      "subject_profile": 80,
+      "topic_profile": 141
+    },
+    "evaluation_query_count": 96,
+    "retrievable_record_count": 477,
+    "reviewed_record_count": 321,
+    "source_count": 29,
+    "sources_used_count": 29,
+    "synthetic_record_count": 200,
+    "unreviewed_record_count": 156
+  },
+  "warning_count": 0,
+  "warnings": []
+}

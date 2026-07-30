@@ -1,0 +1,31 @@
+{
+  "dataset_version": "1.0.0-prototype",
+  "target_count": 200,
+  "sampling_policy": "Review every tenth generated alias within each subject family, with at least ten records overall.",
+  "explicit_aliases": [
+    {"alias": "AI", "subject_name": "Artificial Intelligence", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "AI can be used outside a computing course; use programming, algorithms, models, or the stated course context."},
+    {"alias": "CS", "subject_name": "Computer Science", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "CS can abbreviate other course or organization names; use computing, programming, or algorithm context."},
+    {"alias": "English", "subject_name": "English Language", "generation_method": "reviewed_subject_alias", "ambiguous": true, "ambiguity_notes": "English may mean language, writing, or literature; use the stated topic before choosing a task."},
+    {"alias": "Bio", "subject_name": "Biology", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "Bio can mean Biology or an informal biography label; use science or course context."},
+    {"alias": "DS", "subject_name": "Data Science", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "DS can abbreviate several subjects or technologies; use data, statistics, or computing context."},
+    {"alias": "IT", "subject_name": "Information Technology", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "IT is also an ordinary English word; require a technology or course context."},
+    {"alias": "SE", "subject_name": "Software Engineering", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "SE can abbreviate other subjects or directions; use software-development context."},
+    {"alias": "ME", "subject_name": "Mechanical Engineering", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "ME is also an ordinary pronoun and can abbreviate other courses; require engineering context."},
+    {"alias": "EE", "subject_name": "Electrical Engineering", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "EE can abbreviate other educational terms; use circuits, electronics, or engineering context."},
+    {"alias": "CE", "subject_name": "Civil Engineering", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "CE can abbreviate other courses or credentials; require civil or infrastructure context."},
+    {"alias": "IE", "subject_name": "Industrial Engineering", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "IE can abbreviate other terms; use operations, systems, or engineering context."},
+    {"alias": "RS", "subject_name": "Religious Studies", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "RS can abbreviate other subjects; use religion, belief, or course context."},
+    {"alias": "A and P", "subject_name": "Anatomy and Physiology", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "A and P may be an organization or course abbreviation; use human-biology or health-science context."},
+    {"alias": "Geo", "subject_name": "Geography", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "Geo can refer to geography, geology, geometry, or a general earth prefix; use the topic context."},
+    {"alias": "Comp Sci", "subject_name": "Computer Science", "generation_method": "reviewed_abbreviation_variant", "ambiguous": false},
+    {"alias": "Computor Science", "subject_name": "Computer Science", "generation_method": "reviewed_common_misspelling", "ambiguous": false},
+    {"alias": "Mathmatics", "subject_name": "Mathematics", "generation_method": "reviewed_common_misspelling", "ambiguous": false},
+    {"alias": "Chemestry", "subject_name": "Chemistry", "generation_method": "reviewed_common_misspelling", "ambiguous": false},
+    {"alias": "Geograpy", "subject_name": "Geography", "generation_method": "reviewed_common_misspelling", "ambiguous": false},
+    {"alias": "Programing", "subject_name": "Programming", "generation_method": "reviewed_common_misspelling", "ambiguous": false},
+    {"alias": "Stats", "subject_name": "Statistics", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "Stats may also mean a set of numerical results; use course or topic context."},
+    {"alias": "AI studies", "subject_name": "Artificial Intelligence", "generation_method": "reviewed_abbreviation_variant", "ambiguous": true, "ambiguity_notes": "AI may appear outside a course name; use programming, algorithms, or model context."},
+    {"alias": "English class", "subject_name": "English Language", "generation_method": "reviewed_course_name_variant", "ambiguous": true, "ambiguity_notes": "English may mean language, writing, or literature; use the stated topic."},
+    {"alias": "Design class", "subject_name": "Design", "generation_method": "reviewed_course_name_variant", "ambiguous": true, "ambiguity_notes": "Design may refer to visual, product, engineering, or software work; use project context."}
+  ]
+}

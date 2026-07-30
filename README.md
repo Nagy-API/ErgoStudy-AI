@@ -39,7 +39,9 @@ See [docs/system_architecture.md](docs/system_architecture.md) for the planned c
 
 ## Current status
 
-Only the environment inspection and initial repository scaffold are complete. The dataset, vector database, retrieval system, planner, sensor adaptation, local model integration, API, and Flutter integration have not been implemented.
+Stages 1 through 3 are complete. The repository now contains a deterministic, validated Stage 3 knowledge corpus with 477 retrievable records, 96 separate evaluation queries, source metadata, reusable build and validation modules, unit tests, and two focused notebooks. Embeddings, ChromaDB, retrieval, planning, sensor adaptation, local-model integration, the API, and Flutter integration have not started.
+
+See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md) for the complete counts, validation results, source additions, limitations, and hardware questions.
 
 ## Project tracking
 
@@ -60,14 +62,21 @@ See [PROJECT_STATUS.md](PROJECT_STATUS.md) for confirmed requirements, technical
 
 Detailed goals and completion criteria are in [PROJECT_PLAN.md](PROJECT_PLAN.md).
 
-## Basic setup placeholder
+## Dataset build and validation
 
-The project does not yet require third-party Python packages. A later stage will document a supported Python version, virtual-environment commands, dependency installation, and local model setup after the technical choices are validated.
-
-For now, the environment notebook can be opened when a Jupyter notebook interface is installed:
+Stage 3 uses only the Python standard library. From the repository root:
 
 ```powershell
-jupyter notebook notebooks/00_environment_check.ipynb
+python scripts/build_dataset.py
+python scripts/validate_dataset.py
+python -m unittest discover -s tests -v
 ```
 
-Do not download models or datasets during this setup stage.
+The notebooks can be opened when Jupyter is installed:
+
+```powershell
+jupyter notebook notebooks/01_dataset_creation.ipynb
+jupyter notebook notebooks/02_dataset_validation.ipynb
+```
+
+No model, embedding package, or vector database is required for Stage 3.

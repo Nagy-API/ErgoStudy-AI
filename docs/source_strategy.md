@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The source strategy ensures that factual educational and non-medical ergonomics records are accurate, traceable, copyright-safe, and suitable for concise paraphrasing. `data/sources/source_catalog.csv` is the authoritative Stage 2 inventory. Inclusion in the catalog means a source is a candidate for record curation, not that every claim in it is accepted.
+The source strategy ensures that factual educational and non-medical ergonomics records are accurate, traceable, copyright-safe, and suitable for concise paraphrasing. `data/sources/source_catalog.csv` is the authoritative project inventory. Inclusion in the catalog means a source is a candidate for record curation, not that every claim in it is accepted.
 
 ## Source categories
 
@@ -18,7 +18,7 @@ No paid service or paid API is required. A source may be paywalled for full text
 
 ## Current source-coverage gap matrix
 
-This matrix assesses only the 19 sources already present in `source_catalog.csv`. It does not assume or invent additional evidence.
+This matrix records the coverage assessment for the original 19-source Stage 2 baseline. Stage 3 additions and their resulting coverage are documented in `docs/stage3_dataset_report.md`; no source is assumed or invented outside the catalog.
 
 | Knowledge area | Stage 2 assessment | Current support and gap |
 | --- | --- | --- |
@@ -87,6 +87,7 @@ Each row records:
 - `organization_or_authors`
 - `publication_year`
 - `source_type`
+- `source_role`
 - `url`
 - `license_or_reuse_note`
 - `access_date`
@@ -97,6 +98,14 @@ Each row records:
 - `manual_review_status`
 
 Unknown rights are written as `Unknown; metadata and short paraphrase only pending review`, never guessed. `supports_paraphrased_records` means a source can support short factual summaries with citation; it does not authorize copying figures, tables, or long text.
+
+`source_role` separates what a source is allowed to support:
+
+- `learning_evidence`: learning-science research or evidence-rated educational guidance that may support a bounded study recommendation within its population and task limitations;
+- `subject_framework`: curriculum, accreditation, benchmark, or graduate-outcome material that may support subject coverage and common educational tasks, but not strategy effectiveness, timer values, break timing, or posture claims;
+- `ergonomics_guidance`: occupational guidance or reviews that may support conservative non-medical wording and uncertainty, but not diagnosis, hardware behavior, or invented thresholds;
+- `public_health_guidance`: population-level health guidance that may support broad non-medical scope, but not an individual diagnosis or sensor rule;
+- `planner_design_support`: reserved for a future cataloged design rationale. Stage 3 timer ranges instead use `evidence_level: design_proposal` and `duration_status: design_proposal_requires_evaluation`, so they are not attributed to a framework source.
 
 ## Citation rules
 

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ergostudy.local/schemas/dataset-record-0.1.0.json",
+  "$id": "https://ergostudy.local/schemas/dataset-record-1.0.0-prototype.json",
   "title": "ErgoStudy AI dataset record",
-  "description": "Stage 2 conditional schema for knowledge records and retrieval evaluation queries.",
+  "description": "Stage 3 conditional schema for processed knowledge records and held-out retrieval evaluation queries.",
   "type": "object",
   "required": [
     "record_id",
@@ -171,6 +171,7 @@
       "uniqueItems": true,
       "items": { "type": "string" }
     },
+    "derived_from_record_id": { "type": "string" },
     "evidence_level": {
       "enum": [
         "high",
@@ -367,7 +368,7 @@
         "required": ["synthetic"]
       },
       "then": {
-        "required": ["derived_from_record_ids", "generation_method"],
+        "required": ["derived_from_record_id", "derived_from_record_ids", "generation_method"],
         "properties": {
           "derived_from_record_ids": { "minItems": 1 }
         }

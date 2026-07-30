@@ -1,0 +1,163 @@
+{
+  "dataset_version": "1.0.0-prototype",
+  "review_note": "Tier B curriculum-neutral subject mappings reviewed for the Stage 3 prototype.",
+  "subject_groups": [
+    {
+      "subject_family": "mathematics",
+      "educational_level": ["school", "university"],
+      "source_ids": ["src-math-guide-011", "src-learn-guide-004"],
+      "subjects": [
+        {"name": "Mathematics", "aliases": ["Math", "Maths"], "focus_note": "Its broad profile can connect number, algebra, geometry, data, and change while the current course defines the actual scope."},
+        {"name": "Algebra", "aliases": ["Algebraic Mathematics", "Algebra Studies"]},
+        {"name": "Geometry", "aliases": ["Geometric Mathematics", "Geom"]},
+        {"name": "Calculus", "aliases": ["Differential and Integral Calculus", "Calc"]},
+        {"name": "Statistics", "aliases": ["Stats", "Statistical Methods"]},
+        {"name": "Probability", "aliases": ["Probability Theory", "Prob"]},
+        {"name": "Discrete Mathematics", "aliases": ["Discrete Math", "Discrete Maths"], "focus_note": "Common tasks emphasize logic, proof, counting, graphs, and discrete structures rather than continuous models."},
+        {"name": "Applied Mathematics", "aliases": ["Applied Math", "Applied Maths"], "focus_note": "Common tasks translate real or simulated situations into mathematical models and interpret the resulting solution."}
+      ]
+    },
+    {
+      "subject_family": "natural_sciences",
+      "educational_level": ["school", "university"],
+      "source_ids": ["src-science-standards-013", "src-learn-guide-004"],
+      "subjects": [
+        {"name": "Physics", "aliases": ["Physical Science", "Physics Studies"]},
+        {"name": "Chemistry", "aliases": ["Chem", "Chemical Science"]},
+        {"name": "Biology", "aliases": ["Bio", "Life Science"]},
+        {"name": "General Science", "aliases": ["School Science", "Integrated Science"]},
+        {"name": "Environmental Science", "aliases": ["Environmental Studies", "Environment Science"]},
+        {"name": "Earth Science", "aliases": ["Geoscience", "Earth and Space Science"]},
+        {"name": "Astronomy", "aliases": ["Space Science", "Astrophysical Science"]},
+        {"name": "Anatomy and Physiology", "aliases": ["A and P", "Human Biology"]},
+        {"name": "Biochemistry", "aliases": ["Biological Chemistry", "Biochem"]},
+        {"name": "Materials Science", "aliases": ["Materials", "Materials Chemistry"]}
+      ]
+    },
+    {
+      "subject_family": "language_and_literature",
+      "educational_level": ["school", "university"],
+      "source_ids": ["src-reading-guide-010", "src-writing-guide-009"],
+      "subjects": [
+        {"name": "English Language", "aliases": ["English", "English Studies"]},
+        {"name": "English Literature", "aliases": ["English Lit", "Eng Lit"]},
+        {"name": "French", "aliases": ["French Language", "French Studies"]},
+        {"name": "Spanish", "aliases": ["Spanish Language", "Spanish Studies"]},
+        {"name": "German", "aliases": ["German Language", "German Studies"]},
+        {"name": "Arabic Language", "aliases": ["Arabic", "Arabic Studies"]},
+        {"name": "Linguistics", "aliases": ["Language Science", "Linguistic Studies"]},
+        {"name": "Creative Writing", "aliases": ["Writing Craft", "Creative Composition"]}
+      ]
+    },
+    {
+      "subject_family": "social_sciences",
+      "educational_level": ["school", "university"],
+      "source_ids": ["src-reading-guide-010", "src-writing-guide-009", "src-learn-guide-004"],
+      "subjects": [
+        {"name": "History", "aliases": ["Historical Studies", "Hist"]},
+        {"name": "Geography", "aliases": ["Geo", "Geographical Studies"]},
+        {"name": "Sociology", "aliases": ["Soc", "Social Theory"]},
+        {"name": "Psychology", "aliases": ["Psych", "Psychological Science"]},
+        {"name": "Political Science", "aliases": ["Politics", "Government Studies"]},
+        {"name": "Philosophy", "aliases": ["Philosophical Studies", "Philosophy Studies"]},
+        {"name": "Religious Studies", "aliases": ["Religion Studies", "RS"]},
+        {"name": "Civics", "aliases": ["Citizenship Studies", "Civic Education"]},
+        {"name": "Anthropology", "aliases": ["Anthro", "Anthropological Studies"]},
+        {"name": "Archaeology", "aliases": ["Archaeological Studies", "Archaeological Science"]}
+      ]
+    },
+    {
+      "subject_family": "computing",
+      "educational_level": ["school", "university"],
+      "source_ids": ["src-computing-curriculum-012"],
+      "subjects": [
+        {"name": "Computer Science", "aliases": ["CS", "Computing"], "educational_level": ["university"]},
+        {"name": "Programming", "aliases": ["Coding", "Software Programming"]},
+        {"name": "Software Engineering", "aliases": ["SE", "Software Development"]},
+        {"name": "Data Science", "aliases": ["DS", "Data Analytics"]},
+        {"name": "Artificial Intelligence", "aliases": ["AI", "Machine Intelligence"]},
+        {"name": "Cybersecurity", "aliases": ["Cyber Security", "Information Security"]},
+        {"name": "Information Technology", "aliases": ["IT", "Information Systems Technology"]}
+      ]
+    },
+    {
+      "subject_family": "engineering",
+      "educational_level": ["university"],
+      "source_ids": ["src-engineering-abet-025"],
+      "subjects": [
+        {"name": "Mechanical Engineering", "aliases": ["Mechanical Eng", "ME"]},
+        {"name": "Electrical Engineering", "aliases": ["Electrical Eng", "EE"]},
+        {"name": "Civil Engineering", "aliases": ["Civil Eng", "CE"]},
+        {"name": "Chemical Engineering", "aliases": ["Chemical Eng", "ChemE"]},
+        {"name": "Biomedical Engineering", "aliases": ["BME", "Bioengineering"]},
+        {"name": "Computer Engineering", "aliases": ["CompE", "Computer Systems Engineering"]},
+        {"name": "Industrial Engineering", "aliases": ["IE", "Industrial and Systems Engineering"]},
+        {"name": "Mechatronics Engineering", "aliases": ["Mechatronics", "Mechatronic Engineering"]}
+      ]
+    },
+    {
+      "subject_family": "health_sciences",
+      "educational_level": ["university"],
+      "source_ids": ["src-health-gmc-024", "src-learn-guide-004"],
+      "subjects": [
+        {"name": "Medicine", "aliases": ["Medical Studies", "Medical School"]},
+        {"name": "Nursing", "aliases": ["Nursing Studies", "Nursing Science"]},
+        {"name": "Pharmacy", "aliases": ["Pharmaceutical Studies", "Pharmaceutical Science"]},
+        {"name": "Public Health", "aliases": ["Population Health", "Community Health"]},
+        {"name": "Nutrition", "aliases": ["Nutrition Science", "Nutritional Science"]},
+        {"name": "Medical Science", "aliases": ["Biomedical Science", "Health Science"]}
+      ]
+    },
+    {
+      "subject_family": "business_and_economics",
+      "educational_level": ["school", "university"],
+      "source_ids": ["src-business-qaa-020", "src-economics-qaa-021", "src-accounting-qaa-022"],
+      "subjects": [
+        {"name": "Business Studies", "aliases": ["Business", "Business Administration"]},
+        {"name": "Economics", "aliases": ["Econ", "Economic Studies"]},
+        {"name": "Accounting", "aliases": ["Accountancy", "Financial Accounting Studies"]},
+        {"name": "Finance", "aliases": ["Financial Studies", "Financial Management"]},
+        {"name": "Marketing", "aliases": ["Marketing Studies", "Market Strategy"]},
+        {"name": "Management", "aliases": ["Management Studies", "Business Management"]},
+        {"name": "Entrepreneurship", "aliases": ["Enterprise Studies", "Startup Studies"]},
+        {"name": "Operations Management", "aliases": ["Operations", "Production Management"]}
+      ]
+    },
+    {
+      "subject_family": "arts_and_design",
+      "educational_level": ["school", "university"],
+      "source_ids": ["src-art-design-qaa-026"],
+      "subjects": [
+        {"name": "Art", "aliases": ["Visual Art", "Fine Art"]},
+        {"name": "Design", "aliases": ["Design Studies", "Creative Design"]},
+        {"name": "Graphic Design", "aliases": ["Visual Communication Design", "Graphics"]},
+        {"name": "Architecture", "aliases": ["Architectural Studies", "Built Environment Design"], "source_ids": ["src-architecture-qaa-027"]},
+        {"name": "Music", "aliases": ["Music Studies", "Musical Studies"], "source_ids": ["src-music-qaa-028"]},
+        {"name": "Film Studies", "aliases": ["Cinema Studies", "Screen Studies"], "source_ids": ["src-film-qaa-029"]},
+        {"name": "Product Design", "aliases": ["Industrial Design", "Product Development Design"]}
+      ]
+    },
+    {
+      "subject_family": "law",
+      "educational_level": ["university"],
+      "source_ids": ["src-law-aba-023"],
+      "subjects": [
+        {"name": "Law", "aliases": ["Legal Studies", "Jurisprudence Studies"]},
+        {"name": "Constitutional Law", "aliases": ["Con Law", "Constitutional Studies"]},
+        {"name": "Criminal Law", "aliases": ["Crim Law", "Criminal Justice Law"]},
+        {"name": "Contract Law", "aliases": ["Contracts", "Law of Contract"]}
+      ]
+    },
+    {
+      "subject_family": "general",
+      "educational_level": ["school", "university"],
+      "source_ids": ["src-learn-guide-004", "src-learn-review-001"],
+      "subjects": [
+        {"name": "Research Methods", "aliases": ["Research Skills", "Methods of Research"]},
+        {"name": "Project Work", "aliases": ["Project Studies", "Independent Project"]},
+        {"name": "Exam Preparation", "aliases": ["Exam Revision", "Test Preparation"]},
+        {"name": "Interdisciplinary Studies", "aliases": ["Cross-disciplinary Studies", "Integrated Studies"]}
+      ]
+    }
+  ]
+}
