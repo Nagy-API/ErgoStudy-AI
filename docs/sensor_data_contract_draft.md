@@ -4,7 +4,29 @@
 
 This is a design draft for discussion with the hardware and Flutter teams. It does not confirm units, thresholds, sampling rates, calibration, accuracy, device behavior, or clinical meaning. All fields under **Proposed fields** remain unconfirmed.
 
-The future planner must work without a sensor. Missing, stale, unreliable, or invalid sensor data must safely degrade to the non-sensor plan.
+The planner works without a sensor. Missing, stale, unreliable, or invalid sensor data safely degrades to the non-sensor plan.
+
+Stage 6B defines an application-level adapter contract below. It does not confirm the hardware transport fields in this draft or perform device-specific conversion.
+
+## Stage 6B normalized application boundary
+
+The deterministic adapter consumes values that an upstream application has already normalized. It accepts minutes, seconds, booleans, and categorical status values only:
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `sensor_enabled` | boolean | Required switch between sensor and non-sensor behavior. |
+| `connection_status` | `connected`, `disconnected`, or `unknown` | Application-level connection state. |
+| `observation_status` | `valid`, `missing`, `stale`, `invalid`, or `unknown` | Application validation result. |
+| `continuous_sitting_minutes` | non-negative integer or null | Normalized continuous sitting duration. |
+| `poor_posture_duration_minutes` | non-negative integer or null | Normalized duration for the supplied direction. |
+| `posture_direction` | supported direction or null | `upright`, four leaning directions, or `unknown`. |
+| `pressure_imbalance_detected` | boolean or null | Upstream normalized flag; no raw pressure values. |
+| `reading_age_seconds` | non-negative integer or null | Reading freshness when available. |
+| `current_session_order` | positive integer or null | Current timeline position used to protect past work. |
+| `elapsed_session_minutes` | non-negative integer or null | Progress in the current protected session. |
+| `minutes_since_last_reminder` | non-negative integer or null | Optional cooldown input. |
+
+The adapter does not accept electrical readings, physical pressure units, calibration values, pressure arrays, or device-specific states. `config/sensor_policy.json` contains non-medical prototype product parameters pending user testing and hardware-team confirmation; they are not hardware facts or scientifically universal thresholds.
 
 ## Confirmed product-level concepts
 
@@ -144,7 +166,7 @@ Permitted non-medical outputs may include:
 - a proposal to shorten a future session within planner constraints;
 - a statement that no sensor adjustment was applied because data was unavailable or unreliable.
 
-These responses require deterministic rules in Stage 7. This Stage 2 contract does not define their thresholds.
+Stage 6B implements these responses with deterministic configurable rules. The values are adapter-level prototypes and do not confirm any hardware threshold.
 
 The system must not:
 

@@ -17,11 +17,11 @@ Students often need to decide what to study, for how long, when to pause, and ho
 
 ### Without a sensor
 
-The planned non-sensor mode will support daily planning, timed study sessions, scheduled breaks, completion feedback, and plan rescheduling.
+The non-sensor mode supports deterministic daily planning and timer-based study sessions and breaks. Sensor-disabled or unusable observations preserve this plan unchanged.
 
 ### With a sensor
 
-The planned sensor mode will additionally accept readings such as continuous sitting duration, posture direction, pressure imbalance, and poor-posture duration. These readings will be used by a deterministic adapter to adjust breaks and session timing. Hardware fields and thresholds will not be finalized until the real sensor contract is documented.
+The sensor mode accepts normalized application-level observations such as continuous sitting minutes, posture direction, pressure imbalance, and poor-posture duration. A deterministic adapter may adjust only future breaks and session lengths while preserving academic scores, priorities, methods, and retrieved record IDs. Raw hardware communication and device calibration remain outside the repository.
 
 ## High-level architecture
 
@@ -39,11 +39,11 @@ See [docs/system_architecture.md](docs/system_architecture.md) for the planned c
 
 ## Current status
 
-Stages 1 through 6A are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, a reusable production `RetrievalService`, and a deterministic non-sensor daily study planner. Stage 6A adds validated subject inputs, configurable scoring and time rules, proportional allocation, bounded sessions, demand-aware ordering, breaks, traceable study methods, explicit fallbacks, unscheduled-subject reporting, and stable plan hashes.
+Stages 1 through 6B are complete. The repository contains a deterministic, validated 477-record knowledge corpus, the fixed `minilm_plain` embedding configuration, a persistent 477-record ChromaDB collection, a reusable production `RetrievalService`, a deterministic daily planner, and a deterministic sensor-adaptation layer. Stage 6B adds normalized sensor validation, configurable prototype thresholds, bounded future-timeline changes, calm non-sensor fallback, explicit deferred minutes, non-medical notices, and stable adapted plan hashes.
 
-The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. Sensor-aware adaptation is the next stage; local-model integration, API implementation, and Flutter integration have not started.
+The frozen `alias_plus_dense` retriever achieved development Recall@5 0.8661 and MRR@10 0.8750, then sealed final-test Recall@5 0.8621 and MRR@10 0.8728. Final document-family and subject-family Hit@5 were both 1.0000. Local grounded response generation is the next stage; API implementation and Flutter integration have not started.
 
-See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md), and [docs/stage6a_daily_planner_report.md](docs/stage6a_daily_planner_report.md) for the completed checkpoints.
+See [docs/stage3_dataset_report.md](docs/stage3_dataset_report.md), [docs/stage4_embedding_chroma_report.md](docs/stage4_embedding_chroma_report.md), [docs/stage5_retrieval_report.md](docs/stage5_retrieval_report.md), [docs/stage6a_daily_planner_report.md](docs/stage6a_daily_planner_report.md), and [docs/stage6b_sensor_adaptation_report.md](docs/stage6b_sensor_adaptation_report.md) for the completed checkpoints.
 
 ## Project tracking
 
@@ -165,3 +165,36 @@ Regenerate the committed school, university, short-window, and fallback demos wi
 ```
 
 Planner weights and time bounds are in `config/planner_config.json`. They are versioned prototype product settings rather than universal scientific values.
+
+## Stage 6B sensor adaptation workflow
+
+Apply one normalized observation to an existing `DailyStudyPlan` or its dictionary form:
+
+```python
+from pathlib import Path
+from src.sensor_adapter import SensorPlanAdapter
+
+adapter = SensorPlanAdapter(Path.cwd())
+adapted = adapter.adapt(plan, {
+    "sensor_enabled": True,
+    "connection_status": "connected",
+    "observation_status": "valid",
+    "continuous_sitting_minutes": 50,
+    "poor_posture_duration_minutes": 12,
+    "posture_direction": "leaning_right",
+    "pressure_imbalance_detected": True,
+    "reading_age_seconds": 5,
+    "current_session_order": 1,
+    "elapsed_session_minutes": 25,
+})
+print(adapted.to_dict())
+```
+
+Regenerate and inspect the committed sensor scenarios with:
+
+```powershell
+.venv\Scripts\python.exe scripts\adapt_study_plan.py
+.venv\Scripts\python.exe scripts\run_notebook_cells.py 07_sensor_adaptation.ipynb
+```
+
+Sensor thresholds and time bounds are in `config/sensor_policy.json`. They are configurable, non-medical prototype product parameters pending user testing and hardware-team confirmation.

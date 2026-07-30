@@ -38,13 +38,19 @@ Stage 6A created a deterministic, JSON-compatible one-day planner. It validates 
 
 The planner retrieves subject profiles, topic profiles, study strategies, and session templates through the frozen Stage 5 service. Exact and alias resolution precede dense acceptance, every study session retains corpus record IDs, and ambiguous, weak, unknown, or unavailable retrieval uses a clearly marked generic fallback. Plan IDs hash normalized input plus the complete configuration. Four committed demos, a reusable CLI, a notebook, unit tests, and persistent-Chroma integration coverage are complete.
 
+### Deterministic sensor-aware study plan adaptation
+
+Stage 6B created a normalized application-level sensor model, one configurable prototype policy, and a deterministic adapter layered after the daily planner. Sensor-disabled, disconnected, missing, stale, invalid, and unknown states preserve the timer-based plan. Valid long-sitting, extended-sitting, sustained directional posture, and pressure-imbalance observations can reuse, extend, or insert one future movement break and shorten only upcoming study blocks.
+
+Completed and current sessions are protected. Adapted sessions remain at least 20 minutes, the total never exceeds the original available window, and reduced study time is reported as deferred. Academic scores, priority decisions, study methods, reasons, and retrieved record IDs remain unchanged. All user notices are short, calm, English-only, and non-medical. Six demos, a reusable CLI, a notebook, focused tests, and Stage 6A integration coverage are complete.
+
 ## Current stage
 
-Stage 6A is complete at its final validation checkpoint. The deterministic non-sensor daily planner, retrieval-backed knowledge adapter, demo generator, notebook, tests, and documentation are implemented. Sensor adaptation, local-model integration, API, and Flutter integration have not started.
+Stage 6B is complete at its final validation checkpoint. The deterministic sensor adapter, normalized models, configurable policy, demo generator, notebook, tests, and documentation are implemented. Raw hardware communication, local-model integration, API, and Flutter integration have not started.
 
 ## Next planned stage
 
-Stage 6B: sensor-aware adaptation. It should consume a confirmed sensor contract and apply deterministic, non-medical timing and break adjustments without changing the Stage 6A input scoring rules.
+Stage 7: local grounded response generation. It should explain planner and sensor-adapter outputs with a local model while preserving deterministic decisions and source traceability.
 
 ## Confirmed product requirements
 
@@ -129,6 +135,20 @@ The 29-source catalog now includes descriptive coverage for business, economics,
 - Which independent reviewer can verify Tier A records and the Tier C sample before public deployment?
 
 ## Last validation results
+
+The Stage 6B validation completed successfully on July 30, 2026:
+
+- All 26 focused sensor tests pass, covering the 25 required disabled, normal, trigger, fallback, time-preservation, academic-integrity, determinism, and immutability cases plus planner-warning preservation.
+- All 49 targeted Stage 6B and required Stage 6A planner/integration tests pass, including the existing persistent-Chroma integration path.
+- Six committed demos cover sensor disabled, normal observation, long sitting, extended sitting, combined posture and pressure imbalance, and missing-data fallback.
+- Every adapted demo stays within its original available time. Normal and fallback scenarios preserve all study and timer-break minutes; constrained adaptations report 5 or 10 deferred study minutes explicitly.
+- Sensor notices and action reasons remain short, calm, English-only, and non-medical. Invalid data never produces a posture-based decision.
+- Demo regeneration is byte-identical with SHA-256 `49863dbc760f53f085d6703dd0205e72a4a4c7f28dcde21517c92a469b3f8a13`.
+- All five Stage 6B notebook code cells execute, including original-plan, normal, long-sitting, posture-imbalance, fallback, timeline, total-time, minimum-length, and determinism checks.
+- Sensor source and test compilation, notebook and JSON parsing, and Git whitespace checks pass.
+- No embedding benchmark ran, the frozen retrieval configuration did not change, the Chroma collection was not rebuilt, and no model or package was downloaded.
+
+### Previous Stage 6A validation
 
 The Stage 6A validation completed successfully on July 30, 2026:
 
