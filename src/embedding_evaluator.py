@@ -33,7 +33,6 @@ AUDIT_CATEGORIES = {
     "unseen_wording": {"unseen_wording"},
     "topic": {"topic_level"},
     "study_strategy": {"method_selection"},
-    "sensor_or_safety": {"sensor_situation", "missing_or_unreliable_sensor", "safety_boundary"},
 }
 
 
@@ -235,20 +234,9 @@ def benchmark_configuration(
     return result, document_embeddings, query_embeddings, query_rows
 
 
-def _sensor_serious_failure(result: dict[str, Any]) -> bool:
-    sensor = result["metrics"]["slices"].get("sensor_and_safety")
-    if not sensor:
-        return True
-    recall = sensor.get("recall_at_5")
-    family_hit = sensor.get("document_family_hit_at_5")
-    return (recall is not None and recall < 0.25) or (family_hit is not None and family_hit < 0.60)
-
-
 def select_configuration(results: list[dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any]]:
     """Apply the documented development-only quality and efficiency rule."""
-    eligible = [result for result in results if not _sensor_serious_failure(result)]
-    if not eligible:
-        raise RuntimeError("Every candidate has a serious sensor/safety development-slice failure")
+    eligible = list(results)
     best_recall = max(result["metrics"]["overall"]["recall_at_5"] for result in eligible)
     recall_band = [
         result for result in eligible
@@ -263,7 +251,7 @@ def select_configuration(results: list[dict[str, Any]]) -> tuple[dict[str, Any],
     def slice_quality(result: dict[str, Any]) -> float:
         slices = result["metrics"]["slices"]
         values = []
-        for name in ("ambiguous", "unseen_wording", "sensor_and_safety"):
+        for name in ("ambiguous", "unseen_wording"):
             item = slices.get(name, {})
             for key in ("recall_at_5", "mrr_at_10", "document_family_hit_at_5"):
                 if item.get(key) is not None:
@@ -283,8 +271,6 @@ def select_configuration(results: list[dict[str, Any]]) -> tuple[dict[str, Any],
     decision = {
         "development_only": True,
         "sealed_final_test_metrics_computed": False,
-        "serious_sensor_failure_rule": "Recall@5 below 0.25 or document-family Hit@5 below 0.60 on the sensor/safety development slice",
-        "ineligible_configurations": [result["config_id"] for result in results if _sensor_serious_failure(result)],
         "highest_recall_at_5": best_recall,
         "recall_within_0_02": [result["config_id"] for result in recall_band],
         "highest_mrr_at_10_in_recall_band": best_mrr,
@@ -329,6 +315,12 @@ def load_stage4_inputs(project_root: Path) -> tuple[list[dict[str, Any]], list[d
     split = read_json(project_root / "data" / "processed" / "retrieval_eval_split.json")
     development_ids = set(split["development_query_ids"])
     development = [query for query in all_queries if query["query_id"] in development_ids]
-    if len(development) != 64 or development_ids.intersection(split["final_test_query_ids"]):
+    final_ids = set(split["final_test_query_ids"])
+    all_ids = {query["query_id"] for query in all_queries}
+    if (
+        len(development) != len(development_ids)
+        or development_ids.intersection(final_ids)
+        or development_ids.union(final_ids) != all_ids
+    ):
         raise ValueError("Development/final split integrity check failed")
     return records, development, split

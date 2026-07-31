@@ -1,4 +1,4 @@
-"""Run the six focused Stage 7 local-generation demonstrations."""
+"""Generate current-scope local explanation demonstration artifacts."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.generation_validator import MEDICAL_PATTERN, validate_generated_response
+from src.generation_validator import validate_generated_response
 from src.grounded_generator import GroundedResponseGenerator
 from src.grounding_context import build_grounding_context
 
@@ -64,20 +64,15 @@ def _relevant_records(plan: dict[str, Any], records: dict[str, dict[str, Any]]) 
 def build_demo_inputs() -> list[dict[str, Any]]:
     requests = {item["example_id"]: item["request"] for item in _read_json("planner_demo_inputs.json")}
     plans = {item["example_id"]: item["plan"] for item in _read_json("planner_demo_outputs.json")}
-    sensors = {
-        item["example_id"]: item["adapted_plan"] for item in _read_json("sensor_demo_outputs.json")
-    }
     records = _records_by_id()
     definitions = [
-        ("school_without_sensor", "school_evening", None),
-        ("university_without_sensor", "university_afternoon", None),
-        ("unscheduled_subject", "short_window", None),
-        ("unknown_subject_fallback", "unknown_subject_fallback", None),
-        ("sensor_movement_break", "short_window", "long_sitting"),
-        ("missing_sensor_data_fallback", "school_evening", "missing_sensor_fallback"),
+        ("school_plan", "school_evening"),
+        ("university_aliases", "university_afternoon"),
+        ("unscheduled_subject", "short_window"),
+        ("unknown_subject_fallback", "unknown_subject_fallback"),
     ]
     result: list[dict[str, Any]] = []
-    for case_id, plan_id, sensor_id in definitions:
+    for case_id, plan_id in definitions:
         plan = plans[plan_id]
         result.append(
             {
@@ -85,7 +80,6 @@ def build_demo_inputs() -> list[dict[str, Any]]:
                 "original_user_input": requests[plan_id],
                 "plan": plan,
                 "retrieved_record_summaries": _relevant_records(plan, records),
-                "sensor_result": sensors[sensor_id] if sensor_id else None,
             }
         )
     return result
@@ -105,13 +99,11 @@ def main() -> int:
             item["original_user_input"],
             item["plan"],
             retrieved_record_summaries=item["retrieved_record_summaries"],
-            sensor_result=item["sensor_result"],
         )
         context = build_grounding_context(
             item["original_user_input"],
             item["plan"],
             retrieved_record_summaries=item["retrieved_record_summaries"],
-            sensor_result=item["sensor_result"],
         )
         validation = validate_generated_response(result.response.to_dict(), context)
         latencies.append(result.latency_seconds)
@@ -123,10 +115,6 @@ def main() -> int:
                 "errors": list(validation.errors),
                 "numeric_preservation": validation.valid
                 and not any("changed" in error for error in validation.errors),
-                "sensor_safe": not bool(
-                    result.response.sensor_message
-                    and MEDICAL_PATTERN.search(result.response.sensor_message)
-                ),
             }
         )
         print(f"{item['case_id']}: {result.generation_mode} ({result.latency_seconds:.2f}s)")
@@ -146,7 +134,6 @@ def main() -> int:
         "maximum_latency_seconds": round(max(latencies), 4),
         "numeric_preservation_result": all(item["numeric_preservation"] for item in validations),
         "grounding_validation_result": all(item["valid"] for item in validations),
-        "sensor_safety_result": all(item["sensor_safe"] for item in validations),
         "cases": validations,
     }
     (PROCESSED / "generation_demo_outputs.json").write_text(

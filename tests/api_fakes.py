@@ -16,7 +16,6 @@ from src.daily_planner import DailyPlanner
 from src.deterministic_response import deterministic_grounded_response
 from src.grounded_generator import GroundedResponseGenerator
 from src.local_llm_client import LocalLLMResponse, OllamaUnavailableError
-from src.sensor_adapter import SensorPlanAdapter
 from tests.planner_fakes import FakeRetrievalService
 
 
@@ -72,27 +71,12 @@ UNIVERSITY_REQUEST = {
 }
 
 
-VALID_SENSOR = {
-    "sensor_enabled": True,
-    "connection_status": "connected",
-    "observation_status": "valid",
-    "continuous_sitting_minutes": 65,
-    "poor_posture_duration_minutes": 12,
-    "posture_direction": "leaning_right",
-    "pressure_imbalance_detected": True,
-    "reading_age_seconds": 5,
-    "current_session_order": 1,
-    "elapsed_session_minutes": 20,
-}
-
-
 def component_statuses() -> dict[str, dict[str, str]]:
     return {
         "dataset": {"status": "ready", "detail": "Dataset ready."},
         "chroma_collection": {"status": "ready", "detail": "Chroma ready."},
         "embedding_model": {"status": "ready", "detail": "Embedding model ready."},
         "planner_config": {"status": "ready", "detail": "Planner config ready."},
-        "sensor_policy": {"status": "ready", "detail": "Sensor policy ready."},
         "generation_config": {"status": "ready", "detail": "Generation config ready."},
         "services": {"status": "ready", "detail": "Services ready."},
     }
@@ -152,7 +136,6 @@ def make_services(
         settings=settings,
         components=component_statuses(),
         planner=DailyPlanner(ROOT, retrieval_service=retrieval),
-        sensor_adapter=SensorPlanAdapter(ROOT),
         retrieval_service=retrieval,
         generator_builder=builder or generator_builder(UnavailableModelClient()),
     )

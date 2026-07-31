@@ -30,8 +30,8 @@ def _record(record_id: str, family: str, subject: str, title: str, **extra: obje
 
 
 RECORDS = [
-    _record("a-topic", "topic_profile", "general", "General sitting topic"),
-    _record("b-sensor", "sensor_intervention", "not_applicable", "Posture safety reminder"),
+    _record("a-topic", "topic_profile", "general", "General study topic"),
+    _record("b-strategy", "study_strategy", "not_applicable", "Active recall guidance"),
     _record("c-math", "subject_profile", "mathematics", "Mathematics profile", subject_name="Mathematics", aliases=["Maths"]),
 ]
 
@@ -46,8 +46,8 @@ class FakeCollection:
         return 3
 
     def query(self, *, where=None, **_: object) -> dict:
-        ids = ["a-topic", "b-sensor", "c-math"]
-        distances = [0.10, 0.15, 0.30]
+        ids = ["a-topic", "b-strategy", "c-math"]
+        distances = [0.10, 0.11, 0.30]
         if where:
             clauses = where.get("$and", [where])
             expected_family = next((clause["document_family"] for clause in clauses if "document_family" in clause), None)
@@ -84,14 +84,14 @@ class RetrievalServiceTests(unittest.TestCase):
         self.assertAlmostEqual(result.score, 0.90)
 
     def test_intent_blending_and_deterministic_ordering(self) -> None:
-        first = self.service.retrieve("posture sensor pressure while sitting", top_k=3)
-        second = self.service.retrieve("posture sensor pressure while sitting", top_k=3)
+        first = self.service.retrieve("active recall study method", top_k=3)
+        second = self.service.retrieve("active recall study method", top_k=3)
         self.assertEqual([item.record_id for item in first], [item.record_id for item in second])
-        self.assertEqual(first[0].record_id, "b-sensor")
+        self.assertEqual(first[0].record_id, "b-strategy")
 
     def test_metadata_filter_and_structured_schema(self) -> None:
-        results = self.service.retrieve("study", top_k=3, metadata_filters={"document_family": "sensor_intervention"})
-        self.assertEqual([item.record_id for item in results], ["b-sensor"])
+        results = self.service.retrieve("study", top_k=3, metadata_filters={"document_family": "study_strategy"})
+        self.assertEqual([item.record_id for item in results], ["b-strategy"])
         self.assertIsInstance(results[0], RetrievalResult)
         self.assertEqual(
             set(results[0].to_dict()),

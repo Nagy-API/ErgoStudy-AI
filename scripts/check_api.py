@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import copy
 import json
 import sys
 from pathlib import Path
@@ -44,20 +43,6 @@ SCHOOL_REQUEST = {
     ],
 }
 
-SENSOR_OBSERVATION = {
-    "sensor_enabled": True,
-    "connection_status": "connected",
-    "observation_status": "valid",
-    "continuous_sitting_minutes": 65,
-    "poor_posture_duration_minutes": 12,
-    "posture_direction": "leaning_right",
-    "pressure_imbalance_detected": True,
-    "reading_age_seconds": 5,
-    "current_session_order": 1,
-    "elapsed_session_minutes": 20,
-}
-
-
 def checked_json(response) -> dict:
     if response.status_code != 200:
         raise RuntimeError(f"API smoke request failed with HTTP {response.status_code}: {response.text}")
@@ -81,25 +66,18 @@ def run(real_ollama: bool) -> tuple[list[dict], list[dict]]:
 
         plan_payload = checked_json(client.post("/api/v1/plans", json=SCHOOL_REQUEST))
         plan = plan_payload["plan"]
-        adapt_body = {"plan": plan, "sensor_observation": SENSOR_OBSERVATION}
-        full_body = copy.deepcopy(SCHOOL_REQUEST)
-        full_body["sensor_observation"] = SENSOR_OBSERVATION
-        adapt_payload = checked_json(client.post("/api/v1/plans/adapt", json=adapt_body))
-        full_payload = checked_json(client.post("/api/v1/plans/full", json=full_body))
+        full_payload = checked_json(client.post("/api/v1/plans/full", json=SCHOOL_REQUEST))
         requests.extend([
             {"example_id": "school_plan", "method": "POST", "path": "/api/v1/plans", "body": SCHOOL_REQUEST},
-            {"example_id": "sensor_adaptation", "method": "POST", "path": "/api/v1/plans/adapt", "body": adapt_body},
-            {"example_id": "full_deterministic", "method": "POST", "path": "/api/v1/plans/full", "body": full_body},
+            {"example_id": "full_deterministic", "method": "POST", "path": "/api/v1/plans/full", "body": SCHOOL_REQUEST},
         ])
         responses.extend([
             {"example_id": "school_plan", "response": plan_payload},
-            {"example_id": "sensor_adaptation", "response": adapt_payload},
             {"example_id": "full_deterministic", "response": full_payload},
         ])
 
         explanation_body = {
             "plan": plan,
-            "adapted_plan": adapt_payload["adapted_plan"],
             "timeout_seconds": 30,
         }
         if real_ollama:

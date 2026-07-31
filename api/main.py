@@ -22,8 +22,6 @@ from api.dependencies import (
 from api.error_handlers import register_error_handlers
 from api.lifecycle import AppServices, create_lifespan, initialize_services
 from api.schemas import (
-    AdaptPlanRequest,
-    AdaptPlanResponse,
     ExplanationRequest,
     ExplanationResponse,
     ErrorResponse,
@@ -54,7 +52,7 @@ def _milliseconds(started: float) -> float:
 
 def _plan_values(request: PlanRequest | FullPlanRequest | FullWithExplanationRequest) -> dict[str, Any]:
     return request.model_dump(
-        exclude={"sensor_observation", "explanation_timeout_seconds"},
+        exclude={"explanation_timeout_seconds"},
         exclude_none=True,
     )
 
@@ -64,17 +62,6 @@ def _make_plan(services: AppServices, values: dict[str, Any]) -> dict[str, Any]:
     assert services.planner is not None
     with services.operation_lock:
         return services.planner.plan(values).to_dict()
-
-
-def _adapt_plan(
-    services: AppServices,
-    plan: dict[str, Any],
-    observation: dict[str, Any],
-) -> dict[str, Any]:
-    require_deterministic_services(services)
-    assert services.sensor_adapter is not None
-    with services.operation_lock:
-        return services.sensor_adapter.adapt(plan, observation).to_dict()
 
 
 def _explanation_payload(
@@ -105,9 +92,9 @@ def create_app(
     api_settings = settings or APISettings.from_environment()
     application = FastAPI(
         title="ErgoStudy AI Local API",
-        summary="Deterministic one-day planning, optional sensor adaptation, and grounded explanations.",
+        summary="Deterministic one-day study planning and grounded explanations.",
         description=(
-            "The deterministic planner and sensor adapter own all schedule values. "
+            "The deterministic planner owns all schedule values. "
             "Explanation endpoints may use local Ollama and always retain a validated deterministic fallback."
         ),
         version="1.0.0-prototype",
@@ -197,46 +184,10 @@ def create_app(
         }
 
     @application.post(
-        "/api/v1/plans/adapt",
-        response_model=AdaptPlanResponse,
-        tags=["plans"],
-        summary="Apply deterministic sensor adaptation to an existing plan",
-        description="Fast deterministic endpoint. It never calls Ollama.",
-        responses=COMMON_ERROR_RESPONSES,
-    )
-    async def adapt_plan(
-        body: AdaptPlanRequest,
-        request: Request,
-        services: ServicesDependency,
-    ) -> dict[str, Any]:
-        started = time.perf_counter()
-        observation = (
-            body.sensor_observation.model_dump(exclude_none=True)
-            if body.sensor_observation is not None
-            else {
-                "sensor_enabled": True,
-                "connection_status": "connected",
-                "observation_status": "missing",
-            }
-        )
-        adapted = await asyncio.to_thread(
-            _adapt_plan,
-            services,
-            body.plan.model_dump(),
-            observation,
-        )
-        return {
-            "adapted_plan": adapted,
-            "request_id": request_id(request),
-            "processing_time_ms": _milliseconds(started),
-            "api_version": "v1",
-        }
-
-    @application.post(
         "/api/v1/plans/full",
         response_model=FullPlanResponse,
         tags=["plans"],
-        summary="Create and optionally adapt a deterministic plan",
+        summary="Create a deterministic plan",
         description="Fast deterministic convenience endpoint. It never calls Ollama.",
         responses=COMMON_ERROR_RESPONSES,
     )
@@ -247,18 +198,9 @@ def create_app(
     ) -> dict[str, Any]:
         started = time.perf_counter()
         plan = await asyncio.to_thread(_make_plan, services, _plan_values(body))
-        adapted = None
-        if body.sensor_observation is not None:
-            adapted = await asyncio.to_thread(
-                _adapt_plan,
-                services,
-                plan,
-                body.sensor_observation.model_dump(exclude_none=True),
-            )
         return {
             "original_plan": plan,
-            "adapted_plan": adapted,
-            "final_sessions": adapted["sessions"] if adapted is not None else plan["sessions"],
+            "final_sessions": plan["sessions"],
             "request_id": request_id(request),
             "processing_time_ms": _milliseconds(started),
             "fallback": plan_fallback_information(plan),
@@ -283,13 +225,11 @@ def create_app(
     ) -> dict[str, Any]:
         require_deterministic_services(services)
         plan = body.plan.model_dump()
-        adapted = body.adapted_plan.model_dump() if body.adapted_plan is not None else None
         result, reason, model_status, validation_status = await asyncio.to_thread(
             generate_explanation,
             services,
             original_input_from_plan(plan),
             plan,
-            adapted,
             body.timeout_seconds,
         )
         return _explanation_payload(
@@ -319,26 +259,16 @@ def create_app(
         started = time.perf_counter()
         original_input = _plan_values(body)
         plan = await asyncio.to_thread(_make_plan, services, original_input)
-        adapted = None
-        if body.sensor_observation is not None:
-            adapted = await asyncio.to_thread(
-                _adapt_plan,
-                services,
-                plan,
-                body.sensor_observation.model_dump(exclude_none=True),
-            )
         result, reason, model_status, validation_status = await asyncio.to_thread(
             generate_explanation,
             services,
             original_input,
             plan,
-            adapted,
             body.explanation_timeout_seconds,
         )
         current_request_id = request_id(request)
         return {
             "original_plan": plan,
-            "adapted_plan": adapted,
             "explanation": _explanation_payload(
                 result,
                 reason,

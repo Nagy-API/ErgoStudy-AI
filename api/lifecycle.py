@@ -16,8 +16,6 @@ from src.daily_planner import DailyPlanner
 from src.grounded_generator import GroundedResponseGenerator, load_generation_config
 from src.planner_config import load_planner_config
 from src.retriever import RetrievalService
-from src.sensor_adapter import SensorPlanAdapter
-from src.sensor_policy import load_sensor_policy
 
 
 StatusMap = dict[str, dict[str, str]]
@@ -30,7 +28,6 @@ class AppServices:
     settings: APISettings
     components: StatusMap
     planner: DailyPlanner | None = None
-    sensor_adapter: SensorPlanAdapter | None = None
     retrieval_service: RetrievalService | Any | None = None
     generator_builder: Callable[[float], GroundedResponseGenerator | Any] | None = None
     operation_lock: RLock = field(default_factory=RLock)
@@ -42,7 +39,6 @@ class AppServices:
             "chroma_collection",
             "embedding_model",
             "planner_config",
-            "sensor_policy",
             "generation_config",
             "services",
         )
@@ -82,11 +78,6 @@ def initialize_services(settings: APISettings) -> AppServices:
         components["planner_config"] = _ready("Planner configuration is valid.")
     except Exception:
         components["planner_config"] = _unavailable("Planner configuration is invalid or unavailable.")
-    try:
-        load_sensor_policy(root / "config" / "sensor_policy.json")
-        components["sensor_policy"] = _ready("Sensor policy is valid.")
-    except Exception:
-        components["sensor_policy"] = _unavailable("Sensor policy is invalid or unavailable.")
     try:
         load_generation_config(root)
         components["generation_config"] = _ready("Generation configuration is valid.")
@@ -134,13 +125,11 @@ def initialize_services(settings: APISettings) -> AppServices:
         retrieval = RetrievalService.from_frozen_config(root, device="cpu")
         services.retrieval_service = retrieval
         services.planner = DailyPlanner(root, retrieval_service=retrieval)
-        services.sensor_adapter = SensorPlanAdapter(root)
-        components["services"] = _ready("Reusable planner, retrieval, and sensor services are initialized.")
+        components["services"] = _ready("Reusable planner and retrieval services are initialized.")
     except Exception:
         services.close()
         services.retrieval_service = None
         services.planner = None
-        services.sensor_adapter = None
         components["services"] = _unavailable("Deterministic services could not be initialized.")
     return services
 

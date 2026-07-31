@@ -50,7 +50,7 @@ def request_id(request: Request) -> str:
 
 
 def require_deterministic_services(services: AppServices) -> None:
-    if not services.deterministic_ready or services.planner is None or services.sensor_adapter is None:
+    if not services.deterministic_ready or services.planner is None:
         raise ServiceUnavailableError("The deterministic planning pipeline is not ready")
 
 
@@ -123,7 +123,6 @@ def generate_explanation(
     services: AppServices,
     original_input: dict[str, Any],
     plan: dict[str, Any],
-    adapted_plan: dict[str, Any] | None,
     timeout_seconds: int | None,
 ) -> tuple[GenerationResult, str | None, str, str]:
     """Generate an explanation or a validated deterministic fallback."""
@@ -135,10 +134,9 @@ def generate_explanation(
             original_input,
             plan,
             retrieved_record_summaries=relevant_record_summaries(services, plan),
-            sensor_result=adapted_plan,
         )
     except Exception:
-        context = build_grounding_context(original_input, plan, sensor_result=adapted_plan)
+        context = build_grounding_context(original_input, plan)
         result = GenerationResult(
             response=deterministic_grounded_response(context),
             generation_mode="deterministic_fallback",

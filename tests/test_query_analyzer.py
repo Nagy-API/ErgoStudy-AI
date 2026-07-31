@@ -33,9 +33,7 @@ class QueryAnalyzerTests(unittest.TestCase):
         self.assertIn("topic_lookup", analysis.intents)
         self.assertEqual(analysis.alias_resolution.resolved_subject_record_ids, ("subject-mathematics",))
 
-    def test_detects_sensor_and_session_intents(self) -> None:
-        sensor = self.analyzer.analyze("The posture sensor reports uneven pressure while sitting")
-        self.assertEqual(sensor.primary_intent, "sensor_or_posture")
+    def test_detects_session_intent(self) -> None:
         session = self.analyzer.analyze("Give me a study session with a short break")
         self.assertEqual(session.primary_intent, "session_template")
         self.assertIn("session_template", session.suggested_document_families)

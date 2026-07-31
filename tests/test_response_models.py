@@ -14,7 +14,6 @@ def valid_values() -> dict:
             {"subject": "Mathematics", "allocated_minutes": 60, "reason": "High priority."}
         ],
         "session_messages": [{"session_order": 1, "message": "Study Mathematics."}],
-        "sensor_message": None,
         "unscheduled_message": None,
         "warnings": [],
     }

@@ -85,23 +85,6 @@ class GroundingContextTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "evaluation or internal-only"):
             build_grounding_context(request, plan)
 
-    def test_sensor_timeline_becomes_final_timeline(self) -> None:
-        request, plan = fixture()
-        sensor = {
-            "sessions": [{"order": 1, "session_type": "study", "duration_minutes": 55, "subject": "Mathematics", "retrieved_record_ids": []}],
-            "total_study_minutes": 55,
-            "total_break_minutes": 0,
-            "mode": "sensor",
-            "severity": "normal",
-            "triggers": [],
-            "actions": [],
-            "sensor_notice": "The adapted plan is active.",
-            "adaptation_applied": True,
-            "warnings": [],
-        }
-        context = build_grounding_context(request, plan, sensor_result=sensor)
-        self.assertEqual(context["final_plan"]["sessions"][0]["duration_minutes"], 55)
-
 
 if __name__ == "__main__":
     unittest.main()

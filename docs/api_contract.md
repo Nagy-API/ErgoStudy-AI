@@ -1,78 +1,46 @@
-# ErgoStudy API contract
+# API contract
 
-## Scope and versioning
+Base URL: `http://127.0.0.1:8000/api/v1`. Content type is JSON. Request models are strict: unknown fields are rejected with HTTP 422.
 
-The local API is rooted at `/api/v1`. The deterministic planner owns subject allocation, session order, durations, breaks, methods, and retrieval record IDs. The sensor adapter may change only the bounded future timeline allowed by its existing policy. Ollama is used only by the two explanation-capable endpoints.
+## Active endpoints
 
-Interactive OpenAPI documentation is available at `/docs`, ReDoc at `/redoc`, and the generated OpenAPI 3.1 document at `/openapi.json`.
+| Method | Path | Result |
+| --- | --- | --- |
+| GET | `/health` | Process health |
+| GET | `/readiness` | Deterministic component status plus separate Ollama status |
+| POST | `/plans` | `{plan, request_id, processing_time_ms, fallback, api_version}` |
+| POST | `/plans/full` | `{original_plan, final_sessions, request_id, processing_time_ms, fallback, api_version}` |
+| POST | `/explanations` | Validated wording or deterministic fallback for an existing plan |
+| POST | `/plans/full-with-explanation` | Combined demonstration response |
 
-## Endpoints
-
-| Method | Path | Purpose | Calls Ollama |
-| --- | --- | --- | --- |
-| GET | `/api/v1/health` | Basic process health | No |
-| GET | `/api/v1/readiness` | Dataset, Chroma, embedding, configuration, service, and separate Ollama status | Version probe only |
-| POST | `/api/v1/plans` | Create a deterministic one-day plan | No |
-| POST | `/api/v1/plans/adapt` | Adapt an existing plan from a normalized sensor observation | No |
-| POST | `/api/v1/plans/full` | Create and optionally adapt a plan | No |
-| POST | `/api/v1/explanations` | Explain an existing deterministic plan | Yes, with fallback |
-| POST | `/api/v1/plans/full-with-explanation` | Slower demo-only full pipeline | Yes, with fallback |
-
-## Planning input
-
-`total_available_minutes` is an integer from 30 through 720. `preferred_start_time`, when supplied, uses 24-hour `HH:MM`. `preferred_session_length`, when supplied, is an integer from 20 through 60. The `subjects` list contains one through 30 unique subject names. Every rating is a strict integer from 1 through 5. A subject may contain up to 20 unique topic strings, each no longer than 160 characters.
-
-Unknown JSON fields are rejected. Duplicate subject names follow the existing planner behavior and are rejected after case and whitespace normalization.
-
-## Sensor input
-
-The API accepts only the normalized application-level contract already implemented by Stage 6B. It does not accept raw voltages, pressure matrices, calibration values, or device-specific units. Omitting `sensor_observation` from `/plans/adapt` produces the existing safe missing-observation result. Omitting it from `/plans/full` skips adaptation.
-
-## Explanation behavior
-
-The default explanation timeout is 30 seconds. A request may override it only within the configured 1-to-60-second range. The deadline covers the initial model call and the one permitted correction call together. Stage 7 generation and validation rules are unchanged.
-
-Timeout, connection failure, malformed model output, and failed correction all return HTTP 200 with:
+## Plan request
 
 ```json
 {
-  "generation_mode": "deterministic_fallback",
-  "model_status": "unavailable",
-  "validation_status": "fallback_valid",
-  "fallback_reason_code": "OLLAMA_UNAVAILABLE"
+  "total_available_minutes": 90,
+  "preferred_start_time": "16:00",
+  "preferred_session_length": 40,
+  "subjects": [
+    {
+      "name": "Mathematics",
+      "topics": ["Equations"],
+      "difficulty": 4,
+      "priority": 5,
+      "workload": 4,
+      "current_understanding": 2
+    }
+  ]
 }
 ```
 
-The full response also contains the validated grounded response, attempt count, generation latency, request ID, and API version. Non-sensitive reason codes are `OLLAMA_TIMEOUT`, `OLLAMA_UNAVAILABLE`, `MODEL_VALIDATION_FAILED`, and `GENERATION_FAILED`.
+`preferred_start_time`, `preferred_session_length`, and `topics` are optional. Ratings are integers from 1 to 5. Available time is 30 to 720 minutes. Obsolete sensor fields are unknown fields and fail validation.
 
-## Error envelope
+## Plan semantics
 
-Validation and service errors use one envelope:
+The plan reports subject allocations, ordered study/break sessions, methods, retrieved record IDs, deterministic reasons, warnings, fallback status, and unscheduled subjects. Session minutes and totals are internally consistent and never exceed available time. Repeating the same active request and configuration returns the same plan and plan ID.
 
-```json
-{
-  "error": {
-    "code": "INVALID_REQUEST",
-    "message": "The request body is invalid.",
-    "details": [
-      {
-        "field": "subjects.0.priority",
-        "message": "Input should be less than or equal to 5"
-      }
-    ]
-  },
-  "request_id": "886654c1-e092-4033-a5f8-6a11ac39b57c"
-}
-```
+## Explanation semantics
 
-Responses never include stack traces, local paths, cache locations, secrets, evaluation data, or raw Ollama errors.
+`POST /explanations` accepts `plan` and optional `timeout_seconds`. Its `grounded_response` contains `summary`, `allocation_explanations`, `session_messages`, `unscheduled_message`, and `warnings`. It contains no hardware-specific fields. `generation_mode` is `local_llm`, `local_llm_corrected`, or `deterministic_fallback`.
 
-## Request IDs
-
-Each request receives a random UUID version 4. It is safe for correlation, does not encode user data, and is returned in the JSON response and `X-Request-ID` header. Plan and adapted-plan IDs remain deterministic hashes owned by the existing pipeline.
-
-## CORS and lifecycle
-
-The defaults allow `http://localhost` and `http://127.0.0.1` without credentials. Configure comma-separated origins with `ERGOSTUDY_CORS_ORIGINS`. Configure credentials with `ERGOSTUDY_CORS_ALLOW_CREDENTIALS`; wildcard origins are rejected when credentials are enabled.
-
-FastAPI lifespan validates local artifacts and configurations, checks the persistent Chroma collection and cached embedding model, and initializes reusable retrieval, planning, and sensor services. It does not preload Ollama or run benchmarks.
+Ollama timeout or unavailability is a successful fallback response, not plan failure. Error responses use `{error: {code, message, details}, request_id}` and do not expose local paths or stack traces.

@@ -109,8 +109,6 @@ def evaluation_slices(queries: list[dict[str, Any]]) -> dict[str, list[str]]:
             slices["school_related"].append(query_id)
         if difficulty == "university_level":
             slices["university_related"].append(query_id)
-        if difficulty in {"sensor_situation", "missing_or_unreliable_sensor", "safety_boundary"}:
-            slices["sensor_and_safety"].append(query_id)
         if difficulty == "alias":
             slices["aliases_and_misspellings"].append(query_id)
         if difficulty == "ambiguous":
@@ -141,8 +139,6 @@ def _labels(query: dict[str, Any]) -> set[str]:
     }
     labels.update(f"document:{value}" for value in query.get("expected_document_families", []))
     difficulty = query["difficulty_type"]
-    if difficulty in {"sensor_situation", "missing_or_unreliable_sensor", "safety_boundary"}:
-        labels.add("special:sensor_safety")
     if difficulty == "school_level":
         labels.add("special:school")
     if difficulty == "university_level":
@@ -190,7 +186,6 @@ def split_counts(queries: list[dict[str, Any]], ids: Iterable[str]) -> dict[str,
         "by_difficulty_type": dict(sorted(Counter(q["difficulty_type"] for q in rows).items())),
         "by_subject_family": dict(sorted(Counter(q.get("expected_subject_family") or "not_applicable" for q in rows).items())),
         "by_document_family": dict(sorted(Counter(f for q in rows for f in q.get("expected_document_families", [])).items())),
-        "sensor_and_safety": sum(q["difficulty_type"] in {"sensor_situation", "missing_or_unreliable_sensor", "safety_boundary"} for q in rows),
         "school_related": sum(q["difficulty_type"] == "school_level" for q in rows),
         "university_related": sum(q["difficulty_type"] == "university_level" for q in rows),
     }

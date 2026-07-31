@@ -28,8 +28,6 @@ FILTER_CASES = {
     "school_supported": {"supports_school": True},
     "university_supported": {"supports_university": True},
     "reviewed_only": {"reviewed": True},
-    "sensor_intervention_only": {"document_family": "sensor_intervention"},
-    "non_medical_wellbeing": {"safety_scope": "non_medical_wellbeing"},
 }
 
 

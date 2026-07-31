@@ -1,7 +1,7 @@
 {
   "collection_name": "ergostudy-knowledge-1-0-0",
-  "corpus_record_count": 477,
-  "corpus_sha256": "7b2156a6e49c742041edc53eb721033e042cb3329c0e50ee0cc19e4aa5b024df",
+  "corpus_record_count": 463,
+  "corpus_sha256": "c58262fcdb7e6b35bae3034fecbfcf110c67756ea9c97bd079a4857cc826de5b",
   "dataset_version": "1.0.0-prototype",
   "distance_metric": "cosine",
   "embedding_dimension": 384,
@@ -14,7 +14,7 @@
     }
   },
   "manifest_version": "1.0.0",
-  "metadata_projection_hash": "fce86973f7d0115ef569c9f1f699b2dca31ba01b77301658960e0deea1904bc4",
+  "metadata_projection_hash": "26d68a8a75961670227dc4738d3daf09e31f47cfd9ecce2669bcd935e19b17a5",
   "normalized_embeddings": true,
   "package_versions": {
     "chromadb": "1.5.9",
@@ -30,8 +30,8 @@
     "document_prefix": "",
     "query_prefix": ""
   },
-  "record_id_set_hash": "9e0997c6e66f66c477f9d5915d4b8348c115b298a7464f6efd63dd9c782210ad",
-  "retrieval_text_hash": "052c23c5c339bba852ac40b86fca4c56cd8f83489616b92633ceb11b0149ed8c",
+  "record_id_set_hash": "ea32e63edcda1671ee23b077e1f1c5024de90d70b839962dc189b75d1a83ad23",
+  "retrieval_text_hash": "31244c8e144f888075a7a621e801d1c93d53e17eb925b76207974cddf023530e",
   "selected_model_id": "sentence-transformers/all-MiniLM-L6-v2",
   "selected_model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
 }

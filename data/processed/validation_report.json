@@ -44,11 +44,10 @@
     "reproducible_deterministic_build": {
       "passed": true,
       "sha256": {
-        "dataset_statistics.json": "a15498967d145352da9dcc024c9b2c13fc5e7f38023a7239b117b56765016f96",
-        "knowledge_corpus.jsonl": "7b2156a6e49c742041edc53eb721033e042cb3329c0e50ee0cc19e4aa5b024df",
-        "retrieval_evaluation_queries.jsonl": "ff1cf6d8d23832705678b5d61cb274d79655e792b1a6dcb7beb10572f2219abf",
-        "sensor_interventions.jsonl": "d8e9c31750a2de3fb95cf2fcefb1c42fabd6dee778ef56821357c3d86d2b7fa3",
-        "session_templates.jsonl": "073103025c62ca7d1b75e4b51a7d99d9f13c2aa59058047f1ee01f45821e6d9c",
+        "dataset_statistics.json": "5d6b7ab4a1744084311cbfb0c87f9b37c04a34218059072f99ea44a5062581bf",
+        "knowledge_corpus.jsonl": "c58262fcdb7e6b35bae3034fecbfcf110c67756ea9c97bd079a4857cc826de5b",
+        "retrieval_evaluation_queries.jsonl": "15a8b8858c3061ad191055a962c979d8e9bfa47915e11c312638327380ec43a1",
+        "session_templates.jsonl": "8888034f1861135da08d0f316bb8f63527deadfc30de2ee54e8c560ddfdb1c75",
         "study_strategies.jsonl": "44a03982d0b60cff34aa649f4d1c8bd28f6a1586dc0d240071ce9e8346191fd2",
         "subject_aliases.jsonl": "42e673b51fc68da0618933c0b61a7b3bd7fa5a4c708c9fd3b6ba5f0e1fbb8f23",
         "subject_profiles.jsonl": "c1174be19cc37b13bc238cab27c2a369a847eb85bbc4cce3b012584ace39a4b7",
@@ -66,30 +65,23 @@
       "passed": true,
       "unknown_fields": []
     },
-    "sensor_safety_and_medical_language": {
-      "invalid_records": [],
-      "passed": true
-    },
     "session_and_break_bounds": {
       "invalid_records": [],
       "passed": true
     },
     "source_family_coverage": {
       "passed": true,
-      "source_count": 29,
-      "source_type_count": 12,
+      "source_count": 23,
+      "source_type_count": 9,
       "source_types": [
         "curriculum_standard",
-        "government_ergonomics_guidance",
         "government_evidence_practice_guide",
         "higher_education_subject_benchmark",
-        "international_public_health_guideline",
         "peer_reviewed_evidence_review",
         "peer_reviewed_primary_research",
         "professional_accreditation_standard",
         "professional_curriculum_framework",
         "professional_education_outcomes_framework",
-        "systematic_review",
         "systematic_review_meta_analysis"
       ]
     },
@@ -102,9 +94,7 @@
       "invalid_record_uses": [],
       "passed": true,
       "role_counts": {
-        "ergonomics_guidance": 5,
         "learning_evidence": 11,
-        "public_health_guidance": 1,
         "subject_framework": 12
       }
     },
@@ -129,20 +119,19 @@
   "errors": [],
   "passed": true,
   "summary": {
-    "canonical_record_count": 277,
+    "canonical_record_count": 263,
     "document_family_counts": {
-      "sensor_intervention": 14,
       "session_template": 18,
       "study_strategy": 24,
       "subject_alias": 200,
       "subject_profile": 80,
       "topic_profile": 141
     },
-    "evaluation_query_count": 96,
-    "retrievable_record_count": 477,
-    "reviewed_record_count": 321,
-    "source_count": 29,
-    "sources_used_count": 29,
+    "evaluation_query_count": 91,
+    "retrievable_record_count": 463,
+    "reviewed_record_count": 307,
+    "source_count": 23,
+    "sources_used_count": 23,
     "synthetic_record_count": 200,
     "unreviewed_record_count": 156
   },

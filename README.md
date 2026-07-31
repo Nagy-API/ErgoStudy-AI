@@ -1,92 +1,53 @@
 # ErgoStudy AI
 
-ErgoStudy AI `1.0.0-prototype` is a local, posture-aware daily study planner built for a competition demonstration. It combines source-traceable semantic retrieval, deterministic study scheduling, optional normalized sensor adaptation, optional local-LLM wording, and a versioned FastAPI interface for a future Flutter client.
+ErgoStudy AI is a local personalized one-day study planner for a competition prototype. It validates student input, retrieves source-traceable guidance with cached MiniLM embeddings and ChromaDB, creates a deterministic schedule, and can optionally ask a local Ollama model to explain the completed plan in English.
 
-The prototype is complete. It is not production-ready, and this repository does not include Flutter UI implementation, deployment, Docker, authentication, cloud APIs, or raw sensor hardware integration.
+The physical product still contains sensors. The hardware and Flutter teams own those sensors entirely: this AI backend does not receive, validate, store, retrieve, or act on sensor data. Users with and without the hardware receive the same AI study-planning features.
 
-## What the system demonstrates
-
-1. A student submits available time, subjects, topics, and four 1-to-5 ratings.
-2. MiniLM embeddings and a persistent Chroma collection retrieve relevant knowledge records.
-3. Python rules calculate subject scores and allocate study time.
-4. The scheduler creates ordered study sessions and breaks inside the available window.
-5. An optional normalized sensor observation may adjust only future timing and breaks.
-6. An optional local Qwen model phrases the already-complete plan in English.
-7. Strict validation accepts that wording or returns a deterministic fallback.
-8. FastAPI returns versioned JSON for Flutter.
-
-## Architecture
+## Active flow
 
 ```mermaid
 flowchart LR
-    A["Flutter client (future)"] --> B["FastAPI + Pydantic"]
-    B --> C["Alias resolver + MiniLM retrieval"]
-    C --> D["477-record Chroma collection"]
-    D --> E["Deterministic scorer, allocator, scheduler"]
-    E --> F["Optional sensor adapter"]
-    F --> G["Optional Qwen wording"]
-    G --> H["Schema validation or deterministic fallback"]
-    H --> B
+    A["User study input"] --> B["FastAPI validation"]
+    B --> C["MiniLM + ChromaDB retrieval"]
+    C --> D["Deterministic daily planner"]
+    D --> E["Optional local-LLM explanation"]
+    E --> F["Validated JSON for Flutter"]
 ```
 
-Python owns every score, allocation, subject priority, session duration, break, sensor action, and fallback. The language model cannot change those values.
+Python owns subject scoring, time allocation, session order, normal timer-based breaks, reasons, fallbacks, and plan IDs. The local language model only explains those values and cannot change them.
 
-## Final evidence
+## Current evidence
 
-- Dataset: 477 retrievable records from 29 recorded sources; 96 separate evaluation queries.
-- Embedding: `sentence-transformers/all-MiniLM-L6-v2`, pinned revision, 384 dimensions.
-- Frozen retrieval: Recall@5 `0.8621`, MRR@10 `0.8728`, document-family and subject-family Hit@5 `1.0000` on the sealed 32-query final split.
-- End-to-end scenarios: 12 of 12 passed.
-- Unit and integration tests: 171 passed.
-- Warm local averages over 20 measured requests: `/plans` `113.010 ms`, `/plans/adapt` `3.893 ms`, `/plans/full` `114.440 ms`, readiness `5.045 ms`.
-- Five simultaneous deterministic plan requests: 5 of 5 passed in `784.756 ms` total.
-- Real prewarmed Ollama explanation: validated after one correction in `17.610 s`.
+- Corpus: 463 records from 23 used sources: 263 canonical records and 200 controlled aliases.
+- Evaluation queries: 91 non-sensor queries with a fresh deterministic 61/30 split.
+- Current 30-query evaluation: Recall@5 `0.9038`, MRR@10 `0.9274`, nDCG@10 `0.9198`, document-family Hit@5 `1.0000`, subject-family Hit@5 `1.0000`.
+- Chroma collection: `ergostudy-knowledge-1-0-0`, 463 records, with IDs, documents, metadata, and manifest verified.
+- Embedding: cached `sentence-transformers/all-MiniLM-L6-v2` revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`, 384 dimensions.
 
-These are local prototype measurements, not production capacity claims. See [the final system report](docs/final_system_report.md) for the complete method and limitations.
+These are local prototype results, not production-capacity claims.
 
-## Requirements
+## Inputs and outputs
 
-- Windows with PowerShell
-- 64-bit CPython 3.12
-- Git
-- A repository-local `.venv`
-- Packages pinned in `requirements.txt`
-- The selected MiniLM revision available in the local Hugging Face cache before offline startup
-- A locally built Chroma collection
-- Optional: Ollama with `qwen3:4b-instruct` already installed for live English generation
+Requests contain total available minutes, optional preferred start time and session length, and one or more subjects. Each subject may include topics and includes difficulty, priority, workload, and current understanding ratings from 1 to 5.
 
-Ollama is not required for planning. The repository uses no paid service or paid API.
+Responses contain scored subject allocations, ordered study and break sessions, study methods, deterministic reasons, warnings, unscheduled subjects, and optional grounded English wording.
 
 ## Setup
 
-From the repository root:
+The repository expects Windows, Python 3.12, the pinned packages in `requirements.txt`, the selected MiniLM revision already in the local cache, and a locally built Chroma collection. Ollama with `qwen3:4b-instruct` is optional. No paid API is used.
 
 ```powershell
 py -3.12 -m venv .venv
-.venv\Scripts\python.exe -m pip install --upgrade pip
 .venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-PyTorch is pinned to the CUDA 13.0 build used by the evaluated machine. On a different machine, install the appropriate PyTorch build first and then install the remaining pinned requirements. `scripts/setup_stage4_environment.ps1` preserves the original environment workflow.
-
-Model downloads are not automatic Stage 9 behavior. Confirm before downloading models or other large files.
-
-## Dataset validation and index build
-
-Validate the included source and processed records:
-
-```powershell
+.venv\Scripts\python.exe scripts\build_dataset.py
 .venv\Scripts\python.exe scripts\validate_dataset.py
-```
-
-Build the persistent Chroma collection from the included 477-record corpus, then verify it:
-
-```powershell
-.venv\Scripts\python.exe scripts\build_chroma_index.py
+.venv\Scripts\python.exe scripts\build_chroma_index.py --rebuild
+.venv\Scripts\python.exe scripts\rebuild_retrieval_evaluation.py
 .venv\Scripts\python.exe scripts\verify_chroma_index.py
 ```
 
-Use `--rebuild` only when intentionally replacing the exact local collection. Chroma contents are ignored by Git and are not included in the handoff ZIP.
+Model downloads are never automatic. Ask before downloading any model or large dataset.
 
 ## Run the API
 
@@ -94,84 +55,32 @@ Use `--rebuild` only when intentionally replacing the exact local collection. Ch
 powershell -ExecutionPolicy Bypass -File scripts\run_api.ps1
 ```
 
-Local URLs:
+Active endpoints:
 
-- API base: `http://127.0.0.1:8000/api/v1`
-- Interactive OpenAPI: `http://127.0.0.1:8000/docs`
-- Raw OpenAPI: `http://127.0.0.1:8000/openapi.json`
-
-## Main endpoints
-
-| Method | Endpoint | Purpose | Calls Ollama |
+| Method | Endpoint | Purpose | Waits for Ollama |
 | --- | --- | --- | --- |
-| GET | `/api/v1/health` | Basic process health | No |
-| GET | `/api/v1/readiness` | Deterministic prerequisites and separate Ollama status | Version probe only |
+| GET | `/api/v1/health` | Process health | No |
+| GET | `/api/v1/readiness` | Deterministic prerequisites and separate Ollama status | No |
 | POST | `/api/v1/plans` | Create a deterministic daily plan | No |
-| POST | `/api/v1/plans/adapt` | Adapt an existing plan from normalized sensor data | No |
-| POST | `/api/v1/plans/full` | Create and optionally adapt a plan | No |
-| POST | `/api/v1/explanations` | Explain an existing plan with fallback | Yes |
-| POST | `/api/v1/plans/full-with-explanation` | Slower demonstration-only full path | Yes |
+| POST | `/api/v1/plans/full` | Convenience plan response | No |
+| POST | `/api/v1/explanations` | Explain an existing plan with fallback | Optional |
+| POST | `/api/v1/plans/full-with-explanation` | Demonstration-only combined path | Optional |
 
-Use `/plans`, `/plans/adapt`, and `/plans/full` as the primary application path. Explanation is optional.
+Unknown request fields are rejected. The deterministic plan endpoints never wait for Ollama.
 
-## Run the competition demo
-
-Verify and prewarm the already-installed local Ollama model without downloading anything:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\prewarm_ollama.ps1
-```
-
-Start the prepared demonstration:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\run_demo.ps1 -SkipPrewarm
-```
-
-If prewarm fails, continue normally and show the deterministic fallback. Use `-RefreshOutputs` only when intentionally rerunning the final scenarios. The 5–7 minute presentation flow and backup paths are in [the competition demo script](docs/competition_demo_script.md).
-
-## Run validation and tests
+## Validate and package
 
 ```powershell
 .venv\Scripts\python.exe scripts\final_validation.py
 .venv\Scripts\python.exe -m unittest discover -s tests -v
 .venv\Scripts\python.exe scripts\run_notebook_cells.py 10_end_to_end_demo.ipynb
 .venv\Scripts\python.exe -m compileall -q api src scripts
+.venv\Scripts\python.exe scripts\build_handoff_package.py
 git diff --check
 ```
 
-`final_validation.py` preserves the 12 inputs/responses, per-scenario checks, cold/warm performance statistics, concurrent smoke, real optional Ollama result, and deterministic fallback measurements in `data/processed`.
+The ignored `handoff` directory receives the source ZIP. It excludes Git data, virtual environments, caches, Chroma contents, model files, Ollama files, temporary files, and secrets.
 
-## Build the source handoff
+## Limits
 
-After checking out the final tag:
-
-```powershell
-.venv\Scripts\python.exe scripts\build_handoff_package.py
-```
-
-The ignored `handoff` directory receives the source ZIP. The ignored external `data/processed/package_manifest.json` records included count/size, exclusions, Git commit, project version, ZIP size, and SHA-256. The builder audits package entries, machine-specific paths, and common secret patterns.
-
-## Project documentation
-
-- [Final system report](docs/final_system_report.md)
-- [Competition demo script](docs/competition_demo_script.md)
-- [Discussion guide](docs/discussion_guide.md)
-- [Final handoff guide](docs/final_handoff_guide.md)
-- [Project file map](docs/project_file_map.md)
-- [API contract](docs/api_contract.md)
-- [Flutter integration guide](docs/flutter_integration_guide.md)
-- [Stage reports](docs)
-
-## Known limitations
-
-- The corpus is curriculum-neutral and is not a course-specific tutoring dataset.
-- The sealed final retrieval evaluation contains 32 queries.
-- Planner and sensor thresholds are prototype product settings requiring user testing.
-- Sensor input is normalized application data; raw hardware transport and calibration are not implemented.
-- Sensor behavior is non-medical and must not be presented as diagnosis or treatment.
-- Real Ollama latency varies and may exceed a live presentation window without prewarming.
-- The local API has no authentication, TLS, rate limiting, or production hardening.
-- There is no Flutter UI or deployment in this release.
-
-The project version deliberately includes `prototype`; completion means the competition prototype and handoff are complete, not that a production service is ready.
+This is a local prototype, not a production service. It has no authentication, TLS, rate limiting, cloud deployment, Flutter UI, or course-specific tutoring corpus. Retrieval evaluation is small, and optional Ollama latency depends on the local machine.

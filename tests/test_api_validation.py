@@ -41,6 +41,20 @@ class APIValidationTests(unittest.TestCase):
         payload = self.assert_invalid(request)
         self.assertIn("cloud_api_key", json.dumps(payload))
 
+    def test_obsolete_sensor_fields_are_rejected(self) -> None:
+        request = copy.deepcopy(SCHOOL_REQUEST)
+        request["sensor_observation"] = {"sensor_enabled": True}
+        with make_client() as client:
+            for path in ("/api/v1/plans/full", "/api/v1/plans/full-with-explanation"):
+                response = client.post(path, json=request)
+                self.assertEqual(response.status_code, 422)
+                self.assertIn("sensor_observation", response.text)
+
+    def test_removed_adaptation_endpoint_returns_404(self) -> None:
+        with make_client() as client:
+            response = client.post("/api/v1/plans/adapt", json={})
+        self.assertEqual(response.status_code, 404)
+
     def test_invalid_clock_time(self) -> None:
         request = copy.deepcopy(SCHOOL_REQUEST)
         request["preferred_start_time"] = "25:00"

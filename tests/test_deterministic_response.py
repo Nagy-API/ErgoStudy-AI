@@ -28,10 +28,6 @@ def context() -> dict:
             "warnings": ["5 study minutes were deferred."],
         },
         "retrieved_record_summaries": [],
-        "sensor_result": {
-            "notice": "Take a short movement break before the next study block.",
-            "actions": [{"action": "insert_movement_break"}],
-        },
     }
 
 
@@ -48,11 +44,6 @@ class DeterministicResponseTests(unittest.TestCase):
         self.assertEqual([item.session_order for item in response.session_messages], [1, 2])
         self.assertIn("English Literature", response.unscheduled_message or "")
         self.assertTrue(validate_generated_response(response.to_dict(), values).valid)
-
-    def test_fallback_sensor_language_is_non_medical(self) -> None:
-        message = deterministic_grounded_response(context()).sensor_message or ""
-        self.assertNotIn("diagnos", message.lower())
-        self.assertNotIn("treatment", message.lower())
 
 
 if __name__ == "__main__":

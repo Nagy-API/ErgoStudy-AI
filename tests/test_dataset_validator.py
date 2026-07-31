@@ -13,7 +13,6 @@ from src.dataset_validator import (
     find_broken_source_references,
     find_duplicate_retrieval_texts,
     find_evaluation_leaks,
-    find_sensor_safety_errors,
     find_source_role_errors,
     validate_dataset,
     validate_record,
@@ -97,13 +96,6 @@ class DatasetValidatorTests(unittest.TestCase):
         self.assertEqual(len(find_duplicate_retrieval_texts([first, second])), 1)
         second["retrieval_text"] += " Additional."
         self.assertTrue(detect_near_duplicates([first, second], threshold=0.80))
-
-    def test_sensor_safety_validation(self) -> None:
-        valid_sensor = copy.deepcopy(next(record for record in self.corpus if record["document_family"] == "sensor_intervention"))
-        self.assertEqual(find_sensor_safety_errors([valid_sensor]), [])
-        valid_sensor["hardware_confirmation_required"] = False
-        valid_sensor["retrieval_text"] = "The sensor proves injury and should diagnose the user."
-        self.assertEqual(find_sensor_safety_errors([valid_sensor]), [valid_sensor["record_id"]])
 
     def test_evaluation_corpus_separation(self) -> None:
         self.assertEqual(find_evaluation_leaks(self.corpus, self.evaluations), [])

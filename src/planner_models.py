@@ -60,7 +60,7 @@ class SubjectInput:
 
 @dataclass(frozen=True)
 class DailyPlanRequest:
-    """Validated shape of one non-sensor daily-planning request."""
+    """Validated shape of one daily-planning request."""
 
     total_available_minutes: int
     subjects: tuple[SubjectInput, ...]

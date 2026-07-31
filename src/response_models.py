@@ -11,7 +11,6 @@ RESPONSE_FIELDS = frozenset(
         "summary",
         "allocation_explanations",
         "session_messages",
-        "sensor_message",
         "unscheduled_message",
         "warnings",
     }
@@ -78,7 +77,6 @@ class GroundedResponse:
     summary: str
     allocation_explanations: tuple[AllocationExplanation, ...]
     session_messages: tuple[SessionMessage, ...]
-    sensor_message: str | None
     unscheduled_message: str | None
     warnings: tuple[str, ...]
 
@@ -96,10 +94,7 @@ class GroundedResponse:
             isinstance(item, str) and item.strip() for item in warnings
         ):
             raise ValueError("warnings must be a list of non-empty strings")
-        sensor = values["sensor_message"]
         unscheduled = values["unscheduled_message"]
-        if sensor is not None and (not isinstance(sensor, str) or not sensor.strip()):
-            raise ValueError("sensor_message must be a non-empty string or null")
         if unscheduled is not None and (
             not isinstance(unscheduled, str) or not unscheduled.strip()
         ):
@@ -110,7 +105,6 @@ class GroundedResponse:
                 AllocationExplanation.from_dict(item) for item in allocations
             ),
             session_messages=tuple(SessionMessage.from_dict(item) for item in sessions),
-            sensor_message=sensor.strip() if isinstance(sensor, str) else None,
             unscheduled_message=(
                 unscheduled.strip() if isinstance(unscheduled, str) else None
             ),
@@ -122,7 +116,6 @@ class GroundedResponse:
             "summary": self.summary,
             "allocation_explanations": [asdict(item) for item in self.allocation_explanations],
             "session_messages": [asdict(item) for item in self.session_messages],
-            "sensor_message": self.sensor_message,
             "unscheduled_message": self.unscheduled_message,
             "warnings": list(self.warnings),
         }
@@ -185,7 +178,6 @@ OUTPUT_JSON_SCHEMA: dict[str, Any] = {
                 },
             },
         },
-        "sensor_message": {"type": ["string", "null"]},
         "unscheduled_message": {"type": ["string", "null"]},
         "warnings": {"type": "array", "items": {"type": "string", "minLength": 1}},
     },

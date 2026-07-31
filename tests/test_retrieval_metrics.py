@@ -59,7 +59,7 @@ class RetrievalMetricTests(unittest.TestCase):
         queries = [
             {
                 "query_id": f"q{i:02d}",
-                "difficulty_type": ["exact_name", "ambiguous", "sensor_situation"][i % 3],
+                "difficulty_type": ["exact_name", "ambiguous", "session_structure"][i % 3],
                 "expected_subject_family": ["computing", "mathematics", None][i % 3],
                 "expected_document_families": ["subject_profile"],
             }

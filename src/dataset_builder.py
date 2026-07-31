@@ -23,7 +23,6 @@ FAMILY_FILES = {
     "topic_profile": "topic_profiles.jsonl",
     "study_strategy": "study_strategies.jsonl",
     "session_template": "session_templates.jsonl",
-    "sensor_intervention": "sensor_interventions.jsonl",
     "subject_alias": "subject_aliases.jsonl",
 }
 
@@ -251,27 +250,6 @@ def _build_sessions(seed: list[dict[str, Any]]) -> list[dict[str, Any]]:
         record.update({key: value for key, value in item.items() if key not in {"key", "source_ids", "title"}})
         record["retrieval_text"] = retrieval_text
         record["duration_status"] = "design_proposal_requires_evaluation"
-        record.setdefault("sensor_mode", "sensor_optional")
-        records.append(record)
-    return records
-
-
-def _build_sensors(seed: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    records: list[dict[str, Any]] = []
-    for item in seed:
-        actions = "; ".join(item["intervention"])
-        retrieval_text = (
-            f"Non-medical sensor response: {item['title']}. Condition: {item['sensor_condition'].rstrip('.')}. Safe response: {actions}. "
-            f"If data is unavailable or unreliable: {item['missing_data_behavior'].rstrip('.')}. This record does not diagnose posture, injury, or health. "
-            "No hardware unit, sampling rate, calibration rule, or scientifically confirmed threshold is assumed; the hardware contract and deterministic trigger configuration must be confirmed before use."
-        )
-        record = _base_record(
-            "sensor_intervention", stable_record_id("sensor", item["key"]), item["title"], item["source_ids"],
-            evidence_level=item.get("evidence_level", "expert_consensus"), review_tier="tier_a",
-            safety_scope=item.get("safety_scope", "non_medical_wellbeing"),
-        )
-        record.update({key: value for key, value in item.items() if key not in {"key", "source_ids", "title", "evidence_level", "safety_scope"}})
-        record.update({"retrieval_text": retrieval_text, "hardware_confirmation_required": True, "sensor_mode": "sensor_optional"})
         records.append(record)
     return records
 
@@ -371,7 +349,7 @@ def _build_aliases(subjects: list[dict[str, Any]], seed: dict[str, Any]) -> list
     return records
 
 
-def _build_evaluation_queries(seed_path: Path, subjects: list[dict[str, Any]], aliases: list[dict[str, Any]], target: int = 96) -> list[dict[str, Any]]:
+def _build_evaluation_queries(seed_path: Path, subjects: list[dict[str, Any]], aliases: list[dict[str, Any]], target: int = 91) -> list[dict[str, Any]]:
     seed_queries = read_jsonl(seed_path)
     queries: list[dict[str, Any]] = []
     for seed in seed_queries:
@@ -391,7 +369,9 @@ def _build_evaluation_queries(seed_path: Path, subjects: list[dict[str, Any]], a
         ("How should I structure one focused block for {subject} without assuming an ideal timer?", "session_structure", ["subject_profile", "session_template"]),
         ("This custom subject is called {subject}; map it before deciding how hard it is.", "unseen_wording", ["subject_profile", "subject_alias"]),
     ]
-    next_number = max(int(query["query_id"].split("-")[1]) for query in queries) + 1
+    # Preserve the established IDs of the remaining generated queries; retired
+    # evaluation IDs 128-132 are intentionally not reused.
+    next_number = max(133, max(int(query["query_id"].split("-")[1]) for query in queries) + 1)
     alias_cases = [
         record for record in aliases
         if record["generation_method"] == "reviewed_common_misspelling" or record["ambiguous"]
@@ -479,7 +459,6 @@ def build_dataset(project_root: Path = PROJECT_ROOT, output_dir: Path | None = N
     topics = _build_topics(read_json(raw_dir / "topic_seed_data.json"), subjects)
     strategies = _build_strategies(read_json(raw_dir / "study_strategy_seed.json"))
     sessions = _build_sessions(read_json(raw_dir / "session_template_seed.json"))
-    sensors = _build_sensors(read_json(raw_dir / "sensor_intervention_seed.json"))
     aliases = _build_aliases(subjects, read_json(raw_dir / "alias_seed_data.json"))
 
     by_family = {
@@ -487,7 +466,6 @@ def build_dataset(project_root: Path = PROJECT_ROOT, output_dir: Path | None = N
         "topic_profile": topics,
         "study_strategy": strategies,
         "session_template": sessions,
-        "sensor_intervention": sensors,
         "subject_alias": aliases,
     }
     corpus = [record for family in FAMILY_FILES for record in by_family[family]]

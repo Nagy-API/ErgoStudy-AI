@@ -25,7 +25,7 @@ UNSUPPORTED_INPUT_TERMS = (
     "tomorrow",
 )
 RECORD_ID_PATTERN = re.compile(
-    r"\b(?:subject|topic|strategy|session|sensor)-[a-z0-9][a-z0-9-]*-v\d+\b",
+    r"\b(?:subject|topic|strategy|session)-[a-z0-9][a-z0-9-]*-v\d+\b",
     re.IGNORECASE,
 )
 MINUTE_PATTERN = re.compile(r"\b(\d+)\s*(?:-|\s)?minutes?\b", re.IGNORECASE)
@@ -76,8 +76,6 @@ def _all_text(response: GroundedResponse) -> list[str]:
     values = [response.summary, *(item.reason for item in response.allocation_explanations)]
     values.extend(item.message for item in response.session_messages)
     values.extend(response.warnings)
-    if response.sensor_message:
-        values.append(response.sensor_message)
     if response.unscheduled_message:
         values.append(response.unscheduled_message)
     return values
@@ -188,31 +186,6 @@ def validate_generated_response(
             allowed_plan_minutes | warning_minutes
         ):
             errors.append("unscheduled_message changes or invents a duration")
-
-    sensor_supplied = grounding_context.get("sensor_result") is not None
-    if sensor_supplied and response.sensor_message is None:
-        errors.append("sensor_message is required when a sensor result is supplied")
-    if not sensor_supplied and response.sensor_message is not None:
-        errors.append("sensor_message must be null without a sensor result")
-    if response.sensor_message and sensor_supplied:
-        sensor_values = grounding_context["sensor_result"]
-        supplied_sensor_text = json.dumps(sensor_values, ensure_ascii=True).lower()
-        for term in ("move", "movement", "reposition", "adjust", "posture", "break"):
-            if term in response.sensor_message.lower() and term not in supplied_sensor_text:
-                errors.append(f"sensor_message invents an unsupported action: {term}")
-        sensor_minutes = {
-            int(value)
-            for action in sensor_values.get("actions", [])
-            for key in ("duration_minutes", "minutes_reduced")
-            if isinstance((value := action.get(key)), int) and not isinstance(value, bool)
-        }
-        sensor_minutes.update(
-            item["duration_minutes"]
-            for item in plan["sessions"]
-            if item.get("session_type") == "break"
-        )
-        if not _minute_values(response.sensor_message).issubset(sensor_minutes):
-            errors.append("sensor_message changes or invents a sensor duration")
 
     allowed_ids = {
         item["record_id"] for item in grounding_context.get("retrieved_record_summaries", [])

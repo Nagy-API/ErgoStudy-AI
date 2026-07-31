@@ -104,15 +104,11 @@ def build_grounding_context(
     plan: Any,
     *,
     retrieved_record_summaries: Iterable[dict[str, Any]] = (),
-    sensor_result: Any | None = None,
 ) -> dict[str, Any]:
     """Return only deterministic results and relevant supplied record summaries."""
     original = _as_dict(original_user_input, "original user input")
     plan_values = _as_dict(plan, "daily study plan")
-    sensor_values = _as_dict(sensor_result, "sensor result") if sensor_result is not None else None
-    sessions = copy.deepcopy(
-        sensor_values.get("sessions", []) if sensor_values is not None else plan_values.get("sessions", [])
-    )
+    sessions = copy.deepcopy(plan_values.get("sessions", []))
     if not isinstance(sessions, list):
         raise ValueError("final sessions must be a list")
     allowed_ids = _record_ids(plan_values, sessions)
@@ -126,12 +122,8 @@ def build_grounding_context(
     relevant_records.sort(key=lambda item: item["record_id"])
     final_plan = {
         "total_available_minutes": plan_values.get("total_available_minutes"),
-        "total_study_minutes": (
-            sensor_values.get("total_study_minutes") if sensor_values else plan_values.get("total_study_minutes")
-        ),
-        "total_break_minutes": (
-            sensor_values.get("total_break_minutes") if sensor_values else plan_values.get("total_break_minutes")
-        ),
+        "total_study_minutes": plan_values.get("total_study_minutes"),
+        "total_break_minutes": plan_values.get("total_break_minutes"),
         "subject_allocations": [
             {
                 "subject": item.get("subject"),
@@ -144,25 +136,10 @@ def build_grounding_context(
         ],
         "sessions": sessions,
         "unscheduled_subjects": copy.deepcopy(plan_values.get("unscheduled_subjects", [])),
-        "warnings": copy.deepcopy(
-            sensor_values.get("warnings", plan_values.get("warnings", []))
-            if sensor_values
-            else plan_values.get("warnings", [])
-        ),
+        "warnings": copy.deepcopy(plan_values.get("warnings", [])),
     }
-    sensor_context = None
-    if sensor_values is not None:
-        sensor_context = {
-            "mode": sensor_values.get("mode"),
-            "severity": sensor_values.get("severity"),
-            "triggers": copy.deepcopy(sensor_values.get("triggers", [])),
-            "actions": copy.deepcopy(sensor_values.get("actions", [])),
-            "notice": sensor_values.get("sensor_notice"),
-            "adaptation_applied": sensor_values.get("adaptation_applied"),
-        }
     return {
         "original_user_input": _safe_user_input(original),
         "final_plan": final_plan,
         "retrieved_record_summaries": relevant_records,
-        "sensor_result": sensor_context,
     }

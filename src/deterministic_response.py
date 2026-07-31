@@ -38,8 +38,6 @@ def deterministic_grounded_response(context: dict) -> GroundedResponse:
                 f"{method_text}."
             )
         messages.append(SessionMessage(order, message))
-    sensor = context.get("sensor_result")
-    sensor_message = sensor.get("notice") if sensor else None
     unscheduled = plan.get("unscheduled_subjects", [])
     unscheduled_message = None
     if unscheduled:
@@ -49,7 +47,6 @@ def deterministic_grounded_response(context: dict) -> GroundedResponse:
         summary=summary,
         allocation_explanations=allocation_explanations,
         session_messages=tuple(messages),
-        sensor_message=sensor_message,
         unscheduled_message=unscheduled_message,
         warnings=tuple(plan.get("warnings", [])),
     )

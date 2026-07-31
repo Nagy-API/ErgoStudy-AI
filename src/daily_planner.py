@@ -1,4 +1,4 @@
-"""Orchestrator for deterministic, non-sensor, one-day study plans."""
+"""Orchestrator for deterministic one-day study plans."""
 
 from __future__ import annotations
 
@@ -49,7 +49,7 @@ def deterministic_plan_id(request: DailyPlanRequest, config: PlannerConfig) -> s
 
 
 class DailyPlanner:
-    """Build an explainable plan without an LLM or sensor input."""
+    """Build an explainable plan without an LLM."""
 
     def __init__(
         self,

@@ -14,7 +14,7 @@ from src.dataset_io import file_sha256, read_json, read_jsonl, read_source_catal
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-RECORD_ID_PATTERN = re.compile(r"^(subject|topic|strategy|session|sensor|alias|eval)-[a-z0-9]+(?:-[a-z0-9]+)*-v[0-9]+$")
+RECORD_ID_PATTERN = re.compile(r"^(subject|topic|strategy|session|alias|eval)-[a-z0-9]+(?:-[a-z0-9]+)*-v[0-9]+$")
 DOCUMENT_FAMILIES = set(FAMILY_FILES) | {"retrieval_evaluation_query"}
 SUBJECT_FAMILIES = {
     "mathematics", "natural_sciences", "language_and_literature", "social_sciences", "computing",
@@ -27,9 +27,9 @@ LEARNING_TASKS = {
 }
 COGNITIVE_DEMANDS = {"remember", "understand", "apply", "analyze", "evaluate", "create", "mixed", None}
 EVIDENCE_LEVELS = {"high", "moderate", "emerging", "expert_consensus", "source_descriptive", "design_proposal", "not_applicable"}
-SAFETY_SCOPES = {"none", "non_medical_wellbeing", "stop_and_seek_help"}
+SAFETY_SCOPES = {"none"}
 REVIEW_TIERS = {"tier_a", "tier_b", "tier_c"}
-SOURCE_ROLES = {"learning_evidence", "subject_framework", "ergonomics_guidance", "public_health_guidance", "planner_design_support"}
+SOURCE_ROLES = {"learning_evidence", "subject_framework", "planner_design_support"}
 
 SHARED_REQUIRED = {
     "record_id", "document_family", "title", "retrieval_text", "evidence_level", "source_ids",
@@ -40,7 +40,6 @@ FAMILY_REQUIRED = {
     "topic_profile": {"topic", "subject_family", "educational_level", "learning_task", "cognitive_demand", "recommended_methods"},
     "study_strategy": {"recommended_methods", "suitable_learning_tasks", "implementation_guidance", "unsuitable_use_cases", "limitations"},
     "session_template": {"session_duration_min", "session_duration_max", "break_duration_min", "break_duration_max", "phases", "suitable_learning_tasks", "unsuitable_use_cases", "duration_status"},
-    "sensor_intervention": {"sensor_condition", "intervention", "missing_data_behavior", "hardware_confirmation_required", "contraindications", "sensor_mode"},
     "subject_alias": {"subject_name", "aliases", "subject_family", "educational_level", "matching_notes", "ambiguous", "ambiguity_notes"},
 }
 EVALUATION_REQUIRED = {
@@ -82,18 +81,11 @@ def find_source_role_errors(records: list[dict[str, Any]], source_roles: dict[st
         if "subject_framework" in roles:
             if record.get("evidence_level") not in {"source_descriptive", "design_proposal"}:
                 invalid.append(f"{record['record_id']}: framework used as effectiveness evidence")
-            if record.get("document_family") == "sensor_intervention":
-                invalid.append(f"{record['record_id']}: framework used for sensor intervention")
             if record.get("document_family") == "session_template" and (
                 record.get("evidence_level") != "design_proposal"
                 or record.get("duration_status") != "design_proposal_requires_evaluation"
             ):
                 invalid.append(f"{record['record_id']}: framework-linked session is not a design proposal")
-        if roles & {"ergonomics_guidance", "public_health_guidance"}:
-            if record.get("document_family") != "sensor_intervention":
-                invalid.append(f"{record['record_id']}: health or ergonomics source used outside sensor safety scope")
-            if record.get("safety_scope") not in {"non_medical_wellbeing", "stop_and_seek_help"}:
-                invalid.append(f"{record['record_id']}: health or ergonomics source lacks safe scope")
     return sorted(set(invalid))
 
 
@@ -118,28 +110,6 @@ def find_evaluation_leaks(records: list[dict[str, Any]], evaluations: list[dict[
     """Return evaluation IDs whose query text exactly duplicates retrieval text."""
     retrieval_norms = {normalize_text(record["retrieval_text"]) for record in records}
     return [record["record_id"] for record in evaluations if normalize_text(record["query_text"]) in retrieval_norms]
-
-
-def find_sensor_safety_errors(records: list[dict[str, Any]]) -> list[str]:
-    """Return sensor records that violate conservative language and metadata rules."""
-    invalid: list[str] = []
-    unsafe_patterns = [
-        r"sensor (?:proves|confirms) (?:injury|disease)", r"diagnose the user", r"treat the user's",
-        r"scientifically confirmed posture threshold", r"pressure threshold of \d", r"sampling rate of \d",
-    ]
-    for record in records:
-        if record.get("document_family") != "sensor_intervention":
-            continue
-        text = record.get("retrieval_text", "").casefold()
-        if not record.get("hardware_confirmation_required") or not record.get("reviewed"):
-            invalid.append(record["record_id"])
-        if record.get("safety_scope") not in {"non_medical_wellbeing", "stop_and_seek_help"}:
-            invalid.append(record["record_id"])
-        if "non-medical" not in text or "does not diagnose" not in text:
-            invalid.append(record["record_id"])
-        if any(re.search(pattern, text) for pattern in unsafe_patterns):
-            invalid.append(record["record_id"])
-    return sorted(set(invalid))
 
 
 def _strings(value: Any) -> Iterable[str]:
@@ -339,7 +309,7 @@ def validate_dataset(project_root: Path = PROJECT_ROOT, *, check_determinism: bo
     tier_errors: list[str] = []
     for record in corpus:
         family = record["document_family"]
-        if family in {"study_strategy", "sensor_intervention"} and (record["review_tier"] != "tier_a" or not record["reviewed"]):
+        if family == "study_strategy" and (record["review_tier"] != "tier_a" or not record["reviewed"]):
             tier_errors.append(record["record_id"])
         if family in {"subject_profile", "topic_profile", "session_template"} and record["review_tier"] != "tier_b":
             tier_errors.append(record["record_id"])
@@ -348,11 +318,6 @@ def validate_dataset(project_root: Path = PROJECT_ROOT, *, check_determinism: bo
     if tier_errors:
         errors.append(f"Review-tier violations: {tier_errors[:20]}")
     checks["review_tier_compliance"] = {"passed": not tier_errors, "invalid_records": tier_errors}
-
-    sensor_errors = find_sensor_safety_errors(corpus)
-    if sensor_errors:
-        errors.append(f"Sensor safety-language violations: {sensor_errors}")
-    checks["sensor_safety_and_medical_language"] = {"passed": not sensor_errors, "invalid_records": sensor_errors}
 
     range_errors: list[str] = []
     for record in corpus:

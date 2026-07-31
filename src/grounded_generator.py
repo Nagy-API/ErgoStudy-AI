@@ -15,13 +15,13 @@ from src.response_models import GenerationResult, OUTPUT_JSON_SCHEMA
 
 
 SYSTEM_INSTRUCTION = """You are the local wording layer for ErgoStudy AI. /no_think
-Use only the supplied structured data. The deterministic plan and sensor result are final.
+Use only the supplied structured data. The deterministic study plan is final.
 Do not change, add, remove, or reorder subjects, sessions, durations, breaks, priorities,
-allocations, sensor triggers, or sensor actions. Do not invent inputs, record IDs, facts, or
+or allocations. Do not invent inputs, record IDs, facts, or
 educational claims. Do not diagnose conditions or give medical or treatment advice.
 Return concise natural English as JSON matching the schema exactly. Use exact subject names,
 allocated minutes, and session orders. Include one allocation explanation per scheduled subject
-and one message per final session. Use calm non-medical sensor wording. Use no Markdown, no
+and one message per final session. Use no Markdown, no
 hidden reasoning, no extra fields, and do not mention record IDs."""
 
 
@@ -85,13 +85,11 @@ class GroundedResponseGenerator:
         plan: Any,
         *,
         retrieved_record_summaries: Iterable[dict[str, Any]] = (),
-        sensor_result: Any | None = None,
     ) -> GenerationResult:
         context = build_grounding_context(
             original_user_input,
             plan,
             retrieved_record_summaries=retrieved_record_summaries,
-            sensor_result=sensor_result,
         )
         started = time.perf_counter()
         collected_errors: list[str] = []

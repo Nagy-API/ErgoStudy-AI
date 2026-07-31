@@ -27,7 +27,6 @@ def context() -> dict:
             "warnings": ["5 minutes remain unallocated."],
         },
         "retrieved_record_summaries": [{"record_id": "subject-mathematics-cross-level-v1"}],
-        "sensor_result": None,
     }
 
 
@@ -43,7 +42,6 @@ def valid_output() -> dict:
             {"session_order": 2, "message": "Take the planned 10-minute break."},
             {"session_order": 3, "message": "Study Biology for 30 minutes."},
         ],
-        "sensor_message": None,
         "unscheduled_message": None,
         "warnings": ["5 minutes remain unallocated."],
     }
@@ -130,30 +128,6 @@ class GenerationValidatorTests(unittest.TestCase):
         values = valid_output()
         values["warnings"] = ["10 minutes remain unallocated."]
         self.assertRejected(values, "warning text changes or invents a duration")
-
-    def test_rejects_changed_sensor_duration(self) -> None:
-        values = valid_output()
-        values["sensor_message"] = "Take a 15-minute movement break."
-        grounded = context()
-        grounded["sensor_result"] = {
-            "notice": "Take a short movement break.",
-            "actions": [{"action": "insert_movement_break", "duration_minutes": 10}],
-        }
-        result = validate_generated_response(values, grounded)
-        self.assertFalse(result.valid)
-        self.assertIn("sensor duration", " ".join(result.errors))
-
-    def test_rejects_invented_sensor_action_for_missing_data(self) -> None:
-        values = valid_output()
-        values["sensor_message"] = "Move now before the next block."
-        grounded = context()
-        grounded["sensor_result"] = {
-            "notice": "No current sensor observation is available; the timer-based plan remains active.",
-            "actions": [],
-        }
-        result = validate_generated_response(values, grounded)
-        self.assertFalse(result.valid)
-        self.assertIn("unsupported action", " ".join(result.errors))
 
 
 if __name__ == "__main__":

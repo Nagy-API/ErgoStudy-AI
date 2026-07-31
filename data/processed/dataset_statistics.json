@@ -1,8 +1,7 @@
 {
-  "canonical_record_count": 277,
+  "canonical_record_count": 263,
   "dataset_version": "1.0.0-prototype",
   "document_family_counts": {
-    "sensor_intervention": 14,
     "session_template": 18,
     "study_strategy": 24,
     "subject_alias": 200,
@@ -14,17 +13,15 @@
     "school": 350,
     "university": 454
   },
-  "evaluation_query_count": 96,
-  "retrievable_record_count": 477,
-  "reviewed_record_count": 321,
-  "source_catalog_count": 29,
+  "evaluation_query_count": 91,
+  "retrievable_record_count": 463,
+  "reviewed_record_count": 307,
+  "source_catalog_count": 23,
   "source_role_counts": {
-    "ergonomics_guidance": 5,
     "learning_evidence": 11,
-    "public_health_guidance": 1,
     "subject_framework": 12
   },
-  "sources_used_count": 29,
+  "sources_used_count": 23,
   "subject_family_counts": {
     "arts_and_design": 38,
     "business_and_economics": 41,
@@ -36,7 +33,6 @@
     "law": 24,
     "mathematics": 49,
     "natural_sciences": 54,
-    "not_applicable": 14,
     "social_sciences": 49
   },
   "synthetic_record_count": 200,

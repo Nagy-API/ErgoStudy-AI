@@ -18,7 +18,6 @@ from src.retrieval_models import QueryAnalysis, RetrievalConfiguration, Retrieva
 
 
 DEFAULT_INTENT_BOOSTS = {
-    "sensor_or_posture": {"sensor_intervention": 0.20},
     "session_template": {"session_template": 0.03, "study_strategy": 0.01},
     "study_strategy": {"study_strategy": 0.025, "session_template": 0.01},
     "topic_lookup": {"topic_profile": 0.02},

@@ -28,7 +28,6 @@ def records() -> list[dict]:
         "synthetic": False,
         "safety_scope": "none",
         "dataset_version": "1.0.0-prototype",
-        "sensor_mode": "not_applicable",
         "source_ids": ["source-a"],
     }
     return [

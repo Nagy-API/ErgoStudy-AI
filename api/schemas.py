@@ -117,69 +117,6 @@ class DailyStudyPlanSchema(StrictModel):
         return self
 
 
-class SensorObservationSchema(StrictModel):
-    sensor_enabled: bool
-    connection_status: Literal["connected", "disconnected", "unknown"] | None = None
-    observation_status: Literal["valid", "missing", "stale", "invalid", "unknown"] | None = None
-    continuous_sitting_minutes: NonNegativeInteger | None = None
-    poor_posture_duration_minutes: NonNegativeInteger | None = None
-    posture_direction: Literal[
-        "upright", "leaning_left", "leaning_right", "leaning_forward", "leaning_backward", "unknown"
-    ] | None = None
-    pressure_imbalance_detected: bool | None = None
-    reading_age_seconds: NonNegativeInteger | None = None
-    current_session_order: PositiveInteger | None = None
-    elapsed_session_minutes: NonNegativeInteger | None = None
-    minutes_since_last_reminder: NonNegativeInteger | None = None
-
-
-class AdaptationActionSchema(StrictModel):
-    action: ShortText
-    reason: str | None = None
-    duration_minutes: PositiveInteger | None = None
-    minutes_reduced: PositiveInteger | None = None
-    session_order: PositiveInteger | None = None
-
-
-class AdaptedStudyPlanSchema(StrictModel):
-    original_plan_id: ShortText
-    adapted_plan_id: ShortText
-    adaptation_applied: bool
-    mode: str
-    severity: str
-    triggers: list[str]
-    actions: list[AdaptationActionSchema]
-    sessions: list[PlannedSessionSchema]
-    total_available_minutes: PositiveInteger
-    total_study_minutes: NonNegativeInteger
-    total_break_minutes: NonNegativeInteger
-    total_planned_minutes: NonNegativeInteger
-    unallocated_minutes: NonNegativeInteger
-    deferred_study_minutes: NonNegativeInteger
-    sensor_notice: ShortText
-    warnings: list[str]
-    sensor_policy_version: ShortText
-
-    @model_validator(mode="after")
-    def validate_adapted_totals_and_orders(self) -> "AdaptedStudyPlanSchema":
-        orders = [item.order for item in self.sessions]
-        if orders != list(range(1, len(orders) + 1)):
-            raise ValueError("adapted session orders must be consecutive and start at 1")
-        study = sum(
-            item.duration_minutes for item in self.sessions if item.session_type == "study"
-        )
-        breaks = sum(
-            item.duration_minutes for item in self.sessions if item.session_type == "break"
-        )
-        if (study, breaks) != (self.total_study_minutes, self.total_break_minutes):
-            raise ValueError("adapted session durations must match the reported totals")
-        if self.total_planned_minutes != study + breaks:
-            raise ValueError("adapted total_planned_minutes must equal study plus break minutes")
-        if self.unallocated_minutes != self.total_available_minutes - self.total_planned_minutes:
-            raise ValueError("adapted unallocated_minutes must match the available time remainder")
-        return self
-
-
 class FallbackInformation(StrictModel):
     used: bool
     reason_codes: list[str] = Field(default_factory=list)
@@ -194,25 +131,12 @@ class PlanResponse(StrictModel):
     api_version: str = API_VERSION
 
 
-class AdaptPlanRequest(StrictModel):
-    plan: DailyStudyPlanSchema
-    sensor_observation: SensorObservationSchema | None = None
-
-
-class AdaptPlanResponse(StrictModel):
-    adapted_plan: AdaptedStudyPlanSchema
-    request_id: str
-    processing_time_ms: float
-    api_version: str = API_VERSION
-
-
 class FullPlanRequest(PlanRequest):
-    sensor_observation: SensorObservationSchema | None = None
+    pass
 
 
 class FullPlanResponse(StrictModel):
     original_plan: DailyStudyPlanSchema
-    adapted_plan: AdaptedStudyPlanSchema | None
     final_sessions: list[PlannedSessionSchema]
     request_id: str
     processing_time_ms: float
@@ -235,24 +159,13 @@ class GroundedResponseSchema(StrictModel):
     summary: str
     allocation_explanations: list[AllocationExplanationSchema]
     session_messages: list[SessionMessageSchema]
-    sensor_message: str | None
     unscheduled_message: str | None
     warnings: list[str]
 
 
 class ExplanationRequest(StrictModel):
     plan: DailyStudyPlanSchema
-    adapted_plan: AdaptedStudyPlanSchema | None = None
     timeout_seconds: Annotated[int, Field(strict=True, ge=1, le=120)] | None = None
-
-    @model_validator(mode="after")
-    def match_original_and_adapted_plan(self) -> "ExplanationRequest":
-        if self.adapted_plan is not None and (
-            self.adapted_plan.original_plan_id != self.plan.plan_id
-            or self.adapted_plan.total_available_minutes != self.plan.total_available_minutes
-        ):
-            raise ValueError("adapted_plan must belong to the supplied deterministic plan")
-        return self
 
 
 class ExplanationResponse(StrictModel):
@@ -273,7 +186,6 @@ class FullWithExplanationRequest(FullPlanRequest):
 
 class FullWithExplanationResponse(StrictModel):
     original_plan: DailyStudyPlanSchema
-    adapted_plan: AdaptedStudyPlanSchema | None
     explanation: ExplanationResponse
     request_id: str
     processing_time_ms: float

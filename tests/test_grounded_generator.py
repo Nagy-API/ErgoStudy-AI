@@ -43,7 +43,6 @@ def valid_json() -> str:
                 {"session_order": 1, "message": "Study Mathematics for 60 minutes."},
                 {"session_order": 2, "message": "Take the planned 10-minute break."},
             ],
-            "sensor_message": None,
             "unscheduled_message": None,
             "warnings": [],
         }
@@ -102,34 +101,21 @@ class GroundedGeneratorTests(unittest.TestCase):
         GroundedResponseGenerator(ROOT, client=SequenceClient([valid_json()])).generate(request, plan)
         self.assertEqual((request, plan), before)
 
-    def test_optional_sensor_and_record_inputs_are_not_mutated(self) -> None:
+    def test_optional_record_inputs_are_not_mutated(self) -> None:
         request, plan = request_and_plan()
-        sensor = {
-            "sessions": copy.deepcopy(plan["sessions"]),
-            "total_study_minutes": 60,
-            "total_break_minutes": 10,
-            "mode": "non_sensor",
-            "severity": "data_unavailable",
-            "triggers": ["missing_observation"],
-            "actions": [],
-            "sensor_notice": "No current sensor observation is available; the timer-based plan remains active.",
-            "adaptation_applied": False,
-            "warnings": [],
-        }
         records = [{
             "record_id": "subject-mathematics-cross-level-v1",
             "title": "Mathematics",
             "document_family": "subject_profile",
             "summary": "A supplied record summary.",
         }]
-        before = copy.deepcopy((request, plan, sensor, records))
+        before = copy.deepcopy((request, plan, records))
         GroundedResponseGenerator(ROOT, client=UnavailableClient()).generate(
             request,
             plan,
-            sensor_result=sensor,
             retrieved_record_summaries=records,
         )
-        self.assertEqual((request, plan, sensor, records), before)
+        self.assertEqual((request, plan, records), before)
 
 
 if __name__ == "__main__":

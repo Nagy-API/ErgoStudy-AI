@@ -98,10 +98,6 @@ def _priority_slices(score_rows: list[dict[str, Any]], queries: list[dict[str, A
     by_id = {row["query_id"]: row for row in score_rows}
     groups = {
         "alias_and_abbreviation": [q for q in queries if q["difficulty_type"] == "alias"],
-        "sensor_and_safety": [
-            q for q in queries
-            if q["difficulty_type"] in {"sensor_situation", "missing_or_unreliable_sensor", "safety_boundary"}
-        ],
         "session_template": [q for q in queries if "session_template" in q.get("expected_document_families", [])],
         "study_strategy": [q for q in queries if "study_strategy" in q.get("expected_document_families", [])],
     }
@@ -115,14 +111,12 @@ def _priority_slices(score_rows: list[dict[str, Any]], queries: list[dict[str, A
 def _selection_key(metrics: dict[str, Any]) -> tuple[float, ...]:
     overall = metrics["overall"]
     slices = metrics["priority_slices"]
-    sensor = slices.get("sensor_and_safety", {})
     alias = slices.get("alias_and_abbreviation", {})
     session = slices.get("session_template", {})
     strategy = slices.get("study_strategy", {})
     return (
         float(overall["recall_at_5"] or 0.0),
         float(overall["mrr_at_10"] or 0.0),
-        float(sensor.get("document_family_hit_at_5") or 0.0),
         float(alias.get("recall_at_5") or 0.0),
         float(session.get("document_family_hit_at_5") or 0.0),
         float(strategy.get("document_family_hit_at_5") or 0.0),
@@ -222,7 +216,6 @@ def development_evaluation(*, freeze: bool, write_results: bool = False) -> dict
         "selection_rule": [
             "maximize development Recall@5",
             "then maximize development MRR@10",
-            "then sensor/safety document-family Hit@5",
             "then alias Recall@5",
             "then session-template and study-strategy document-family Hit@5",
             "then minimize measured average latency",

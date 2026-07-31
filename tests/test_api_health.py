@@ -42,12 +42,13 @@ class APIHealthTests(unittest.TestCase):
             "/api/v1/health",
             "/api/v1/readiness",
             "/api/v1/plans",
-            "/api/v1/plans/adapt",
             "/api/v1/plans/full",
             "/api/v1/explanations",
             "/api/v1/plans/full-with-explanation",
         }
         self.assertTrue(expected.issubset(schema["paths"]))
+        self.assertNotIn("/api/v1/plans/adapt", schema["paths"])
+        self.assertNotIn("sensor", str(schema).casefold())
 
 
 if __name__ == "__main__":

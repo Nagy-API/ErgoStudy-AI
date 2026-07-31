@@ -6,10 +6,6 @@ from src.alias_resolver import AliasResolver, normalize_query
 from src.retrieval_models import QueryAnalysis
 
 
-_SENSOR_TERMS = {
-    "imbalance", "leaning", "posture", "pressure", "sensor", "sitting", "slouch", "slouching", "standing"
-}
-_SAFETY_TERMS = {"dizzy", "dizziness", "faint", "numb", "numbness", "pain", "severe", "symptom"}
 _SESSION_TERMS = {"block", "break", "minutes", "routine", "schedule", "session", "template", "timer"}
 _STRATEGY_TERMS = {
     "annotate", "annotation", "concept map", "explain", "flashcard", "flashcards", "interleave", "method",
@@ -37,8 +33,6 @@ class QueryAnalyzer:
             return QueryAnalysis("", "invalid", (), (), resolution)
 
         intents: list[str] = []
-        if _contains_any(normalized, _SENSOR_TERMS | _SAFETY_TERMS):
-            intents.append("sensor_or_posture")
         if _contains_any(normalized, _SESSION_TERMS):
             intents.append("session_template")
         if _contains_any(normalized, _STRATEGY_TERMS) or normalized.startswith(("how should i study", "how do i study")):
@@ -54,12 +48,11 @@ class QueryAnalyzer:
             intents.append("semantic_lookup")
 
         priority = (
-            "sensor_or_posture", "session_template", "study_strategy", "alias_lookup", "subject_lookup",
+            "session_template", "study_strategy", "alias_lookup", "subject_lookup",
             "topic_lookup", "semantic_lookup",
         )
         ordered = tuple(name for name in priority if name in intents)
         families_by_intent = {
-            "sensor_or_posture": ("sensor_intervention",),
             "session_template": ("session_template", "study_strategy"),
             "study_strategy": ("study_strategy", "session_template"),
             "alias_lookup": ("subject_alias", "subject_profile"),

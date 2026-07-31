@@ -25,7 +25,7 @@ class DatasetBuilderTests(unittest.TestCase):
             self.assertEqual(first_stats, second_stats)
             filenames = [
                 "knowledge_corpus.jsonl", "subject_profiles.jsonl", "topic_profiles.jsonl",
-                "study_strategies.jsonl", "session_templates.jsonl", "sensor_interventions.jsonl",
+                "study_strategies.jsonl", "session_templates.jsonl",
                 "subject_aliases.jsonl", "retrieval_evaluation_queries.jsonl", "dataset_statistics.json",
             ]
             self.assertEqual(
